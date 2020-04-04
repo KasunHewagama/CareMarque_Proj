@@ -1,6 +1,6 @@
-package com.appointment.service;
+package com.CareMarque.model;
 
-public class A {
+public class B {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
