@@ -39,7 +39,7 @@ public class PatientService {
 			preparedStatement.setString(10, password);
 			preparedStatement.setString(11, cPassword);
 
-			preparedStatement.execute();
+			preparedStatement.executeUpdate();
 			con.close();
 
 			output = "Inserted successfully";
