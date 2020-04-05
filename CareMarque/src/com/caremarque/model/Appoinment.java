@@ -118,4 +118,24 @@ public class Appoinment {
 		this.specialization = specialization;
 	}
 
+	public Appoinment(String appointmentId, String patientId, String patientName, String phone, String doctorName,
+			String hospitalName, String hospitalId, Date appointmentDate, Date lastUpdateDate, Time appointmentTime,
+			Time lastUpdateTime, String specialization) {
+		super();
+		this.appointmentId = appointmentId;
+		this.patientId = patientId;
+		this.patientName = patientName;
+		this.phone = phone;
+		this.doctorName = doctorName;
+		this.hospitalName = hospitalName;
+		this.hospitalId = hospitalId;
+		this.appointmentDate = appointmentDate;
+		this.lastUpdateDate = lastUpdateDate;
+		this.appointmentTime = appointmentTime;
+		this.lastUpdateTime = lastUpdateTime;
+		this.specialization = specialization;
+	}
+	
+	
+
 }
