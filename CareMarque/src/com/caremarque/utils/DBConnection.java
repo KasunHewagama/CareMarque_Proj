@@ -6,8 +6,8 @@ import java.sql.SQLException;
 
 public class DBConnection {
 
-	// TODO:Implement DB class with phpmyadmin
-	
+	//If there is any issue you can change it accordingly
+	//Implemented with Singleton Pattern
 	private static Connection connection;
 	
 	private DBConnection() {
