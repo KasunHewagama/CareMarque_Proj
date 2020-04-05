@@ -2,27 +2,50 @@ package com.caremarque.utils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class DBConnection {
 
-	//TODO:Implement DB class with phpmyadmin
+	// TODO:Implement DB class with phpmyadmin
 	
-public static Connection connect() {
+	private static Connection connection;
+	
+	private DBConnection() {
 		
-		Connection con = null;
+	}
+	
+	public static Connection getDBConnection() throws ClassNotFoundException, SQLException {
 		
-		try {
+		if(connection==null ||connection.isClosed()) {
 			
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			
-			con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/healthcare", "root", "root");
+			connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/healthcare", "root", "root");
 			
-		}catch (Exception e) {
-			
-			e.printStackTrace();
+			System.out.println("Connected to DB");
 		}
 		
-		return con;
-		
+		return connection;
 	}
+	
+
+//	public static Connection connect() {
+//
+//		Connection con = null;
+//
+//		try {
+//
+//			Class.forName("com.mysql.cj.jdbc.Driver");
+//
+//			con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/healthcare", "root", "root");
+//
+//		} catch (Exception e) {
+//
+//			e.printStackTrace();
+//		}
+//
+//		return con;
+//
+//	}
+	
 }
