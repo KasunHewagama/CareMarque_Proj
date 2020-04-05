@@ -20,7 +20,7 @@ public class Patient {
 	
 	
 	public Patient() {
-		super();
+		
 	}
 	
 	public Patient(String patientId, String firstName, String lastName, String nIC, Date dOB, int phone, String email,
