@@ -1,5 +1,7 @@
 package com.caremarque.model;
 
+import java.util.Date;
+
 public class Payment {
 
 	private String paymentId;
@@ -8,9 +10,10 @@ public class Payment {
 	private String appointmentId;
 	private String doctorId;
 	private String hospitalId;
-	private String appoinmentDate;
+	private Date appoinmentDate;
 	private String paymentDate;
 	private double amount;
+	private String paymentStatus;
 
 	public Payment() {
 
@@ -64,11 +67,11 @@ public class Payment {
 		this.hospitalId = hospitalId;
 	}
 
-	public String getAppoinmentDate() {
+	public Date getAppoinmentDate() {
 		return appoinmentDate;
 	}
 
-	public void setAppoinmentDate(String appoinmentDate) {
+	public void setAppoinmentDate(Date appoinmentDate) {
 		this.appoinmentDate = appoinmentDate;
 	}
 
@@ -87,5 +90,15 @@ public class Payment {
 	public void setAmount(double amount) {
 		this.amount = amount;
 	}
+
+	public String getPaymentStatus() {
+		return paymentStatus;
+	}
+
+	public void setPaymentStatus(String paymentStatus) {
+		this.paymentStatus = paymentStatus;
+	}
+	
+	
 
 }
