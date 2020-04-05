@@ -1,6 +1,6 @@
 package com.caremarque.model;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Patient {
 	
@@ -9,7 +9,7 @@ public class Patient {
 	private String lastName;
 	private String NIC;
 	private Date DOB;
-	private int phone;
+	private String phone;
 	private String email;
 	private String gender;
 	private String password;
@@ -23,7 +23,7 @@ public class Patient {
 		
 	}
 	
-	public Patient(String patientId, String firstName, String lastName, String nIC, Date dOB, int phone, String email,
+	public Patient(String patientId, String firstName, String lastName, String nIC, Date dOB, String phone, String email,
 			String gender, String password, String confirmPassword, String bloodGroup, String chronic, String allergy) {
 		super();
 		this.patientId = patientId;
@@ -70,10 +70,10 @@ public class Patient {
 	public void setDOB(Date dOB) {
 		DOB = dOB;
 	}
-	public int getPhone() {
+	public String getPhone() {
 		return phone;
 	}
-	public void setPhone(int phone) {
+	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 	public String getEmail() {
