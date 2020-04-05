@@ -17,7 +17,6 @@ public class Test {
 	
 	public String Text()
 	{
-		System.out.println("resultss");
 		return "Hello World!!!";
 	}
 
