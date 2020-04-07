@@ -1,9 +1,9 @@
 package com.caremarque.model;
 
+import java.sql.Date;
 import java.sql.Time;
-import java.util.Date;
 
-public class Appoinment {
+public class Appointment {
 
 	private String appointmentId;
 	private String patientId;
@@ -17,8 +17,9 @@ public class Appoinment {
 	private Time appointmentTime;
 	private Time lastUpdateTime;
 	private String specialization;
+	private String appointmentStatus;
 
-	public Appoinment() {
+	public Appointment() {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -118,9 +119,17 @@ public class Appoinment {
 		this.specialization = specialization;
 	}
 
-	public Appoinment(String appointmentId, String patientId, String patientName, String phone, String doctorName,
+	public String getAppointmentStatus() {
+		return appointmentStatus;
+	}
+
+	public void setAppointmentStatus(String appointmentStatus) {
+		this.appointmentStatus = appointmentStatus;
+	}
+	
+	public Appointment(String appointmentId, String patientId, String patientName, String phone, String doctorName,
 			String hospitalName, String hospitalId, Date appointmentDate, Date lastUpdateDate, Time appointmentTime,
-			Time lastUpdateTime, String specialization) {
+			Time lastUpdateTime, String specialization, String appoinmentStatus) {
 		super();
 		this.appointmentId = appointmentId;
 		this.patientId = patientId;
@@ -134,6 +143,7 @@ public class Appoinment {
 		this.appointmentTime = appointmentTime;
 		this.lastUpdateTime = lastUpdateTime;
 		this.specialization = specialization;
+		this.appointmentStatus = appoinmentStatus;
 	}
 	
 	
