@@ -2,8 +2,7 @@ package com.caremarque.model;
 
 public class Patient {
 
-	//private int patientId;
-	private String patientId;
+	private int patientId;
 	private String firstName;
 	private String lastName;
 	private String NIC;
@@ -22,7 +21,7 @@ public class Patient {
 
 	}
 
-	public Patient(String patientId, String firstName, String lastName, String nIC, String dOB, String phone,
+	public Patient(int patientId, String firstName, String lastName, String nIC, String dOB, String phone,
 			String email, String gender, String password, String confirmPassword, String bloodGroup, String chronic,
 			String allergy) {
 		
@@ -42,11 +41,11 @@ public class Patient {
 		this.allergy = allergy;
 	}
 
-	public String getPatientId() {
+	public int getPatientId() {
 		return patientId;
 	}
 
-	public void setPatientId(String patientId) {
+	public void setPatientId(int patientId) {
 		this.patientId = patientId;
 	}
 

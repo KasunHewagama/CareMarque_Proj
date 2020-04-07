@@ -8,7 +8,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import com.caremarque.model.Patient;
 import com.caremarque.service.patient.PatientService;
 
 
@@ -16,13 +15,12 @@ import com.caremarque.service.patient.PatientService;
 public class PatientResource {
 
 PatientService patientObj = new PatientService();
-Patient patient;
 
 	@POST
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.TEXT_PLAIN)
-	public String registerPatient( @FormParam("patientId") String patientId,
+	public String registerPatient(
 								  @FormParam("firstName") String firstName,
 								  @FormParam("lastName") String lastName,
 								  @FormParam("gender") String gender,
@@ -35,7 +33,8 @@ Patient patient;
 								  @FormParam("password") String password,
 								  @FormParam("cPassword") String cPassword) 
 	{
-		String output = patientObj.registerPatient(patientId, firstName, lastName, gender, NIC, DOB, email, phone, bloodGroup, allergies, password, cPassword);
+		String output = patientObj.registerPatient(firstName, lastName, gender, NIC, DOB, email, phone, bloodGroup, allergies, password, cPassword);
+		//String output = patientObj.registerPatient();
 		return output;
 	}
 	
