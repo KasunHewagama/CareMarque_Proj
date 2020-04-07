@@ -2,6 +2,7 @@ package com.caremarque.model;
 
 public class Patient {
 
+	//private int patientId;
 	private String patientId;
 	private String firstName;
 	private String lastName;
