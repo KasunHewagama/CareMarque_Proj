@@ -2,7 +2,6 @@ package com.caremarque.service.patient;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-
 import com.caremarque.model.Patient;
 import com.caremarque.utils.DBConnection;
 
@@ -82,7 +81,6 @@ public class PatientService {
 			preparedStatement.setString(11, patient.getConfirmPassword());
 
 			preparedStatement.executeUpdate();
-			con.close();
 
 			output = "Inserted successfully";
 
@@ -90,6 +88,20 @@ public class PatientService {
 
 			output = "Error while inserting the item..!";
 			System.err.println(e.getMessage());
+			
+		}finally {
+			
+			try {
+				if(preparedStatement != null) {
+					preparedStatement.close();
+				}
+				
+				if(con != null) {
+					con.close();
+				}
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 
 		return output;
