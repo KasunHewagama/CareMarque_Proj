@@ -11,7 +11,6 @@ public class AppointmentResource {
 	@GET
 	@Path("/")
 	@Produces(MediaType.TEXT_PLAIN)
-	
 	public String getAppointments() {
 		// TODO Auto-generated constructor stub
 		return "Appointment Resource Called...!";
