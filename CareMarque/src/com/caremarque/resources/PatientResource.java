@@ -5,17 +5,19 @@ import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-
+import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.parser.Parser;
 
 import com.caremarque.model.Patient;
 import com.caremarque.service.patient.PatientService;
+import com.mysql.cj.xdevapi.JsonParser;
 
 
 @Path("/Patients")
@@ -85,6 +87,15 @@ PatientService patientObj = new PatientService();
 		return output;
 		 
 	}
+	
+//	@PUT
+//	@Path("/")
+//	@Consumes(MediaType.APPLICATION_JSON)
+//	@Produces(MediaType.TEXT_PLAIN)
+//	public String updatePatientDetails(String patientData) {
+//		
+//		JSONObject patientObject = new JsonParser().parse(patientData).getAsJsonObject();
+//	}
 	
 	
 }
