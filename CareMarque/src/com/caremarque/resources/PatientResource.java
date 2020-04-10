@@ -13,7 +13,7 @@ import com.caremarque.service.patient.PatientService;
 
 @Path("/Patients")
 public class PatientResource {
-
+	/*
 PatientService patientObj = new PatientService();
 
 	@POST
@@ -36,7 +36,7 @@ PatientService patientObj = new PatientService();
 		String output = patientObj.registerPatient(firstName, lastName, gender, NIC, DOB, email, phone, bloodGroup, allergies, password, cPassword);
 		//String output = patientObj.registerPatient();
 		return output;
-	}
+	}*/
 	
 //	@GET
 //	@Path("/")
