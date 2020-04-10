@@ -10,9 +10,10 @@ public class Payment {
 	private String appointmentId;
 	private String doctorId;
 	private String hospitalId;
-	private Date appoinmentDate;
-	private String paymentDate;
-	private double amount;
+	private Date paymentDate;
+	private double doctorCharges;
+	private double hospitalCharges;
+	private double totalAmount;
 	private String paymentStatus;
 
 	public Payment() {
@@ -67,28 +68,36 @@ public class Payment {
 		this.hospitalId = hospitalId;
 	}
 
-	public Date getAppoinmentDate() {
-		return appoinmentDate;
-	}
-
-	public void setAppoinmentDate(Date appoinmentDate) {
-		this.appoinmentDate = appoinmentDate;
-	}
-
-	public String getPaymentDate() {
+	public Date getPaymentDate() {
 		return paymentDate;
 	}
 
-	public void setPaymentDate(String paymentDate) {
+	public void setPaymentDate(Date paymentDate) {
 		this.paymentDate = paymentDate;
 	}
 
-	public double getAmount() {
-		return amount;
+	public double getDoctorCharges() {
+		return doctorCharges;
 	}
 
-	public void setAmount(double amount) {
-		this.amount = amount;
+	public void setDoctorCharges(double doctorCharges) {
+		this.doctorCharges = doctorCharges;
+	}
+
+	public double getHospitalCharges() {
+		return hospitalCharges;
+	}
+
+	public void setHospitalCharges(double hospitalCharges) {
+		this.hospitalCharges = hospitalCharges;
+	}
+
+	public double getTotalAmount() {
+		return totalAmount;
+	}
+
+	public void setTotalAmount(double totalAmount) {
+		this.totalAmount = totalAmount;
 	}
 
 	public String getPaymentStatus() {
@@ -98,6 +107,7 @@ public class Payment {
 	public void setPaymentStatus(String paymentStatus) {
 		this.paymentStatus = paymentStatus;
 	}
+
 	
 	
 
