@@ -10,7 +10,7 @@ public interface IPatientService {
 	
 	public Patient getPatient(String patientId);
 	
-	public String getPatient();
+	public String getPatients();
 
 	//public ArrayList<Patient> getPatients();
 	

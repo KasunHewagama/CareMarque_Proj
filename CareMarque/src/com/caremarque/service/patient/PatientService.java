@@ -172,7 +172,7 @@ public class PatientService implements IPatientService {
 
 	@Override
 	//public ArrayList<Patient> getPatients() {
-	public String getPatient() {
+	public String getPatients() {
 
 		String output = "";
 		Statement st = null;
@@ -257,8 +257,47 @@ public class PatientService implements IPatientService {
 
 	@Override
 	public String deletePatient(String patientId) {
-		// TODO Auto-generated method stub
-		return null;
+
+		String output = "";		
+		PreparedStatement preparedStmt = null;
+		Connection con = null;
+		
+		try {
+			
+			con = DBConnection.getDBConnection();
+			
+			String query = "DELETE FROM patient WHERE patientId = ?";
+			
+			preparedStmt = con.prepareStatement(query);
+			
+			preparedStmt.setInt(1, Integer.parseInt(patientId));
+			
+			preparedStmt.execute();
+			
+			output = "Deleted successfully..!";
+		
+		}catch (Exception e) {
+			
+			output = "Error while deleting the item..!";
+			System.err.println(e.getMessage());
+
+		}finally {
+
+			try {
+				if (preparedStmt != null) {
+					preparedStmt.close();
+				}
+
+				if (con != null) {
+					con.close();
+				}				
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return output;
 	}
 
 }

@@ -58,9 +58,9 @@ PatientService patientObj = new PatientService();
 	@GET
 	@Path("/")
 	@Produces(MediaType.TEXT_HTML)
-	public String getPatient() {
+	public String getPatients() {
 		
-		return patientObj.getPatient();
+		return patientObj.getPatients();
 		
 	}
 	
