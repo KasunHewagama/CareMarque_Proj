@@ -16,7 +16,9 @@ public class Payment {
 	private double totalAmount;
 	private String paymentStatus;
 
-	public Payment() {}
+	public Payment() {
+		
+	}
 
 	public String getPaymentId() {
 		return paymentId;
