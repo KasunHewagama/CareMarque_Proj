@@ -250,7 +250,7 @@ public class PatientService implements IPatientService {
 	}
 
 	@Override
-	public Patient updatePatientDetails(String patientId, Patient patient) {
+	public String updatePatientDetails(String patientId, Patient patient) {
 		// TODO Auto-generated method stub
 		return null;
 	}
