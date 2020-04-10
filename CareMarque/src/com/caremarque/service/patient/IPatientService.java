@@ -14,8 +14,10 @@ public interface IPatientService {
 
 	//public ArrayList<Patient> getPatients();
 	
-	public String updatePatientDetails(String patientId, Patient patient);
+	//public Patient updatePatientDetails(String patientId, Patient patient);
 	
+	public String updatePatientDetails(Patient patient);
+
 	public String deletePatient(String patientId);
 	
 }

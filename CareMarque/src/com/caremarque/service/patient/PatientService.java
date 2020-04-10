@@ -250,9 +250,43 @@ public class PatientService implements IPatientService {
 	}
 
 	@Override
-	public String updatePatientDetails(String patientId, Patient patient) {
-		// TODO Auto-generated method stub
-		return null;
+	public String updatePatientDetails(Patient patient) {
+		
+		String output = "";
+		Connection con = null;
+		PreparedStatement preparedStmt = null;
+		
+		try {
+			
+			con = DBConnection.getDBConnection();
+			
+			String query = "UPDATE patient SET firstName=?, lastName=?, gender=?, NIC=?, DOB=?, email=?, phone=?, bloodGroup=?, allergies=?, password=?, cPassword=? WHERE patientId=? ";
+			
+			preparedStmt = con.prepareStatement(query);
+			
+			preparedStmt.setString(1, patient.getFirstName());
+			preparedStmt.setString(2, patient.getLastName());
+			preparedStmt.setString(3, patient.getGender());
+			preparedStmt.setString(4, patient.getNIC());
+			preparedStmt.setString(5, patient.getDOB());
+			preparedStmt.setString(6, patient.getEmail());
+			preparedStmt.setString(7, patient.getPhone());
+			preparedStmt.setString(8, patient.getBloodGroup());
+			preparedStmt.setString(9, patient.getAllergy());
+			preparedStmt.setString(10, patient.getPassword());
+			preparedStmt.setString(11, patient.getConfirmPassword());
+
+			preparedStmt.executeUpdate();
+			
+			output = "Updated Successfully..!";
+			
+		}catch (Exception e) {
+		
+			output = "Updated Successfully..!";
+			System.err.println(e.getMessage());
+		}
+		
+		return output;
 	}
 
 	@Override
