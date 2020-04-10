@@ -1,12 +1,15 @@
 package com.caremarque.resources;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+
+import org.apache.tomcat.util.http.fileupload.ParameterParser;
 
 import com.caremarque.model.Patient;
 import com.caremarque.service.patient.PatientService;
@@ -63,6 +66,17 @@ PatientService patientObj = new PatientService();
 		return patientObj.getPatients();
 		
 	}
+	
+//	@DELETE
+//	@Path("/")
+//	@Consumes(MediaType.APPLICATION_XML)
+//	@Produces(MediaType.TEXT_PLAIN)
+//	public String deletePatient(String patientData) {
+//		
+//		Document doc = Jsoup.parse(patientData, "", Parser) 
+//		return patientId;
+//		
+//	}
 	
 	
 }
