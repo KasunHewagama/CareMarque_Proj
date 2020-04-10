@@ -9,7 +9,7 @@ public class PaymentService implements IPaymentService {
 	@Override
 	public String createPayement(Payment p) {
 		// TODO Auto-generated method stub
-		return null;
+		return "Payment created successfully!";
 	}
 
 	@Override
