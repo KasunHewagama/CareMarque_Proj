@@ -110,7 +110,7 @@ public class PatientService implements IPatientService {
 	 * 
 	 * }
 	 */
-
+	@Override
 	public String registerPatient(Patient patient) {
 
 		String output = "";
