@@ -10,6 +10,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import org.apache.tomcat.util.http.fileupload.ParameterParser;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.parser.Parser;
 
 import com.caremarque.model.Patient;
 import com.caremarque.service.patient.PatientService;
@@ -67,16 +70,21 @@ PatientService patientObj = new PatientService();
 		
 	}
 	
-//	@DELETE
-//	@Path("/")
-//	@Consumes(MediaType.APPLICATION_XML)
-//	@Produces(MediaType.TEXT_PLAIN)
-//	public String deletePatient(String patientData) {
-//		
-//		Document doc = Jsoup.parse(patientData, "", Parser) 
-//		return patientId;
-//		
-//	}
+	@DELETE
+	@Path("/")
+	@Consumes(MediaType.APPLICATION_XML)
+	@Produces(MediaType.TEXT_PLAIN)
+	public String deletePatient(String patientData) {
+				
+		Document doc = Jsoup.parse(patientData, "", Parser.xmlParser());
+		
+		String patientId = doc.select("patientId").text();
+		
+		String output = patientObj.deletePatient(patientId);
+		
+		return output;
+		 
+	}
 	
 	
 }
