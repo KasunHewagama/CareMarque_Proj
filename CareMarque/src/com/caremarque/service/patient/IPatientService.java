@@ -10,7 +10,9 @@ public interface IPatientService {
 	
 	public Patient getPatient(String patientId);
 	
-	public ArrayList<Patient> getPatients();
+	public String getPatient();
+
+	//public ArrayList<Patient> getPatients();
 	
 	public Patient updatePatientDetails(String patientId, Patient patient);
 	

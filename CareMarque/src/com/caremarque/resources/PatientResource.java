@@ -55,14 +55,14 @@ PatientService patientObj = new PatientService();
 		return output;
 	}
 	
-//	@GET
-//	@Path("/")
-//	@Produces(MediaType.TEXT_HTML)
-//	public String getPatient() {
-//		
-//		return patientObj.getPatient();
-//		
-//	}
-//	
+	@GET
+	@Path("/")
+	@Produces(MediaType.TEXT_HTML)
+	public String getPatient() {
+		
+		return patientObj.getPatient();
+		
+	}
+	
 	
 }

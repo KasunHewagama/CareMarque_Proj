@@ -171,9 +171,82 @@ public class PatientService implements IPatientService {
 	}
 
 	@Override
-	public ArrayList<Patient> getPatients() {
-		// TODO Auto-generated method stub
-		return null;
+	//public ArrayList<Patient> getPatients() {
+	public String getPatient() {
+
+		String output = "";
+		Statement st = null;
+		ResultSet rs = null;
+		Connection con = null;
+		
+		try
+		{
+		    con = DBConnection.getDBConnection();
+			
+			String query = "SELECT * FROM patient";			
+			
+			st = con.createStatement();			
+		    rs = st.executeQuery(query);
+			
+			output = "<table border=\"1\"> "
+					+ "<tr><th>firstName</th> "
+					+ "<th>lastName</th> "
+					+ "<th>gender</th> "
+					+ "<th>NIC</th></tr>"; 
+			
+			while(rs.next())
+			{
+				
+				String firstName = rs.getString("firstName");
+				String lastName = rs.getString("lastName");
+				String gender = rs.getString("gender");
+				String NIC = rs.getString("NIC");
+				//String DOB = rs.getDate("DOB").toString();
+				String DOB = rs.getString("DOB");
+				String email = rs.getString("email");
+				String phone = rs.getString("phone");
+				String bloodGroup = rs.getString("bloodGroup");
+				String allergies = rs.getString("allergies");
+				String password = rs.getString("password");
+				String cPassword = rs.getString("cPassword");
+				
+				 output += "<tr><td>" + firstName + "</td>";
+				 output += "<td>" + lastName + "</td>";
+				 output += "<td>" + gender + "</td>";
+				 output += "<td>" + NIC + "</td>"; 
+				
+			}
+			// Complete the html table
+			 output += "</table>"; 
+			
+			
+		}catch (Exception e){
+			
+			output = "Error while reading the patient details...!";
+			System.err.println(e.getMessage());
+			
+		}finally {
+
+			try {
+				if (st != null) {
+					st.close();
+				}
+
+				if (con != null) {
+					con.close();
+				}
+				
+				if(rs != null) {
+					rs.close();
+				}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return output;
+		
+		
 	}
 
 	@Override
