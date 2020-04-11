@@ -7,7 +7,7 @@ import com.caremarque.model.Appointment;
 public class AppointmentService implements IAppointmentService{
 
 	@Override
-	public String createAppointment(Appointment a) {
+	public String createAppointment(Appointment appointment) {
 		// TODO Auto-generated method stub
 		return "Appointment created successfully...!";
 	}
@@ -19,23 +19,23 @@ public class AppointmentService implements IAppointmentService{
 	}
 
 	@Override
-	public ArrayList<Appointment> getAppointments() {
+	public String getAppointments() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Appointment updateAppointment(String appointmentid, Appointment id) {
+	public String updateAppointment(Appointment appointment) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void cancelAppointment(String appointmnetId) {
+	public String cancelAppointment(String appointmnetId) {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
-	
-	
 
+
+	
 }
