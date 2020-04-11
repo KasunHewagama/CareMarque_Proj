@@ -32,8 +32,9 @@ public class PaymentResource {
 								@FormParam("paymentDate") Date paymentDate,
 								@FormParam("doctorCharges") double doctorCharges,
 								@FormParam("hospitalCharges") double hospitalCharges,
-								@FormParam("totalAmount") double totalAmount,
 								@FormParam("paymentStatus") String paymentStatus) {
+		
+		System.out.println("CREATE PAYMENT");
 		//create payment object
 		Payment payment = new Payment();
 		
@@ -46,7 +47,6 @@ public class PaymentResource {
 		payment.setPaymentDate(paymentDate);
 		payment.setDoctorCharges(doctorCharges);
 		payment.setHospitalCharges(hospitalCharges);
-		payment.setTotalAmount(totalAmount);
 		payment.setPaymentStatus(paymentStatus);
 		
 		//pass object to the service implementation class

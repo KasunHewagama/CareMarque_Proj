@@ -58,7 +58,7 @@ public class PaymentService implements IPaymentService {
 				preparedstatement.setDate(Constants.COLUMN_INDEX_SEVEN, p.getPaymentDate());
 				preparedstatement.setDouble(Constants.COLUMN_INDEX_EIGHT, p.getDoctorCharges());
 				preparedstatement.setDouble(Constants.COLUMN_INDEX_NINE, p.getHospitalCharges());
-				preparedstatement.setDouble(Constants.COLUMN_INDEX_TEN, p.getTotalAmount());
+				preparedstatement.setDouble(Constants.COLUMN_INDEX_TEN, p.getDoctorCharges() +  p.getHospitalCharges());
 				preparedstatement.setString(Constants.COLUMN_INDEX_ELEVEN, p.getPaymentStatus());
 				preparedstatement.execute();
 				connecton.commit();
