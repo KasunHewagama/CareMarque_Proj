@@ -3,6 +3,7 @@ package com.caremarque.service.payment;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -14,8 +15,10 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
 import com.caremarque.model.Payment;
+import com.caremarque.utils.CommonUtils;
 import com.caremarque.utils.Constants;
 import com.caremarque.utils.DBConnection;
+import com.mysql.cj.protocol.Resultset;
 
 public class PaymentService implements IPaymentService {
 	
@@ -33,6 +36,10 @@ public class PaymentService implements IPaymentService {
 		
 		String output = null;
 		
+		//Here we call the generatePaymentIDs method to auto generate a paymentID
+		//To do that we pass the existing paymentid set as an arraylist
+		String paymentId = CommonUtils.generatePaymentIDs(getPaymentIDs());
+		
 		try {
 			
 				connecton = DBConnection.getDBConnection();
@@ -49,6 +56,7 @@ public class PaymentService implements IPaymentService {
 				
 				preparedstatement = connecton.prepareStatement(query);
 				
+				p.setPaymentId(paymentId);
 				preparedstatement.setString(Constants.COLUMN_INDEX_ONE, p.getPaymentId());
 				preparedstatement.setString(Constants.COLUMN_INDEX_TWO, p.getPatientId());
 				preparedstatement.setString(Constants.COLUMN_INDEX_THREE, p.getPatientName());
@@ -61,7 +69,8 @@ public class PaymentService implements IPaymentService {
 				preparedstatement.setDouble(Constants.COLUMN_INDEX_TEN, p.getDoctorCharges() +  p.getHospitalCharges());
 				preparedstatement.setString(Constants.COLUMN_INDEX_ELEVEN, p.getPaymentStatus());
 				preparedstatement.execute();
-				connecton.commit();
+				
+				output = "Data inserted successfully!";
 
 		} catch (Exception e) {
 			
@@ -107,5 +116,44 @@ public class PaymentService implements IPaymentService {
 		// TODO Auto-generated method stub
 		
 	}
+
+	//This method get all the existing paymentids and put them into a arraylist 
+	@Override
+	public ArrayList<String> getPaymentIDs() {
+		ArrayList<String> arrayList = new ArrayList<String>();
+		
+		
+		try {
+			connecton = DBConnection.getDBConnection();
+			
+			String query = "SELECT PAYMENTS.PAYMENTID FROM PAYMENTS";
+			
+			preparedstatement = connecton.prepareStatement(query);
+			ResultSet resultset = preparedstatement.executeQuery();
+			
+			while(resultset.next()) {
+				
+				arrayList.add(resultset.getString(Constants.COLUMN_INDEX_ONE));
+				
+			}
+			
+		} catch (Exception e) {
+			log.log(Level.SEVERE, e.getMessage());
+		} finally {
+			try {
+				if(preparedstatement != null) {
+					preparedstatement.close();
+				}
+				if(connecton != null) {
+					connecton.close();
+				}
+			} catch (SQLException e) {
+				log.log(Level.SEVERE, e.getMessage());
+			}
+		}
+		return arrayList;
+	}
+	
+	
 
 }

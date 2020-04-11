@@ -23,8 +23,7 @@ public class PaymentResource {
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.TEXT_PLAIN)
-	public String createPayment(@FormParam("paymentId") String paymentId,
-								@FormParam("patientId") String patientId,
+	public String createPayment(@FormParam("patientId") String patientId,
 								@FormParam("patientName") String patientName,
 								@FormParam("appointmentId") String appointmentId,
 								@FormParam("doctorId") String doctorId,
@@ -38,7 +37,6 @@ public class PaymentResource {
 		//create payment object
 		Payment payment = new Payment();
 		
-		payment.setPaymentId(paymentId);
 		payment.setPatientId(patientId);
 		payment.setPatientName(patientName);
 		payment.setAppointmentId(appointmentId);

@@ -19,4 +19,7 @@ public class Constants {
 	public static final int COLUMN_INDEX_THIRTEEN = 13;
 	public static final int COLUMN_INDEX_FOURTEEN = 14;
 	public static final int COLUMN_INDEX_FIFTEEN = 15;
+	
+	//ID Prefixes
+	public static final String PAYMENT_ID_PREFIX = "PY"; 
 }
