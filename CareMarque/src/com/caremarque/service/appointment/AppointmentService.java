@@ -9,7 +9,7 @@ public class AppointmentService implements IAppointmentService{
 	@Override
 	public String createAppointment(Appointment a) {
 		// TODO Auto-generated method stub
-		return null;
+		return "Appointment created successfully...!";
 	}
 
 	@Override
