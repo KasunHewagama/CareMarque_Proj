@@ -6,14 +6,16 @@ import com.caremarque.model.Appointment;
 
 public interface IAppointmentService {
 
-	public String createAppointment(Appointment a);
+	public String createAppointment(Appointment appointment);
 	
 	public Appointment getAppointment(String appointmentId);
 	
-	public ArrayList<Appointment> getAppointments();
+	public String getAppointments();	
+	//public ArrayList<Appointment> getAppointments();
 	
-	public Appointment updateAppointment(String appointmentid, Appointment id);
+	public String updateAppointment(Appointment appointment);
+	//public Appointment updateAppointment(String appointmentid, Appointment id);
 	
-	public void cancelAppointment(String appointmnetId);
+	public String cancelAppointment(String appointmnetId);
 	
 }
