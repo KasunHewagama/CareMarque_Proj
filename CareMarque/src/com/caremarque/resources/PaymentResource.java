@@ -1,6 +1,8 @@
 package com.caremarque.resources;
 
+
 import java.sql.Date;
+import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
@@ -55,9 +57,10 @@ public class PaymentResource {
 	
 	@GET
 	@Path("/")
-	@Produces(MediaType.TEXT_PLAIN)
-	public String getPayments() {
-		return "Payment Resource Called";
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Payment> getPayments() {
+		
+		return ps.getPayments();
 	}
 	
 }

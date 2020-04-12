@@ -101,8 +101,53 @@ public class PaymentService implements IPaymentService {
 
 	@Override
 	public ArrayList<Payment> getPayments() {
-		// TODO Auto-generated method stub
-		return null;
+
+		ArrayList<Payment> arrayList = new ArrayList<Payment>();
+		
+		try {
+			connecton = DBConnection.getDBConnection();
+			
+			String query = "SELECT * FROM PAYMENTS";
+			
+			preparedstatement = connecton.prepareStatement(query);
+			ResultSet resultset = preparedstatement.executeQuery();
+			
+			
+			while(resultset.next()) {
+				Payment payment = new Payment();
+				payment.setPaymentId(resultset.getString(Constants.COLUMN_INDEX_ONE));
+				payment.setPatientId(resultset.getString(Constants.COLUMN_INDEX_TWO));
+				payment.setPatientName(resultset.getString(Constants.COLUMN_INDEX_THREE));
+				payment.setAppointmentId(resultset.getString(Constants.COLUMN_INDEX_FOUR));
+				payment.setDoctorId(resultset.getString(Constants.COLUMN_INDEX_FIVE));
+				payment.setHospitalId(resultset.getString(Constants.COLUMN_INDEX_SIX));
+				payment.setPaymentDate(resultset.getDate(Constants.COLUMN_INDEX_SEVEN));
+				System.out.println("DATE: " + payment.getPaymentDate());
+				payment.setDoctorCharges(resultset.getDouble(Constants.COLUMN_INDEX_EIGHT));
+				payment.setHospitalCharges(resultset.getDouble(Constants.COLUMN_INDEX_NINE));
+				payment.setTotalAmount(resultset.getDouble(Constants.COLUMN_INDEX_TEN));
+				payment.setPaymentStatus(resultset.getString(Constants.COLUMN_INDEX_ELEVEN));
+				arrayList.add(payment);
+				
+				System.out.println("Data Retreived From DB");
+			}
+		} catch (Exception e) {
+			log.log(Level.SEVERE, e.getMessage());
+		
+		} finally {
+			try {
+				if(preparedstatement != null) {
+					preparedstatement.close();
+				}
+				if(connecton != null) {
+					connecton.close();
+				}
+			} catch (SQLException e) {
+				log.log(Level.SEVERE, e.getMessage());
+			}
+		}
+		
+		return arrayList;
 	}
 
 	@Override
@@ -153,7 +198,6 @@ public class PaymentService implements IPaymentService {
 		}
 		return arrayList;
 	}
-	
 	
 
 }
