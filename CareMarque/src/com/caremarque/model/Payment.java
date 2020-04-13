@@ -13,7 +13,7 @@ public class Payment {
 	private String appointmentId;
 	private String doctorId;
 	private String hospitalId;
-	private Date paymentDate;
+	private String paymentDate;
 	private double doctorCharges;
 	private double hospitalCharges;
 	private double totalAmount;
@@ -69,11 +69,11 @@ public class Payment {
 		this.hospitalId = hospitalId;
 	}
 
-	public Date getPaymentDate() {
+	public String getPaymentDate() {
 		return paymentDate;
 	}
 
-	public void setPaymentDate(Date paymentDate) {
+	public void setPaymentDate(String paymentDate) {
 		this.paymentDate = paymentDate;
 	}
 

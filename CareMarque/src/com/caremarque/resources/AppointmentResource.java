@@ -2,6 +2,7 @@ package com.caremarque.resources;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -56,5 +57,28 @@ public class AppointmentResource {
 		return null;
 		
 	}
+	
+	
+	//To Connect with payment resource
+//	@GET
+//	@Path("/createPayment")
+//	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+//	@Produces(MediaType.TEXT_PLAIN)
+//	public String createPayment(@FormParam ("patientId") String patientId,
+//							@FormParam("patientName") String patientName,
+//							@FormParam("appointmentId") String appointmentId,
+//							@FormParam("doctorId") String doctorId,
+//							@FormParam("hospitalId") String hospitalId,
+//							@FormParam("doctorCharges") double doctorCharges,
+//							@FormParam("hospitalCharges") double hospitalCharges,
+//							@FormParam("paymentStatus") String paymentStatus) {
+//		
+//		PaymentResource pr = new PaymentResource(); 
+//		
+//		String output = pr.createPayment(patientId,patientName, appointmentId, doctorId,hospitalId, doctorCharges, hospitalCharges, paymentStatus);
+//		
+//		return output;
+//		
+//	}
 
 }

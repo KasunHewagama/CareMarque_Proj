@@ -65,7 +65,7 @@ public class PaymentService implements IPaymentService {
 				preparedstatement.setString(Constants.COLUMN_INDEX_FOUR, p.getAppointmentId());
 				preparedstatement.setString(Constants.COLUMN_INDEX_FIVE, p.getDoctorId());
 				preparedstatement.setString(Constants.COLUMN_INDEX_SIX, p.getHospitalId());
-				preparedstatement.setDate(Constants.COLUMN_INDEX_SEVEN, Date.valueOf(LocalDate.now()));
+				preparedstatement.setString(Constants.COLUMN_INDEX_SEVEN, LocalDate.now().toString());
 				preparedstatement.setDouble(Constants.COLUMN_INDEX_EIGHT, p.getDoctorCharges());
 				preparedstatement.setDouble(Constants.COLUMN_INDEX_NINE, p.getHospitalCharges());
 				preparedstatement.setDouble(Constants.COLUMN_INDEX_TEN, p.getDoctorCharges() +  p.getHospitalCharges());
@@ -124,10 +124,8 @@ public class PaymentService implements IPaymentService {
 				payment.setAppointmentId(resultset.getString(Constants.COLUMN_INDEX_FOUR));
 				payment.setDoctorId(resultset.getString(Constants.COLUMN_INDEX_FIVE));
 				payment.setHospitalId(resultset.getString(Constants.COLUMN_INDEX_SIX));
-				//Convert sql date into java.uti.Date
-				java.util.Date date = new java.util.Date(resultset.getDate(Constants.COLUMN_INDEX_SEVEN).getTime());
-				payment.setPaymentDate(date);
-				System.out.println("DATE: " + payment.getPaymentDate().getDate());
+				payment.setPaymentDate(resultset.getString(Constants.COLUMN_INDEX_SEVEN));
+				System.out.println("DATE: " + payment.getPaymentDate());
 				payment.setDoctorCharges(resultset.getDouble(Constants.COLUMN_INDEX_EIGHT));
 				payment.setHospitalCharges(resultset.getDouble(Constants.COLUMN_INDEX_NINE));
 				payment.setTotalAmount(resultset.getDouble(Constants.COLUMN_INDEX_TEN));
