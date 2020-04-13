@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -59,6 +60,15 @@ public class PaymentResource {
 	public List<Payment> getPayments() {
 		
 		return ps.getPayments();
+	}
+	
+	@DELETE
+	@Path("/")
+	@Consumes(MediaType.APPLICATION_XML)
+	@Produces(MediaType.TEXT_PLAIN)
+	public String deletePayment(String paymentId) {
+		
+		return null;
 	}
 	
 }
