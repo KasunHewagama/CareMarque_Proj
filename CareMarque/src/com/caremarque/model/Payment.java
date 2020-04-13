@@ -1,6 +1,6 @@
 package com.caremarque.model;
 
-import java.sql.Date;
+import java.util.Date;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -108,5 +108,7 @@ public class Payment {
 	public void setPaymentStatus(String paymentStatus) {
 		this.paymentStatus = paymentStatus;
 	}
+
+
 
 }

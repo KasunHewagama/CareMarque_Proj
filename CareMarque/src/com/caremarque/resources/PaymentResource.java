@@ -1,7 +1,7 @@
 package com.caremarque.resources;
 
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -30,7 +30,6 @@ public class PaymentResource {
 								@FormParam("appointmentId") String appointmentId,
 								@FormParam("doctorId") String doctorId,
 								@FormParam("hospitalId") String hospitalId,
-								@FormParam("paymentDate") Date paymentDate,
 								@FormParam("doctorCharges") double doctorCharges,
 								@FormParam("hospitalCharges") double hospitalCharges,
 								@FormParam("paymentStatus") String paymentStatus) {
@@ -44,7 +43,6 @@ public class PaymentResource {
 		payment.setAppointmentId(appointmentId);
 		payment.setDoctorId(doctorId);
 		payment.setHospitalId(hospitalId);
-		payment.setPaymentDate(paymentDate);
 		payment.setDoctorCharges(doctorCharges);
 		payment.setHospitalCharges(hospitalCharges);
 		payment.setPaymentStatus(paymentStatus);

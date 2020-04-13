@@ -1,24 +1,23 @@
 package com.caremarque.service.payment;
 
-import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.xml.sax.SAXException;
 
 import com.caremarque.model.Payment;
 import com.caremarque.utils.CommonUtils;
 import com.caremarque.utils.Constants;
 import com.caremarque.utils.DBConnection;
-import com.mysql.cj.protocol.Resultset;
 
 public class PaymentService implements IPaymentService {
 	
@@ -56,6 +55,9 @@ public class PaymentService implements IPaymentService {
 				
 				preparedstatement = connecton.prepareStatement(query);
 				
+			//	java.util.Date date = new Date();
+//				DateTimeFormatter formatter = new DateTimeFormatter("dd/MM/yyyy HH:mm:ss");
+				
 				p.setPaymentId(paymentId);
 				preparedstatement.setString(Constants.COLUMN_INDEX_ONE, p.getPaymentId());
 				preparedstatement.setString(Constants.COLUMN_INDEX_TWO, p.getPatientId());
@@ -63,7 +65,7 @@ public class PaymentService implements IPaymentService {
 				preparedstatement.setString(Constants.COLUMN_INDEX_FOUR, p.getAppointmentId());
 				preparedstatement.setString(Constants.COLUMN_INDEX_FIVE, p.getDoctorId());
 				preparedstatement.setString(Constants.COLUMN_INDEX_SIX, p.getHospitalId());
-				preparedstatement.setDate(Constants.COLUMN_INDEX_SEVEN, p.getPaymentDate());
+				preparedstatement.setDate(Constants.COLUMN_INDEX_SEVEN, Date.valueOf(LocalDate.now()));
 				preparedstatement.setDouble(Constants.COLUMN_INDEX_EIGHT, p.getDoctorCharges());
 				preparedstatement.setDouble(Constants.COLUMN_INDEX_NINE, p.getHospitalCharges());
 				preparedstatement.setDouble(Constants.COLUMN_INDEX_TEN, p.getDoctorCharges() +  p.getHospitalCharges());
@@ -112,6 +114,7 @@ public class PaymentService implements IPaymentService {
 			preparedstatement = connecton.prepareStatement(query);
 			ResultSet resultset = preparedstatement.executeQuery();
 			
+			DateFormat inputFormatter = new SimpleDateFormat("dd/MM/yyyy");
 			
 			while(resultset.next()) {
 				Payment payment = new Payment();
@@ -121,8 +124,10 @@ public class PaymentService implements IPaymentService {
 				payment.setAppointmentId(resultset.getString(Constants.COLUMN_INDEX_FOUR));
 				payment.setDoctorId(resultset.getString(Constants.COLUMN_INDEX_FIVE));
 				payment.setHospitalId(resultset.getString(Constants.COLUMN_INDEX_SIX));
-				payment.setPaymentDate(resultset.getDate(Constants.COLUMN_INDEX_SEVEN));
-				System.out.println("DATE: " + payment.getPaymentDate());
+				//Convert sql date into java.uti.Date
+				java.util.Date date = new java.util.Date(resultset.getDate(Constants.COLUMN_INDEX_SEVEN).getTime());
+				payment.setPaymentDate(date);
+				System.out.println("DATE: " + payment.getPaymentDate().getDate());
 				payment.setDoctorCharges(resultset.getDouble(Constants.COLUMN_INDEX_EIGHT));
 				payment.setHospitalCharges(resultset.getDouble(Constants.COLUMN_INDEX_NINE));
 				payment.setTotalAmount(resultset.getDouble(Constants.COLUMN_INDEX_TEN));
