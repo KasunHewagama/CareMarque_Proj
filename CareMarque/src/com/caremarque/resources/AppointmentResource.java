@@ -12,20 +12,49 @@ import javax.ws.rs.core.MediaType;
 
 import com.caremarque.model.Appointment;
 import com.caremarque.service.appointment.AppointmentService;
+import com.caremarque.service.appointment.IAppointmentService;
 
 @Path("/Appointment")
 public class AppointmentResource {
 	
-	AppointmentService as = new AppointmentService();
+	IAppointmentService as = new AppointmentService();
 	
 	@POST
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.TEXT_PLAIN)
-	public String createAppointment() {
+	public String createAppointment(
+			@FormParam("patientId") String patientId,
+			@FormParam("patientName") String patientName,
+			@FormParam("phone") String phone,
+			@FormParam("doctorName") String doctorName,
+			@FormParam("hospitalName") String hospitalName,
+			@FormParam("hospitalId") String hospitalId,
+			@FormParam("appointmentDate") String appointmentDate,
+			@FormParam("lastUpdateDate") String lastUpdateDate,
+			@FormParam("appointmentTime") String appointmentTime,
+			@FormParam("lastUpdateTime") String lastUpdateTime,
+			@FormParam("specialization") String specialization,
+			@FormParam("appointmentStatus") String appointmentStatus) 
+	{
 		Appointment appointment = new Appointment();
 		
-		return as.createAppointment(appointment);
+		appointment.setPatientId(patientId);
+		appointment.setPatientName(patientName);
+		appointment.setPhone(phone);
+		appointment.setDoctorName(doctorName);
+		appointment.setHospitalName(hospitalName);
+		appointment.setHospitalId(hospitalId);
+		appointment.setAppointmentDate(appointmentDate);
+		appointment.setLastUpdateDate(lastUpdateDate);
+		appointment.setAppointmentTime(appointmentTime);
+		appointment.setLastUpdateTime(lastUpdateTime);
+		appointment.setSpecialization(specialization);
+		appointment.setAppointmentStatus(appointmentStatus);
+		
+		String output = as.createAppointment(appointment);
+		
+		return output;
 		
 	}
 		
@@ -34,7 +63,6 @@ public class AppointmentResource {
 	@Path("/")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String getAppointments() {
-		// TODO Auto-generated constructor stub
 		return as.getAppointments();
 	}
 	
