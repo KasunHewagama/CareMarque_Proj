@@ -85,5 +85,27 @@ public class AppointmentResource {
 		return null;
 		
 	}
+	
+	//To Connect with payment resource
+//	@GET
+//	@Path("/createPayment")
+//	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+//	@Produces(MediaType.TEXT_PLAIN)
+//	public String createPayment(@FormParam ("patientId") String patientId,
+//							@FormParam("patientName") String patientName,
+//							@FormParam("appointmentId") String appointmentId,
+//							@FormParam("doctorId") String doctorId,
+//							@FormParam("hospitalId") String hospitalId,
+//							@FormParam("doctorCharges") double doctorCharges,
+//							@FormParam("hospitalCharges") double hospitalCharges,
+//							@FormParam("paymentStatus") String paymentStatus) {
+//		
+//		PaymentResource pr = new PaymentResource(); 
+//		
+//		String output = pr.createPayment(patientId,patientName, appointmentId, doctorId,hospitalId, doctorCharges, hospitalCharges, paymentStatus);
+//		
+//		return output;
+//		
+//	}
 
 }

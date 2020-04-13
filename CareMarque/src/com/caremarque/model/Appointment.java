@@ -21,6 +21,7 @@ public class Appointment {
 
 	public Appointment() {
 		// TODO Auto-generated constructor stub
+		super();
 	}
 
 	public int getAppointmentId() {
@@ -131,7 +132,6 @@ public class Appointment {
 			String hospitalName, String hospitalId, String appointmentDate, String lastUpdateDate, String appointmentTime,
 			String lastUpdateTime, String specialization, String appoinmentStatus) {
 		super();
-		this.appointmentId = appointmentId;
 		this.patientId = patientId;
 		this.patientName = patientName;
 		this.phone = phone;
