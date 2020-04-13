@@ -5,17 +5,17 @@ import java.sql.Time;
 
 public class Appointment {
 
-	private String appointmentId;
+	private int appointmentId;
 	private String patientId;
 	private String patientName;
 	private String phone;
 	private String doctorName;
 	private String hospitalName;
 	private String hospitalId;
-	private Date appointmentDate;
-	private Date lastUpdateDate;
-	private Time appointmentTime;
-	private Time lastUpdateTime;
+	private String appointmentDate;
+	private String lastUpdateDate;
+	private String appointmentTime;
+	private String lastUpdateTime;
 	private String specialization;
 	private String appointmentStatus;
 
@@ -23,11 +23,11 @@ public class Appointment {
 		// TODO Auto-generated constructor stub
 	}
 
-	public String getAppointmentId() {
+	public int getAppointmentId() {
 		return appointmentId;
 	}
 
-	public void setAppointmentId(String appointmentId) {
+	public void setAppointmentId(int appointmentId) {
 		this.appointmentId = appointmentId;
 	}
 
@@ -79,35 +79,35 @@ public class Appointment {
 		this.hospitalId = hospitalId;
 	}
 
-	public Date getAppointmentDate() {
+	public String getAppointmentDate() {
 		return appointmentDate;
 	}
 
-	public void setAppointmentDate(Date appointmentDate) {
+	public void setAppointmentDate(String appointmentDate) {
 		this.appointmentDate = appointmentDate;
 	}
 
-	public Date getLastUpdateDate() {
+	public String getLastUpdateDate() {
 		return lastUpdateDate;
 	}
 
-	public void setLastUpdateDate(Date lastUpdateDate) {
+	public void setLastUpdateDate(String lastUpdateDate) {
 		this.lastUpdateDate = lastUpdateDate;
 	}
 
-	public Time getAppointmentTime() {
+	public String getAppointmentTime() {
 		return appointmentTime;
 	}
 
-	public void setAppointmentTime(Time appointmentTime) {
+	public void setAppointmentTime(String appointmentTime) {
 		this.appointmentTime = appointmentTime;
 	}
 
-	public Time getLastUpdateTime() {
+	public String getLastUpdateTime() {
 		return lastUpdateTime;
 	}
 
-	public void setLastUpdateTime(Time lastUpdateTime) {
+	public void setLastUpdateTime(String lastUpdateTime) {
 		this.lastUpdateTime = lastUpdateTime;
 	}
 
@@ -127,9 +127,9 @@ public class Appointment {
 		this.appointmentStatus = appointmentStatus;
 	}
 	
-	public Appointment(String appointmentId, String patientId, String patientName, String phone, String doctorName,
-			String hospitalName, String hospitalId, Date appointmentDate, Date lastUpdateDate, Time appointmentTime,
-			Time lastUpdateTime, String specialization, String appoinmentStatus) {
+	public Appointment(int appointmentId, String patientId, String patientName, String phone, String doctorName,
+			String hospitalName, String hospitalId, String appointmentDate, String lastUpdateDate, String appointmentTime,
+			String lastUpdateTime, String specialization, String appoinmentStatus) {
 		super();
 		this.appointmentId = appointmentId;
 		this.patientId = patientId;
