@@ -19,9 +19,9 @@ public class DBConnection {
 		
 		if(connection==null ||connection.isClosed()) {
 			
-			Class.forName("com.mysql.cj.jdbc.Driver");
+			Class.forName(Constants.DB_DRIVER_NAME);
 			
-			connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/healthcare", "root", "root");
+			connection = DriverManager.getConnection(Constants.DBLOCATION_STRING, Constants.DB_USERNAME, Constants.DB_PASSWORD);
 			
 			System.out.println("Connected to DB");
 		}
