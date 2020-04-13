@@ -2,14 +2,21 @@ package com.caremarque.service.appointment;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.caremarque.model.Appointment;
 import com.caremarque.utils.DBConnection;
+import com.mysql.cj.log.Log;
 
 public class AppointmentService implements IAppointmentService{
 
+	public static final Logger log = Logger.getLogger(IAppointmentService.class.getName());
+	
 	@Override
 	public String createAppointment(Appointment appointment) {
 		// TODO Auto-generated method stub
@@ -22,7 +29,10 @@ public class AppointmentService implements IAppointmentService{
 		try {
 			con = DBConnection.getDBConnection();
 			
-			String query = "INSERT iNTO appointment(appointmentId,patientId,PatientName,phone,doctorName,hospitalName,hospitalId,appointmentDate,lastUpdateDate,appointmentTime,lastUpdateTime,specialization,appointmentStatus) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			String query = "INSERT INTO appointment("
+					+ "patientId,patientName,phone,doctorName,hospitalName,hospitalId,appointmentDate,lastUpdateDate,appointmentTime,"
+					+ "lastUpdateTime,specialization,appointmentStatus) "
+					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			
 			preparedStatement = con.prepareStatement(query);
 			
@@ -47,6 +57,8 @@ public class AppointmentService implements IAppointmentService{
 			
 			output = "Error when Inserting the Appointment...!";
 			System.err.println(e.getMessage());
+			log.log(Level.SEVERE, e.getMessage());
+			
 			
 		} finally {
 
@@ -75,8 +87,41 @@ public class AppointmentService implements IAppointmentService{
 
 	@Override
 	public String getAppointments() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		String output = "";
+		Statement st = null;
+		ResultSet rs = null;
+		Connection con = null;
+		
+		try {
+			con = DBConnection.getDBConnection();
+			
+			String query = "SELECT * FROM appointment";
+			
+			st = con.createStatement();
+			rs = st.executeQuery(query);
+			
+			output = "<table border=\"1\"> "
+					+ "<tr><th>appointmentId</th> "
+					+ "<th>patientId</th> "
+					+ "<th>patientName</th> "
+					+ "<th>patientName</th> "
+					+ "<th>patientName</th> "
+					+ "<th>patientName</th> "
+					+ "<th>patientName</th> "
+					+ "<th>patientName</th> "
+					+ "<th>NIC</th></tr>";
+			
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return output;
+
+
 	}
 
 	@Override
