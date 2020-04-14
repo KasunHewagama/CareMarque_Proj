@@ -155,18 +155,19 @@ public class PatientService implements IPatientService {
 		try {
 			con = DBConnection.getDBConnection();
 
-			String query = "SELECT * FROM patient";
+			String query = "SELECT patientId, firstName, lastName, gender, NIC, DOB, email, phone, bloodGroup, allergies FROM patient";
 
 			st = con.createStatement();
 			rs = st.executeQuery(query);
 
-			output = "<table border=\"1\"> " + "<tr>" + "<th>firstName</th> " + "<th>lastName</th> "
+			output = "<table border=\"1\"> " + "<tr>" + "<th>patientId</th> " + "<th>firstName</th> " + "<th>lastName</th> "
 					+ "<th>gender</th> " + "<th>NIC</th> " + "<th>DOB</th> " + "<th>email</th> " + "<th>phone</th> "
-					+ "<th>bloodGroup</th> " + "<th>allergies</th> " + "<th>password</th> " + "<th>cPassword</th>"
+					+ "<th>bloodGroup</th> " + "<th>allergies</th> " 
 					+ "</tr>";
 
 			while (rs.next()) {
 
+				String patientId = Integer.toString(rs.getInt("patientId"));
 				String firstName = rs.getString("firstName");
 				String lastName = rs.getString("lastName");
 				String gender = rs.getString("gender");
@@ -177,10 +178,9 @@ public class PatientService implements IPatientService {
 				String phone = rs.getString("phone");
 				String bloodGroup = rs.getString("bloodGroup");
 				String allergies = rs.getString("allergies");
-				String password = rs.getString("password");
-				String cPassword = rs.getString("cPassword");
 
-				output += "<tr><td>" + firstName + "</td>";
+				output += "<tr><td>" + patientId + "</td>";
+				output += "<td>" + firstName + "</td>";
 				output += "<td>" + lastName + "</td>";
 				output += "<td>" + gender + "</td>";
 				output += "<td>" + NIC + "</td>";
@@ -188,9 +188,7 @@ public class PatientService implements IPatientService {
 				output += "<td>" + email + "</td>";
 				output += "<td>" + phone + "</td>";
 				output += "<td>" + bloodGroup + "</td>";
-				output += "<td>" + allergies + "</td>";
-				output += "<td>" + password + "</td>";
-				output += "<td>" + cPassword + "</td></tr>";
+				output += "<td>" + allergies + "</td></tr>";
 
 			}
 			// Complete the html table
