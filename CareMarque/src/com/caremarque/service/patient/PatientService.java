@@ -275,7 +275,11 @@ public class PatientService implements IPatientService {
 			
 			con = DBConnection.getDBConnection();
 			
-			String query = "UPDATE patient SET firstName=?, lastName=?, gender=?, NIC=?, DOB=?, email=?, phone=?, bloodGroup=?, allergies=?, password=?, cPassword=? WHERE patientId=? ";
+			String query = "UPDATE patient SET firstName=?, lastName=?, gender=?, NIC=?, DOB=?, email=?, phone=?, bloodGroup=?, allergies=?, password=?, cPassword=?"
+					+ " WHERE patientId=? ";
+			
+//			String query = "UPDATE patient SET patientId=?, firstName=?, lastName=?, gender=?, NIC=?, DOB=?, email=?, phone=?, bloodGroup=?, allergies=?, password=?, cPassword=?"
+//					+ " WHERE patientId=? ";
 			
 			preparedStmt = con.prepareStatement(query);
 			
@@ -291,8 +295,9 @@ public class PatientService implements IPatientService {
 			preparedStmt.setString(9, patient.getAllergy());
 			preparedStmt.setString(10, patient.getPassword());
 			preparedStmt.setString(11, patient.getConfirmPassword());
-
-			preparedStmt.executeUpdate();
+			preparedStmt.setInt(12, patient.getPatientId());
+			
+			preparedStmt.execute();
 			
 			output = "Updated Successfully..!";
 			
