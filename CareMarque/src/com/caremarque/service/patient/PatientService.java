@@ -9,6 +9,7 @@ import com.caremarque.utils.DBConnection;
 
 public class PatientService implements IPatientService {
 
+	//to insert patient details to the db
 	@Override
 	public String registerPatient(Patient patient) {
 
@@ -63,14 +64,15 @@ public class PatientService implements IPatientService {
 
 	}
 
+	//to get details of one patient
 	@Override
 	public Patient getPatient(String patientId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	//to get details of all the registered patients
 	@Override
-	// public ArrayList<Patient> getPatients() {
 	public String getPatients() {
 
 		String output = "";
@@ -150,6 +152,7 @@ public class PatientService implements IPatientService {
 
 	}
 
+	//to update patient details
 	@Override
 	public String updatePatientDetails(Patient patient) {
 
@@ -207,6 +210,7 @@ public class PatientService implements IPatientService {
 		return output;
 	}
 
+	//to delete a patient from the system
 	@Override
 	public String deletePatient(String patientId) {
 
