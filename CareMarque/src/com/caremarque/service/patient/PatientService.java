@@ -192,7 +192,14 @@ public class PatientService implements IPatientService {
 					+ "<tr><th>firstName</th> "
 					+ "<th>lastName</th> "
 					+ "<th>gender</th> "
-					+ "<th>NIC</th></tr>"; 
+					+ "<th>NIC</th> "
+					+ "<th>DOB</th> "
+					+ "<th>email</th> "
+					+ "<th>phone</th> "
+					+ "<th>bloodGroup</th> "
+					+ "<th>allergies</th> "
+					+ "<th>password</th> "
+					+ "<th>cPassword</th></tr>"; 
 			
 			while(rs.next())
 			{
@@ -214,6 +221,14 @@ public class PatientService implements IPatientService {
 				 output += "<td>" + lastName + "</td>";
 				 output += "<td>" + gender + "</td>";
 				 output += "<td>" + NIC + "</td>"; 
+				 output += "<td>" + DOB + "</td>"; 
+				 output += "<td>" + email + "</td>"; 
+				 output += "<td>" + phone + "</td>"; 
+				 output += "<td>" + bloodGroup + "</td>"; 
+				 output += "<td>" + allergies + "</td>"; 
+				 output += "<td>" + password + "</td>"; 
+				 output += "<td>" + cPassword + "</td></tr>"; 
+
 				
 			}
 			// Complete the html table
