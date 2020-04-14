@@ -28,13 +28,13 @@ public class AppointmentResource {
 			@FormParam("patientName") String patientName,
 			@FormParam("phone") String phone,
 			@FormParam("doctorName") String doctorName,
-			@FormParam("hospitalName") String hospitalName,
-			@FormParam("hospitalId") String hospitalId,
-			@FormParam("appointmentDate") String appointmentDate,
-			@FormParam("lastUpdateDate") String lastUpdateDate,
-			@FormParam("appointmentTime") String appointmentTime,
-			@FormParam("lastUpdateTime") String lastUpdateTime,
 			@FormParam("specialization") String specialization,
+			@FormParam("hospitalId") String hospitalId,
+			@FormParam("hospitalName") String hospitalName,
+			@FormParam("appointmentDate") String appointmentDate,
+			@FormParam("appointmentTime") String appointmentTime,
+			@FormParam("lastUpdateDate") String lastUpdateDate,
+			@FormParam("lastUpdateTime") String lastUpdateTime,
 			@FormParam("appointmentStatus") String appointmentStatus) 
 	{
 		Appointment appointment = new Appointment();
@@ -43,13 +43,13 @@ public class AppointmentResource {
 		appointment.setPatientName(patientName);
 		appointment.setPhone(phone);
 		appointment.setDoctorName(doctorName);
-		appointment.setHospitalName(hospitalName);
-		appointment.setHospitalId(hospitalId);
-		appointment.setAppointmentDate(appointmentDate);
-		appointment.setLastUpdateDate(lastUpdateDate);
-		appointment.setAppointmentTime(appointmentTime);
-		appointment.setLastUpdateTime(lastUpdateTime);
 		appointment.setSpecialization(specialization);
+		appointment.setHospitalId(hospitalId);
+		appointment.setHospitalName(hospitalName);
+		appointment.setAppointmentDate(appointmentDate);
+		appointment.setAppointmentTime(appointmentTime);
+		appointment.setLastUpdateDate(lastUpdateDate);
+		appointment.setLastUpdateTime(lastUpdateTime);
 		appointment.setAppointmentStatus(appointmentStatus);
 		
 		String output = as.createAppointment(appointment);

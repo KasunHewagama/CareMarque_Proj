@@ -30,8 +30,18 @@ public class AppointmentService implements IAppointmentService{
 			con = DBConnection.getDBConnection();
 			
 			String query = "INSERT INTO appointment("
-					+ "patientId,patientName,phone,doctorName,hospitalName,hospitalId,appointmentDate,lastUpdateDate,appointmentTime,"
-					+ "lastUpdateTime,specialization,appointmentStatus) "
+					+ "patientId,"
+					+ "patientName,"
+					+ "phone,"
+					+ "doctorName,"
+					+ "specialization,"
+					+ "hospitalId,"
+					+ "hospitalName,"
+					+ "appointmentDate,"
+					+ "appointmentTime,"
+					+ "lastUpdateDate,"
+					+ "lastUpdateTime,"
+					+ "appointmentStatus) "
 					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			
 			preparedStatement = con.prepareStatement(query);
@@ -40,13 +50,13 @@ public class AppointmentService implements IAppointmentService{
 			preparedStatement.setString(2, appointment.getPatientName());
 			preparedStatement.setString(3, appointment.getPhone());
 			preparedStatement.setString(4, appointment.getDoctorName());
-			preparedStatement.setString(5, appointment.getHospitalName());
+			preparedStatement.setString(5, appointment.getSpecialization());
 			preparedStatement.setString(6, appointment.getHospitalId());
-			preparedStatement.setString(7, appointment.getAppointmentDate());
-			preparedStatement.setString(8, appointment.getLastUpdateDate());
+			preparedStatement.setString(7, appointment.getHospitalName());
+			preparedStatement.setString(8, appointment.getAppointmentDate());
 			preparedStatement.setString(9, appointment.getAppointmentTime());
-			preparedStatement.setString(10, appointment.getLastUpdateTime());
-			preparedStatement.setString(11, appointment.getSpecialization());
+			preparedStatement.setString(10, appointment.getLastUpdateDate());
+			preparedStatement.setString(11, appointment.getLastUpdateTime());
 			preparedStatement.setString(12, appointment.getAppointmentStatus());
 			
 			preparedStatement.executeUpdate();
@@ -127,6 +137,7 @@ public class AppointmentService implements IAppointmentService{
 	@Override
 	public String updateAppointment(Appointment appointment) {
 		// TODO Auto-generated method stub
+		System.out.println("ABC");
 		return null;
 	}
 
