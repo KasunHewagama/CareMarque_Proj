@@ -145,7 +145,7 @@ public class PatientService implements IPatientService {
 
 	//to get details of all the registered patients
 	@Override
-	public String getPatients() {
+	public String getAllPatients() {
 
 		String output = "";
 		Statement st = null;

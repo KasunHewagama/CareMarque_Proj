@@ -61,9 +61,9 @@ public class PatientResource {
 	@GET
 	@Path("/")
 	@Produces(MediaType.TEXT_HTML)
-	public String getPatients() {
+	public String getAllPatients() {
 
-		return patientService.getPatients();
+		return patientService.getAllPatients();
 
 	}
 
