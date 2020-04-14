@@ -48,7 +48,7 @@
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
 			<version>20170516</version>
-		</dependency>
+		</dependency> 
 		<dependency>
 			 <groupId>mysql</groupId>
 			 <artifactId>mysql-connector-java</artifactId>
@@ -65,6 +65,5 @@
 			<version>2.2.3</version>
 	    </dependency>
 	</dependencies>
-
 
 </project>
