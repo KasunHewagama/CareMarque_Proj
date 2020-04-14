@@ -48,8 +48,8 @@ public class PaymentService implements IPaymentService {
 					return "Error occured while connecting to the database for inserting";
 				}
 				
-				String query = "INSERT INTO PAYMENTS "
-						+ "(paymentId, patientId, patientName, appointmentId, doctorId, hospitalId, paymentDate,"
+				String query = "INSERT INTO PAYMENTS ("
+						+ "paymentId, patientId, patientName, appointmentId, doctorId, hospitalId, paymentDate,"
 						+ " doctorCharges, hospitalCharges, totalAmount, paymentStatus)"
 						+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 				
@@ -160,9 +160,9 @@ public class PaymentService implements IPaymentService {
 	}
 
 	@Override
-	public void cancelPayment(String paymentId) {
+	public String cancelPayment(String paymentId) {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
 	//This method get all the existing paymentids and put them into a arraylist 
