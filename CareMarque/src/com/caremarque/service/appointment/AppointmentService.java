@@ -9,6 +9,10 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.JPopupMenu.Separator;
+
+import org.apache.tomcat.util.security.Escape;
+
 import com.caremarque.model.Appointment;
 import com.caremarque.utils.DBConnection;
 import com.mysql.cj.log.Log;
@@ -112,22 +116,75 @@ public class AppointmentService implements IAppointmentService{
 			rs = st.executeQuery(query);
 			
 			output = "<table border=\"1\"> "
-					+ "<tr><th>appointmentId</th> "
 					+ "<th>patientId</th> "
 					+ "<th>patientName</th> "
-					+ "<th>patientName</th> "
-					+ "<th>patientName</th> "
-					+ "<th>patientName</th> "
-					+ "<th>patientName</th> "
-					+ "<th>patientName</th> "
-					+ "<th>NIC</th></tr>";
+					+ "<th>phone</th> "
+					+ "<th>doctorName</th> "
+					+ "<th>specialization</th> "
+					+ "<th>hospitalId</th> "
+					+ "<th>hospitalName</th> "
+					+ "<th>apointmentDate</th> "
+					+ "<th>appointmentTime</th> "
+					+ "<th>lastUpdateDate</th> "
+					+ "<th>lastUpdateTime</th> "
+					+ "<th>appointmentStatus</th></tr>";
 			
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			while(rs.next())
+			{
+				String patientId = rs.getString("patientId");
+				String patientName = rs.getString("patientName");
+				String phone = rs.getString("phone");
+				String doctorName = rs.getString("doctorName");
+				String specialization = rs.getString("specialization");
+				String hospitalId = rs.getString("hospitalId");
+				String hospitalName = rs.getString("hospitalName");
+				String apointmentDate = rs.getString("apointmentDate");
+				String appointmentTime = rs.getString("appointmentTime");
+				String lastUpdateDate = rs.getString("lastUpdateDate");
+				String lastUpdateTime = rs.getString("lastUpdateTime");
+				String appointmentStatus = rs.getString("appointmentStatus");
+				
+				
+				output += "<tr><td>" + patientId + "</td>";
+				output += "<tr><td>" + patientName + "</td>";
+				output += "<tr><td>" + phone + "</td>";
+				output += "<tr><td>" + doctorName + "</td>";
+				output += "<tr><td>" + specialization + "</td>";
+				output += "<tr><td>" + hospitalId + "</td>";
+				output += "<tr><td>" + hospitalName + "</td>";
+				output += "<tr><td>" + apointmentDate + "</td>";
+				output += "<tr><td>" + appointmentTime + "</td>";
+				output += "<tr><td>" + lastUpdateDate + "</td>";
+				output += "<tr><td>" + lastUpdateTime + "</td>";
+				output += "<tr><td>" + appointmentStatus + "</td></td>";
+				
+			}
+			
+			output += "</table>";
+			
+		} catch (Exception e) {
+
+			output = "Error while reading appointment details...!";
+			System.err.println(e.getMessage());
+			
+		} finally {
+
+			try {
+				if (st != null) {
+					st.close();
+				}
+				
+				if (con != null) {
+					con.close();
+				}
+				
+				if(rs != null) {
+					rs.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
 		}
 		return output;
 
