@@ -10,13 +10,13 @@ public class Appointment {
 	private String patientName;
 	private String phone;
 	private String doctorName;
-	private String hospitalName;
-	private String hospitalId;
-	private String appointmentDate;
-	private String lastUpdateDate;
-	private String appointmentTime;
-	private String lastUpdateTime;
 	private String specialization;
+	private String hospitalId;
+	private String hospitalName;
+	private String appointmentDate;
+	private String appointmentTime;
+	private String lastUpdateDate;
+	private String lastUpdateTime;
 	private String appointmentStatus;
 
 	public Appointment() {
@@ -64,12 +64,12 @@ public class Appointment {
 		this.doctorName = doctorName;
 	}
 
-	public String getHospitalName() {
-		return hospitalName;
+	public String getSpecialization() {
+		return specialization;
 	}
 
-	public void setHospitalName(String hospitalName) {
-		this.hospitalName = hospitalName;
+	public void setSpecialization(String specialization) {
+		this.specialization = specialization;
 	}
 
 	public String getHospitalId() {
@@ -80,20 +80,20 @@ public class Appointment {
 		this.hospitalId = hospitalId;
 	}
 
+	public String getHospitalName() {
+		return hospitalName;
+	}
+
+	public void setHospitalName(String hospitalName) {
+		this.hospitalName = hospitalName;
+	}
+
 	public String getAppointmentDate() {
 		return appointmentDate;
 	}
 
 	public void setAppointmentDate(String appointmentDate) {
 		this.appointmentDate = appointmentDate;
-	}
-
-	public String getLastUpdateDate() {
-		return lastUpdateDate;
-	}
-
-	public void setLastUpdateDate(String lastUpdateDate) {
-		this.lastUpdateDate = lastUpdateDate;
 	}
 
 	public String getAppointmentTime() {
@@ -104,20 +104,20 @@ public class Appointment {
 		this.appointmentTime = appointmentTime;
 	}
 
+	public String getLastUpdateDate() {
+		return lastUpdateDate;
+	}
+
+	public void setLastUpdateDate(String lastUpdateDate) {
+		this.lastUpdateDate = lastUpdateDate;
+	}
+
 	public String getLastUpdateTime() {
 		return lastUpdateTime;
 	}
 
 	public void setLastUpdateTime(String lastUpdateTime) {
 		this.lastUpdateTime = lastUpdateTime;
-	}
-
-	public String getSpecialization() {
-		return specialization;
-	}
-
-	public void setSpecialization(String specialization) {
-		this.specialization = specialization;
 	}
 
 	public String getAppointmentStatus() {
@@ -127,24 +127,28 @@ public class Appointment {
 	public void setAppointmentStatus(String appointmentStatus) {
 		this.appointmentStatus = appointmentStatus;
 	}
-	
+
 	public Appointment(int appointmentId, String patientId, String patientName, String phone, String doctorName,
-			String hospitalName, String hospitalId, String appointmentDate, String lastUpdateDate, String appointmentTime,
-			String lastUpdateTime, String specialization, String appoinmentStatus) {
+			String specialization, String hospitalId, String hospitalName, String appointmentDate,
+			String appointmentTime, String lastUpdateDate, String lastUpdateTime, String appointmentStatus) {
 		super();
+		this.appointmentId = appointmentId;
 		this.patientId = patientId;
 		this.patientName = patientName;
 		this.phone = phone;
 		this.doctorName = doctorName;
-		this.hospitalName = hospitalName;
-		this.hospitalId = hospitalId;
-		this.appointmentDate = appointmentDate;
-		this.lastUpdateDate = lastUpdateDate;
-		this.appointmentTime = appointmentTime;
-		this.lastUpdateTime = lastUpdateTime;
 		this.specialization = specialization;
-		this.appointmentStatus = appoinmentStatus;
+		this.hospitalId = hospitalId;
+		this.hospitalName = hospitalName;
+		this.appointmentDate = appointmentDate;
+		this.appointmentTime = appointmentTime;
+		this.lastUpdateDate = lastUpdateDate;
+		this.lastUpdateTime = lastUpdateTime;
+		this.appointmentStatus = appointmentStatus;
 	}
+	
+	
+
 	
 	
 
