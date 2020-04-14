@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 
 import javax.swing.JPopupMenu.Separator;
 
-import org.apache.tomcat.util.security.Escape;
+//import org.apache.tomcat.util.security.Escape;
 
 import com.caremarque.appointment.model.Appointment;
 import com.caremarque.appointment.utils.DBConnection;
