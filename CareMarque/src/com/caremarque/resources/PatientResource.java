@@ -66,7 +66,7 @@ public class PatientResource {
 		return patientService.getPatients();
 
 	}
-	
+
 	@GET
 	@Path("/{patientId}")
 	@Produces(MediaType.TEXT_HTML)
