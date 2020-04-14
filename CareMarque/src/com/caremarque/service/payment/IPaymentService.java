@@ -15,7 +15,7 @@ public interface IPaymentService {
 	
 	public Payment updatePayment(String paymentid, Payment p);
 	
-	public void cancelPayment(String paymentId);
+	public String cancelPayment(String paymentId);
 	
 	public ArrayList<String> getPaymentIDs();
 
