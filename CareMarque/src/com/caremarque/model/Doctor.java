@@ -11,10 +11,13 @@ public class Doctor
 	private String specialization;
 	private int phone;
 	private String email;
+	private String password;
+	private String confirmPassword;
+	
 	
 	
 	public Doctor(String doctorId, String firstName, String lastName, String regNo, String gender,
-			String specialization, int phone, String email) {
+			String specialization, int phone, String email, String password, String confirmPassword) {
 		super();
 		this.doctorId = doctorId;
 		this.firstName = firstName;
@@ -24,6 +27,8 @@ public class Doctor
 		this.specialization = specialization;
 		this.phone = phone;
 		this.email = email;
+		this.password = password;
+		this.confirmPassword = confirmPassword;
 	}
 	public String getDoctorId() {
 		return doctorId;
@@ -72,6 +77,19 @@ public class Doctor
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
 	}
 	
 	
