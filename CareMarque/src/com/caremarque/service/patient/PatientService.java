@@ -279,6 +279,7 @@ public class PatientService implements IPatientService {
 			
 			preparedStmt = con.prepareStatement(query);
 			
+			//preparedStmt.setInt(1, patient.getPatientId());
 			preparedStmt.setString(1, patient.getFirstName());
 			preparedStmt.setString(2, patient.getLastName());
 			preparedStmt.setString(3, patient.getGender());
@@ -297,8 +298,23 @@ public class PatientService implements IPatientService {
 			
 		}catch (Exception e) {
 		
-			output = "Updated Successfully..!";
+			output = "Error while updating the item..!";
 			System.err.println(e.getMessage());
+			
+		}finally {
+
+			try {
+				if (preparedStmt != null) {
+					preparedStmt.close();
+				}
+
+				if (con != null) {
+					con.close();
+				}				
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		
 		return output;
