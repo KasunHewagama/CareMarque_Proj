@@ -93,19 +93,19 @@ Patient patient = new Patient();
 
 	
 	@PUT
-	@Path("/")
+	@Path("/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
 	public String updatePatientDetails(String patientData) {
 		
-		System.out.println(patientData);
+		//System.out.println(patientData);
 		
 		com.google.gson.JsonParser parser = new com.google.gson.JsonParser();
 		
 		//JsonObject pObject = parser.parse(patientData).getASJsonObject();
 		JsonObject pObject = parser.parse(patientData).getAsJsonObject();
 		
-		String patientId = pObject.get("patientId").toString();
+		//String patientId = pObject.get("patientId").toString();
 		String firstName = pObject.get("firstName").toString();
 		String lastName = pObject.get("lastName").toString();
 		String gender = pObject.get("gender").toString();
@@ -118,7 +118,7 @@ Patient patient = new Patient();
 		String password =pObject.get("password").toString();
 		String cPassword =pObject.get("cPassword").toString();
 				
-		patient.setPatientId(Integer.parseInt(patientId));
+		//patient.setPatientId(Integer.parseInt(patientId));
 		patient.setFirstName(firstName);
 		patient.setLastName(lastName);
 		patient.setGender(gender);
