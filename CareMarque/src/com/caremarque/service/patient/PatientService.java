@@ -300,6 +300,21 @@ public class PatientService implements IPatientService {
 		
 			output = "Error while updating the item..!";
 			System.err.println(e.getMessage());
+			
+		}finally {
+
+			try {
+				if (preparedStmt != null) {
+					preparedStmt.close();
+				}
+
+				if (con != null) {
+					con.close();
+				}				
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		
 		return output;
