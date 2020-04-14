@@ -25,7 +25,7 @@ import com.google.gson.JsonParser;
 public class PatientResource {
 	
 PatientService patientObj = new PatientService();
-
+Patient patient = new Patient();
 
 	@POST
 	@Path("/")
@@ -44,7 +44,6 @@ PatientService patientObj = new PatientService();
 								  @FormParam("password") String password,
 								  @FormParam("cPassword") String cPassword) 
 	{
-		Patient patient = new Patient();
 		
 		patient.setFirstName(firstName);
 		patient.setLastName(lastName);
@@ -60,8 +59,6 @@ PatientService patientObj = new PatientService();
 
 		String output = patientObj.registerPatient(patient);
 		
-		//String output = patientObj.registerPatient(firstName, lastName, gender, NIC, DOB, email, phone, bloodGroup, allergies, password, cPassword);
-		//String output = patientObj.registerPatient();
 		return output;
 	}
 	
@@ -91,7 +88,6 @@ PatientService patientObj = new PatientService();
 	}
 	
 
-	
 	@PUT
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -112,8 +108,6 @@ PatientService patientObj = new PatientService();
 		String allergies =pObject.get("allergies").getAsString();
 		String password =pObject.get("password").getAsString();
 		String cPassword =pObject.get("cPassword").getAsString();
-				
-		Patient patient = new Patient();
 		
 		patient.setPatientId(Integer.parseInt(patientId));
 		patient.setFirstName(firstName);
