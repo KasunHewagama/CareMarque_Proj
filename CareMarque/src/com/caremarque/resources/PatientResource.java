@@ -20,7 +20,7 @@ import com.google.gson.JsonParser;
 @Path("/Patients")
 public class PatientResource {
 
-	PatientService patientObj = new PatientService();
+	PatientService patientService = new PatientService();
 	Patient patient = new Patient();
 
 	@POST
@@ -52,7 +52,7 @@ public class PatientResource {
 		patient.setPassword(password);
 		patient.setConfirmPassword(cPassword);
 
-		String output = patientObj.registerPatient(patient);
+		String output = patientService.registerPatient(patient);
 
 		return output;
 	}
@@ -62,7 +62,7 @@ public class PatientResource {
 	@Produces(MediaType.TEXT_HTML)
 	public String getPatients() {
 
-		return patientObj.getPatients();
+		return patientService.getPatients();
 
 	}
 
@@ -76,7 +76,7 @@ public class PatientResource {
 
 		String patientId = doc.select("patientId").text();
 
-		String output = patientObj.deletePatient(patientId);
+		String output = patientService.deletePatient(patientId);
 
 		return output;
 
@@ -88,20 +88,20 @@ public class PatientResource {
 	@Produces(MediaType.TEXT_PLAIN)
 	public String updatePatientDetails(String patientData) {
 
-		JsonObject pObject = new JsonParser().parse(patientData).getAsJsonObject();
+		JsonObject patientObj = new JsonParser().parse(patientData).getAsJsonObject();
 
-		String patientId = pObject.get("patientId").getAsString();
-		String firstName = pObject.get("firstName").getAsString();
-		String lastName = pObject.get("lastName").getAsString();
-		String gender = pObject.get("gender").getAsString();
-		String NIC = pObject.get("NIC").getAsString();
-		String DOB = pObject.get("DOB").getAsString();
-		String email = pObject.get("email").getAsString();
-		String phone = pObject.get("phone").getAsString();
-		String bloodGroup = pObject.get("bloodGroup").getAsString();
-		String allergies = pObject.get("allergies").getAsString();
-		String password = pObject.get("password").getAsString();
-		String cPassword = pObject.get("cPassword").getAsString();
+		String patientId = patientObj.get("patientId").getAsString();
+		String firstName = patientObj.get("firstName").getAsString();
+		String lastName = patientObj.get("lastName").getAsString();
+		String gender = patientObj.get("gender").getAsString();
+		String NIC = patientObj.get("NIC").getAsString();
+		String DOB = patientObj.get("DOB").getAsString();
+		String email = patientObj.get("email").getAsString();
+		String phone = patientObj.get("phone").getAsString();
+		String bloodGroup = patientObj.get("bloodGroup").getAsString();
+		String allergies = patientObj.get("allergies").getAsString();
+		String password = patientObj.get("password").getAsString();
+		String cPassword = patientObj.get("cPassword").getAsString();
 
 		patient.setPatientId(Integer.parseInt(patientId));
 		patient.setFirstName(firstName);
@@ -116,7 +116,7 @@ public class PatientResource {
 		patient.setPassword(password);
 		patient.setConfirmPassword(cPassword);
 
-		String output = patientObj.updatePatientDetails(patient);
+		String output = patientService.updatePatientDetails(patient);
 
 		return output;
 
