@@ -66,9 +66,81 @@ public class PatientService implements IPatientService {
 
 	//to get details of one patient
 	@Override
-	public Patient getPatient(String patientId) {
-		// TODO Auto-generated method stub
-		return null;
+	public String getPatientDetail(int patientId) {
+		
+		String output = "";
+		Statement st = null;
+		ResultSet rs = null;
+		Connection con = null;
+
+		try {
+			con = DBConnection.getDBConnection();
+
+			String query = "SELECT * FROM patient WHERE patientId = '"+ patientId + "'";
+
+			st = con.createStatement();
+			rs = st.executeQuery(query);
+
+			output = "<table border=\"1\"> " + "<tr>" + "<th>firstName</th> " + "<th>lastName</th> "
+					+ "<th>gender</th> " + "<th>NIC</th> " + "<th>DOB</th> " + "<th>email</th> " + "<th>phone</th> "
+					+ "<th>bloodGroup</th> " + "<th>allergies</th> " + "<th>password</th> " 
+					+ "</tr>";
+
+			while (rs.next()) {
+
+				String firstName = rs.getString("firstName");
+				String lastName = rs.getString("lastName");
+				String gender = rs.getString("gender");
+				String NIC = rs.getString("NIC");
+				// String DOB = rs.getDate("DOB").toString();
+				String DOB = rs.getString("DOB");
+				String email = rs.getString("email");
+				String phone = rs.getString("phone");
+				String bloodGroup = rs.getString("bloodGroup");
+				String allergies = rs.getString("allergies");
+				String password = rs.getString("password");
+
+				output += "<tr><td>" + firstName + "</td>";
+				output += "<td>" + lastName + "</td>";
+				output += "<td>" + gender + "</td>";
+				output += "<td>" + NIC + "</td>";
+				output += "<td>" + DOB + "</td>";
+				output += "<td>" + email + "</td>";
+				output += "<td>" + phone + "</td>";
+				output += "<td>" + bloodGroup + "</td>";
+				output += "<td>" + allergies + "</td>";
+				output += "<td>" + password + "</td></tr>";
+
+			}
+			// Complete the html table
+			output += "</table>";
+
+		} catch (Exception e) {
+
+			output = "Error while reading the patient details...!";
+			System.err.println(e.getMessage());
+
+		} finally {
+
+			try {
+				if (st != null) {
+					st.close();
+				}
+
+				if (con != null) {
+					con.close();
+				}
+
+				if (rs != null) {
+					rs.close();
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return output;
+
 	}
 
 	//to get details of all the registered patients
