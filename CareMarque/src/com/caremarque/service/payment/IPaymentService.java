@@ -11,7 +11,7 @@ public interface IPaymentService {
 	
 	public Payment getPayment(String paymentId);
 	
-	public ArrayList<Payment> getPayments();
+	public String getPayments();
 	
 	public Payment updatePayment(String paymentid, Payment p);
 	

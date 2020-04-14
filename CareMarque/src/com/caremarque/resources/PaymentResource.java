@@ -12,10 +12,17 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.xml.crypto.Data;
 
 import com.caremarque.model.Payment;
+import com.caremarque.model.PaymentAuthentication;
 import com.caremarque.service.payment.IPaymentService;
 import com.caremarque.service.payment.PaymentService;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 
 @Path("/Payment")
 public class PaymentResource {
@@ -56,8 +63,8 @@ public class PaymentResource {
 	
 	@GET
 	@Path("/")
-	@Produces(MediaType.APPLICATION_JSON)
-	public List<Payment> getPayments() {
+	@Produces(MediaType.TEXT_HTML)
+	public String getPayments() {
 		
 		return ps.getPayments();
 	}
@@ -70,5 +77,14 @@ public class PaymentResource {
 		
 		return null;
 	}
+	
+//	@GET
+//	@Path("/testget")
+//	@Consumes(MediaType.APPLICATION_JSON)
+//	@Produces(MediaType.TEXT_PLAIN)
+//	public String testValue() {
+//		
+//		
+//	}
 	
 }

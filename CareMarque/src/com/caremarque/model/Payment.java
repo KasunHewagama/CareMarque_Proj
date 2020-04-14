@@ -17,7 +17,11 @@ public class Payment {
 	private double doctorCharges;
 	private double hospitalCharges;
 	private double totalAmount;
+	private String cardNo;
+	private String expDate;
+	private String passCode;
 	private String paymentStatus;
+
 
 	public Payment() {}
 
@@ -101,6 +105,31 @@ public class Payment {
 		this.totalAmount = totalAmount;
 	}
 
+	public String getCardNo() {
+		return cardNo;
+	}
+
+	public void setCardNo(String cardNo) {
+		this.cardNo = cardNo;
+	}
+
+	public String getExpDate() {
+		return expDate;
+	}
+
+	public void setExpDate(String expDate) {
+		this.expDate = expDate;
+	}
+
+	public String getPassCode() {
+		return passCode;
+	}
+
+	public void setPassCode(String passCode) {
+		this.passCode = passCode;
+	}
+	
+
 	public String getPaymentStatus() {
 		return paymentStatus;
 	}
@@ -108,7 +137,7 @@ public class Payment {
 	public void setPaymentStatus(String paymentStatus) {
 		this.paymentStatus = paymentStatus;
 	}
-
+	
 
 
 }

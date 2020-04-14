@@ -102,9 +102,10 @@ public class PaymentService implements IPaymentService {
 	}
 
 	@Override
-	public ArrayList<Payment> getPayments() {
+	public String getPayments() {
 
 		ArrayList<Payment> arrayList = new ArrayList<Payment>();
+		String output = null;
 		
 		try {
 			connecton = DBConnection.getDBConnection();
@@ -115,6 +116,21 @@ public class PaymentService implements IPaymentService {
 			ResultSet resultset = preparedstatement.executeQuery();
 			
 			DateFormat inputFormatter = new SimpleDateFormat("dd/MM/yyyy");
+			
+			output = "<table border=\"1\"> "
+					+ "<tr>"
+					+ "<th>paymentId</th> "
+					+ "<th>patientId</th> "
+					+ "<th>patientName</th> "
+					+ "<th>appointmentId</th> "
+					+ "<th>doctorId</th> "
+					+ "<th>hospitalId</th> "
+					+ "<th>paymentDate</th> "
+					+ "<th>doctorCharges</th> "
+					+ "<th>hospitalCharges</th> "
+					+ "<th>totalAmount</th> "
+					+ "<th>paymentStatus</th>"
+					+ "</tr>"; 
 			
 			while(resultset.next()) {
 				Payment payment = new Payment();
@@ -132,8 +148,25 @@ public class PaymentService implements IPaymentService {
 				payment.setPaymentStatus(resultset.getString(Constants.COLUMN_INDEX_ELEVEN));
 				arrayList.add(payment);
 				
+				
+				output += "<tr><td>" + resultset.getString(Constants.COLUMN_INDEX_ONE) + "</td>";
+				 output += "<td>" + resultset.getString(Constants.COLUMN_INDEX_TWO) + "</td>";
+				 output += "<td>" + resultset.getString(Constants.COLUMN_INDEX_THREE) + "</td>";
+				 output += "<td>" + resultset.getString(Constants.COLUMN_INDEX_FOUR) + "</td>"; 
+				 output += "<td>" + resultset.getString(Constants.COLUMN_INDEX_FIVE) + "</td>"; 
+				 output += "<td>" + resultset.getString(Constants.COLUMN_INDEX_SIX) + "</td>"; 
+				 output += "<td>" + resultset.getString(Constants.COLUMN_INDEX_SEVEN) + "</td>"; 
+				 output += "<td>" + resultset.getDouble(Constants.COLUMN_INDEX_EIGHT) + "</td>"; 
+				 output += "<td>" + resultset.getDouble(Constants.COLUMN_INDEX_NINE) + "</td>"; 
+				 output += "<td>" + resultset.getDouble(Constants.COLUMN_INDEX_TEN) + "</td>"; 
+				 output += "<td>" + resultset.getString(Constants.COLUMN_INDEX_ELEVEN) + "</td></tr>"; 
+				
+				
 				System.out.println("Data Retreived From DB");
 			}
+			
+			output += "</table>"; 
+			
 		} catch (Exception e) {
 			log.log(Level.SEVERE, e.getMessage());
 		
@@ -150,7 +183,7 @@ public class PaymentService implements IPaymentService {
 			}
 		}
 		
-		return arrayList;
+		return output;
 	}
 
 	@Override
