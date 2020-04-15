@@ -2,7 +2,7 @@ package com.caremarque.hospital.model;
 
 public class Hospital {
 
-	private Integer hospitalId;
+	private String hospitalId;
 	private String hospitalName;
 	private String phone;
 	private String regNo;
@@ -15,10 +15,10 @@ public class Hospital {
 	public Hospital() {
 		// TODO Auto-generated constructor stub
 	}
-	public Integer getHospitalId() {
+	public String getHospitalId() {
 		return hospitalId;
 	}
-	public void setHospitalId(Integer hospitalId) {
+	public void setHospitalId(String hospitalId) {
 		this.hospitalId = hospitalId;
 	}
 	public String getHospitalName() {
@@ -58,7 +58,7 @@ public class Hospital {
 		Close_Hours = close_Hours;
 	}
 	
-	public Hospital(Integer hospitalId, String hospitalName, String phone, String regNo, String address,String Open_Hours,String Close_Hours)
+	public Hospital(String hospitalId, String hospitalName, String phone, String regNo, String address,String Open_Hours,String Close_Hours)
 	{
 		super();
 		this.hospitalId = hospitalId;

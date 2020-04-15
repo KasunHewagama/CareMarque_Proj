@@ -1,6 +1,6 @@
 package com.caremarque.hospital.service;
 
-import java.util.ArrayList;
+
 
 import com.caremarque.hospital.model.Hospital;
 
@@ -18,22 +18,24 @@ public class HospitalService implements IHospitalService{
 		return null;
 	}
 
-	@Override
-	public ArrayList<Hospital> getHospitals() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Hospital updateHospital(String hospitalid, Hospital id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 	@Override
 	public void cancelHospital(String hospitalId) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public String getHospitals() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String updateHospital(Hospital hospital) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
