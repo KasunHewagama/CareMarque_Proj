@@ -78,5 +78,4 @@ public class Hospital {
 		Close_Hours = close_Hours;
 	}
 
-	
 }
