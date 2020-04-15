@@ -155,14 +155,14 @@ public class AppointmentService implements IAppointmentService {
 				arrayList.add(appointment);
 
 				output += "<tr><td>" + rs.getString(Constants.COLUMN_INDEX_ONE) + "</td>";
-				output += "<td>" + patientId + "</td>";
-				output += "<td>" + patientName + "</td>";
-				output += "<td>" + phone + "</td>";
-				output += "<td>" + doctorName + "</td>";
-				output += "<td>" + specialization + "</td>";
-				output += "<td>" + hospitalId + "</td>";
-				output += "<td>" + hospitalName + "</td>";
-				output += "<td>" + appointmentDate + "</td>";
+				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_TWO) + "</td>";
+				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_THREE) + "</td>";
+				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_FOUR) + "</td>";
+				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_FIVE) + "</td>";
+				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_SIX) + "</td>";
+				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_SEVEN) + "</td>";
+				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_EIGHT) + "</td>";
+				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_NINE) + "</td>";
 				output += "<td>" + appointmentTime + "</td>";
 				output += "<td>" + lastUpdateDate + "</td>";
 				output += "<td>" + lastUpdateTime + "</td>";
