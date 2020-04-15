@@ -3,9 +3,12 @@ package com.caremarque.patient.service;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import com.caremarque.patient.model.Patient;
 import com.caremarque.patient.utils.DBConnection;
+
 
 public class PatientService implements IPatientService {
 
@@ -324,6 +327,50 @@ public class PatientService implements IPatientService {
 		}
 
 		return output;
+	}
+
+	// to get all the registerd patients to a arraylist
+	@Override
+	public ArrayList<String> getPatientIDs() {
+
+		ArrayList<String> patientList = new ArrayList<String>();
+
+		String output = "";
+		Connection con = null;
+		PreparedStatement preparedStmt = null;
+		ResultSet rs = null;
+
+		try {
+			con = DBConnection.getDBConnection();
+
+			String query = "SELECT patientId FROM patient";
+
+			preparedStmt = con.prepareStatement(query);
+			rs = preparedStmt.executeQuery();
+
+			while (rs.next()) {
+
+				patientList.add(rs.getString(1));
+
+			}
+
+		} catch (Exception e) {
+
+			System.err.println(e.getMessage());
+
+		} finally {
+			try {
+				if (preparedStmt != null) {
+					preparedStmt.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				System.err.println(e.getMessage());
+			}
+		}
+		return patientList;
 	}
 
 }
