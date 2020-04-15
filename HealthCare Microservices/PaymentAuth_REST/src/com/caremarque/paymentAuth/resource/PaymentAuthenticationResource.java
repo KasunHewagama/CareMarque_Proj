@@ -16,9 +16,9 @@ public class PaymentAuthenticationResource {
 	PaymentAuthService pAuth = new PaymentAuthService();
 	
 	@GET
-	@Path("/")
+	@Path("/getAuthDetails")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<PaymentAuthentication> getAuthenticationDetails() {
+	public List<PaymentAuthentication> getAuthDetails() {
 		
 		System.out.println(pAuth.creditCardAuthFromDB().toString());
 		return pAuth.creditCardAuthFromDB();

@@ -1,6 +1,9 @@
 package com.caremarque.payment.resource;
 
 
+import java.util.Date;
+import java.util.List;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
@@ -25,7 +28,7 @@ import com.google.gson.JsonParser;
 @Path("/Payment")
 public class PaymentResource {
 	
-	IPaymentService ps = new PaymentService(); 
+	PaymentService ps = new PaymentService(); 
 
 	@POST
 	@Path("/")
@@ -84,13 +87,13 @@ public class PaymentResource {
 		return null;
 	}
 	
-//	@GET
-//	@Path("/testget")
-//	@Consumes(MediaType.APPLICATION_JSON)
-//	@Produces(MediaType.TEXT_PLAIN)
-//	public String testValue() {
-//		
-//		
-//	}
+	@GET
+	@Path("/testget")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String testValue() {
+		String output = ps.getDetails();
+		return output;
+		
+	}
 	
 }

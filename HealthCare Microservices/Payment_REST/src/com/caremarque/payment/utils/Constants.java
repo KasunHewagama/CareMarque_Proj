@@ -1,7 +1,6 @@
 package com.caremarque.payment.utils;
 
 public class Constants {
-	//TODO: Declare some constant values used in project
 	
 	//Constant Values for column indexes
 	public static final int COLUMN_INDEX_ONE = 1;

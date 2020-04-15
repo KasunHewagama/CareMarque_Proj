@@ -1,7 +1,7 @@
 package com.caremarque.payment.service;
 
+import java.util.List;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,15 +9,21 @@ import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.caremarque.payment.model.Payment;
+import com.caremarque.payment.model.PaymentAuthentication;
 import com.caremarque.payment.utils.CommonUtils;
 import com.caremarque.payment.utils.Constants;
 import com.caremarque.payment.utils.DBConnection;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
+
+import jersey.repackaged.org.objectweb.asm.TypeReference;
+
 
 public class PaymentService implements IPaymentService {
 	
@@ -310,5 +316,36 @@ public class PaymentService implements IPaymentService {
 		return arrayList;
 	}
 	
+	public String getDetails() {
+		
+		//ArrayList<PaymentAuthentication> output = new ArrayList<PaymentAuthentication>();
+		try {
+
+			Client client = Client.create();
+
+			WebResource webResource = client
+			   .resource("http://localhost:8088/PaymentAuth_REST/myService/PaymentAuthentication/getAuthDetails");
+
+			ClientResponse response = webResource.accept("application/json")
+	                   .get(ClientResponse.class);
+
+			if (response.getStatus() != 200) {
+			   throw new RuntimeException("Failed : HTTP error code : "
+				+ response.getStatus());
+			}
+
+			String output = response.getEntity(String.class);
+
+			System.out.println("Output from Server .... \n");
+			System.out.println(output);
+
+		  } catch (Exception e) {
+
+			e.printStackTrace();
+
+		  }
+			
+		return "hello";
+	}
 
 }
