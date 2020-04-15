@@ -7,7 +7,8 @@ public class Hospital {
 	private String phone;
 	private String regNo;
 	private String address;
-	private String OpeningHours;
+	private String Open_Hours;
+	private String Close_Hours;
 	
 	
 	
@@ -44,20 +45,33 @@ public class Hospital {
 	public void setAddress(String address) {
 		this.address = address;
 	}
+	public String getOpen_Hours() {
+		return Open_Hours;
+	}
+	public void setOpen_Hours(String open_Hours) {
+		Open_Hours = open_Hours;
+	}
+	public String getClose_Hours() {
+		return Close_Hours;
+	}
+	public void setClose_Hours(String close_Hours) {
+		Close_Hours = close_Hours;
+	}
 	
-	public Hospital(Integer hospitalId, String hospitalName, String phone, String regNo, String address) {
+	public Hospital(Integer hospitalId, String hospitalName, String phone, String regNo, String address,String Open_Hours,String Close_Hours)
+	{
 		super();
 		this.hospitalId = hospitalId;
 		this.hospitalName = hospitalName;
 		this.phone = phone;
 		this.regNo = regNo;
 		this.address = address;
+		this.Open_Hours = Open_Hours;
+		this.Close_Hours = Close_Hours;
+		
+		
 	}
-	public String getOpeningHours() {
-		return OpeningHours;
-	}
-	public void setOpeningHours(String openingHours) {
-		OpeningHours = openingHours;
-	}
+	
+	
 
 }
