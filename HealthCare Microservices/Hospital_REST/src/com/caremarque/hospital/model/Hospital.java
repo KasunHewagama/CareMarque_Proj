@@ -7,6 +7,7 @@ public class Hospital {
 	private String phone;
 	private String regNo;
 	private String address;
+	private String OpeningHours;
 	
 	
 	
