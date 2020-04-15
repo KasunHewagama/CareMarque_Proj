@@ -10,6 +10,7 @@ import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.xml.crypto.Data;
@@ -27,7 +28,7 @@ import com.google.gson.JsonParser;
 @Path("/Payment")
 public class PaymentResource {
 	
-	IPaymentService ps = new PaymentService(); 
+	PaymentService ps = new PaymentService(); 
 
 	@POST
 	@Path("/")
@@ -69,6 +70,14 @@ public class PaymentResource {
 		return ps.getPayments();
 	}
 	
+	@GET
+	@Path("/{paymentId}")
+	@Produces(MediaType.TEXT_HTML)
+	public String getPaymentById(@PathParam("paymentId") String paymentId) {
+		
+		return ps.getPaymentById(paymentId);
+	}
+	
 	@DELETE
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_XML)
@@ -78,13 +87,13 @@ public class PaymentResource {
 		return null;
 	}
 	
-//	@GET
-//	@Path("/testget")
-//	@Consumes(MediaType.APPLICATION_JSON)
-//	@Produces(MediaType.TEXT_PLAIN)
-//	public String testValue() {
-//		
-//		
-//	}
+	@GET
+	@Path("/testget")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String testValue() {
+		String output = ps.getDetails();
+		return output;
+		
+	}
 	
 }
