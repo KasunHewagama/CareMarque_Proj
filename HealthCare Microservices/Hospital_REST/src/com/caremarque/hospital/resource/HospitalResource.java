@@ -16,25 +16,19 @@ import com.caremarque.hospital.service.IHospitalService;
 
 @Path("/Hospital")
 public class HospitalResource {
-	IHospitalService as= new HospitalService();
-	
+	IHospitalService as = new HospitalService();
+
 	@POST
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.TEXT_PLAIN)
-	public String createHospitalProfile(
-			@FormParam("hospitalId") String hospitalId,
-			@FormParam("hospitalName") String hospitalName,
-			@FormParam("phone") String phone,
-			@FormParam("regNo") String regNo,
-			@FormParam("address") String address,
-			@FormParam("Open_Hours") String Open_Hours,
-			@FormParam("Close_Hours") String Close_Hours
-			) 
-	{
-		
+	public String createHospitalProfile(@FormParam("hospitalId") String hospitalId,
+			@FormParam("hospitalName") String hospitalName, @FormParam("phone") String phone,
+			@FormParam("regNo") String regNo, @FormParam("address") String address,
+			@FormParam("Open_Hours") String Open_Hours, @FormParam("Close_Hours") String Close_Hours) {
+
 		System.out.println("Create Hospital Profile");
-		
+
 		Hospital hospital = new Hospital();
 		hospital.setHospitalId(hospitalId);
 		hospital.setHospitalName(hospitalName);
@@ -43,19 +37,19 @@ public class HospitalResource {
 		hospital.setAddress(address);
 		hospital.setOpen_Hours(Open_Hours);
 		hospital.setClose_Hours(Close_Hours);
-		
-		String  Hos_obj = as.createHospital(hospital);
+
+		String Hos_obj = as.createHospital(hospital);
 		return Hos_obj;
-		
+
 	}
-	
+
 	@GET
 	@Path("/")
 	@Produces(MediaType.TEXT_HTML)
 	public String getHospitals() {
 		return as.getHospitals();
 	}
-	
+
 	@PUT
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -63,8 +57,7 @@ public class HospitalResource {
 	public String putHospital() {
 		return null;
 	}
-	
-	
+
 	@DELETE
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_XML)
@@ -72,42 +65,5 @@ public class HospitalResource {
 	public String deleteHospital(String hospital) {
 		return null;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 
 }
