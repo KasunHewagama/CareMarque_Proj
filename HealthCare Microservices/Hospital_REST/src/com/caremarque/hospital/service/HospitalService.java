@@ -28,8 +28,8 @@ public class HospitalService implements IHospitalService{
 		try {
 			con = DBConnection.getDBConnection();
 			
-			String insertQuery = "INSERT INTO appointment(" + "hospitalId," + "hospitalName," + "phone," + "regNo," + "address," + "Open_Hours," + "Close_Hours) "
-			+"VALUES(?,?,?,?,?,?,?)";
+			String insertQuery = "INSERT INTO hospital(" + "hospitalId," + "hospitalName," + "phone," + "regNo," + "address," + "Open_Hours," + "Close_Hours) "
+			+ "VALUES(?, ?, ?, ?, ?,  ?, ?)";
 			
 			preparedStatement = con.prepareStatement(insertQuery);
 			
@@ -90,7 +90,7 @@ public class HospitalService implements IHospitalService{
 			resultobj= stobj.executeQuery(RetriveQuery);
 			
 
-			strobj = "<table border=\"1\"> <tr><th>hosID</th> " 
+			strobj = "<table border=\"1\"> <tr><th>HOSPITAL</th> " 
 					+ "<th>hospitalId</th> " 
 					+ "<th>hospitalName</th> " 
 					+ "<th>phone</th> "
