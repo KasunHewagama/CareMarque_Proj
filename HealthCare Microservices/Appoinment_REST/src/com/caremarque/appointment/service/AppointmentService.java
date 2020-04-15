@@ -205,8 +205,46 @@ public class AppointmentService implements IAppointmentService {
 
 	@Override
 	public String cancelAppointment(String appointmnetId) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		String output = "";
+		PreparedStatement pStatement = null;
+		Connection con = null;
+		
+		try {
+			con = DBConnection.getDBConnection();
+			
+			String query = "DELETE FROM appointment WHERE appointmentId = ?";
+			
+			pStatement = con.prepareStatement(query);
+			
+			pStatement.setString(1, appointmnetId);
+			
+			pStatement.execute();
+			
+			output = "Deleted Successfully...!";
+			
+		} catch (Exception e) {
+
+			output = "Error while deleting the appointment";
+			System.err.println(e.getMessage());
+		
+		} finally {
+
+			try {
+				if (pStatement != null) {
+					pStatement.close();
+				}
+
+				if (con != null) {
+					con.close();
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return output;
 	}
 
 	//This method get all the existing appointmentids and put them into a arraylist
