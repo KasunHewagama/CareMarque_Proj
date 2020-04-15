@@ -150,13 +150,11 @@ public class HospitalService implements IHospitalService{
 	}
 
 	
-
 	@Override
 	public void cancelHospital(String hospitalId) {
 		// TODO Auto-generated method stub
 		
 	}
-
 
 	@Override
 	public String updateHospital(Hospital hospital) {
