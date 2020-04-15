@@ -149,7 +149,7 @@ public class HospitalService implements IHospitalService{
 		return strobj;
 	}
 
-	
+
 	@Override
 	public void cancelHospital(String hospitalId) {
 		// TODO Auto-generated method stub
