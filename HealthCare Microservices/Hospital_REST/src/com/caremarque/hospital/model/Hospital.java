@@ -66,4 +66,17 @@ public class Hospital {
 		Close_Hours = close_Hours;
 	}
 
+	public Hospital(String hospitalId, String hospitalName, String phone, String regNo, String address,
+			String open_Hours, String close_Hours) {
+		super();
+		this.hospitalId = hospitalId;
+		this.hospitalName = hospitalName;
+		this.phone = phone;
+		this.regNo = regNo;
+		this.address = address;
+		Open_Hours = open_Hours;
+		Close_Hours = close_Hours;
+	}
+
+	
 }
