@@ -163,10 +163,10 @@ public class AppointmentService implements IAppointmentService {
 				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_SEVEN) + "</td>";
 				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_EIGHT) + "</td>";
 				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_NINE) + "</td>";
-				output += "<td>" + appointmentTime + "</td>";
-				output += "<td>" + lastUpdateDate + "</td>";
-				output += "<td>" + lastUpdateTime + "</td>";
-				output += "<td>" + appointmentStatus + "</td></tr>";
+				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_TEN) + "</td>";
+				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_ELEVEN) + "</td>";
+				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_TWELVE) + "</td>";
+				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_THIRTEEN) + "</td></tr>";
 				
 				
 				System.out.println("Data Retrieved from database...!");
