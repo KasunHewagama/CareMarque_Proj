@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -93,7 +95,7 @@ public class AppointmentService implements IAppointmentService {
 	@Override
 	public String getAppointments() {
 
-		String output = "";
+		String output = null;
 		Statement st = null;
 		ResultSet rs = null;
 		Connection con = null;
@@ -105,6 +107,9 @@ public class AppointmentService implements IAppointmentService {
 
 			st = con.createStatement();
 			rs = st.executeQuery(query);
+			
+			DateFormat inputFormat = new SimpleDateFormat("dd/MM/yyyy");
+			
 
 			output = "<table border=\"1\"> <tr><th>appointmentId</th> " 
 					+ "<th>patientId</th> " 
@@ -149,6 +154,7 @@ public class AppointmentService implements IAppointmentService {
 				output += "<td>" + lastUpdateTime + "</td>";
 				output += "<td>" + appointmentStatus + "</td></tr>";
 
+				System.out.println("Data Retrieved from database...!");
 			}
 
 			output += "</table>";
@@ -157,6 +163,7 @@ public class AppointmentService implements IAppointmentService {
 
 			output = "Error while reading appointment details...!";
 			System.err.println(e.getMessage());
+			log.log(Level.SEVERE, e.getMessage());
 
 		} finally {
 
@@ -173,12 +180,11 @@ public class AppointmentService implements IAppointmentService {
 					rs.close();
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+				log.log(Level.SEVERE, e.getMessage());
 			}
 
 		}
 		return output;
-
 	}
 
 	@Override
