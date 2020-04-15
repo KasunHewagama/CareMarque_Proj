@@ -142,7 +142,7 @@ public class PaymentService implements IPaymentService {
 				arrayList.add(payment);
 				
 				
-				output += "<tr><td>" + resultset.getString(Constants.COLUMN_INDEX_ONE) + "</td>";
+				 output += "<tr><td>" + resultset.getString(Constants.COLUMN_INDEX_ONE) + "</td>";
 				 output += "<td>" + resultset.getString(Constants.COLUMN_INDEX_TWO) + "</td>";
 				 output += "<td>" + resultset.getString(Constants.COLUMN_INDEX_THREE) + "</td>";
 				 output += "<td>" + resultset.getString(Constants.COLUMN_INDEX_FOUR) + "</td>"; 
