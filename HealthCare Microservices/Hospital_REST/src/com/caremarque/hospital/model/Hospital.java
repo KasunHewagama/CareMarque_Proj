@@ -53,5 +53,11 @@ public class Hospital {
 		this.regNo = regNo;
 		this.address = address;
 	}
+	public String getOpeningHours() {
+		return OpeningHours;
+	}
+	public void setOpeningHours(String openingHours) {
+		OpeningHours = openingHours;
+	}
 
 }
