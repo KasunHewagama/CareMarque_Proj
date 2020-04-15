@@ -22,7 +22,7 @@ import com.caremarque.payment.utils.DBConnection;
 public class PaymentService implements IPaymentService {
 	
 	//this object is for logging 
-	public static final Logger log = Logger.getLogger(IPaymentService.class.getName());
+	public static final Logger log = Logger.getLogger(PaymentService.class.getName());
 	
 	public static Connection connecton;
 	
@@ -55,8 +55,9 @@ public class PaymentService implements IPaymentService {
 				
 				preparedstatement = connecton.prepareStatement(query);
 				
-			//	java.util.Date date = new Date();
-//				DateTimeFormatter formatter = new DateTimeFormatter("dd/MM/yyyy HH:mm:ss");
+			/*
+			 * java.util.Date date = new Date() DateTimeFormatter formatter = new DateTimeFormatter("dd/MM/yyyy HH:mm:ss");
+			 */
 				
 				p.setPaymentId(paymentId);
 				preparedstatement.setString(Constants.COLUMN_INDEX_ONE, p.getPaymentId());
@@ -97,25 +98,18 @@ public class PaymentService implements IPaymentService {
 
 	@Override
 	public String getPaymentById(String paymentId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	@Override
-	public String getPayments() {
-
-		ArrayList<Payment> arrayList = new ArrayList<Payment>();
 		String output = null;
+		ArrayList<Payment> arrayList = new ArrayList<Payment>();
 		
 		try {
 			connecton = DBConnection.getDBConnection();
 			
-			String query = "SELECT * FROM PAYMENTS";
+			String query = "SELECT * FROM PAYMENTS WHERE paymentId = '"+ paymentId + "'";
 			
 			preparedstatement = connecton.prepareStatement(query);
 			ResultSet resultset = preparedstatement.executeQuery();
 			
-			DateFormat inputFormatter = new SimpleDateFormat("dd/MM/yyyy");
 			
 			output = "<table border=\"1\"> "
 					+ "<tr>"
@@ -141,7 +135,6 @@ public class PaymentService implements IPaymentService {
 				payment.setDoctorId(resultset.getString(Constants.COLUMN_INDEX_FIVE));
 				payment.setHospitalId(resultset.getString(Constants.COLUMN_INDEX_SIX));
 				payment.setPaymentDate(resultset.getString(Constants.COLUMN_INDEX_SEVEN));
-				System.out.println("DATE: " + payment.getPaymentDate());
 				payment.setDoctorCharges(resultset.getDouble(Constants.COLUMN_INDEX_EIGHT));
 				payment.setHospitalCharges(resultset.getDouble(Constants.COLUMN_INDEX_NINE));
 				payment.setTotalAmount(resultset.getDouble(Constants.COLUMN_INDEX_TEN));
@@ -187,14 +180,96 @@ public class PaymentService implements IPaymentService {
 	}
 
 	@Override
+	public String getPayments() {
+
+		ArrayList<Payment> arrayList = new ArrayList<Payment>();
+		String output = null;
+		
+		try {
+			connecton = DBConnection.getDBConnection();
+			
+			String query = "SELECT * FROM PAYMENTS";
+			
+			preparedstatement = connecton.prepareStatement(query);
+			ResultSet resultset = preparedstatement.executeQuery();
+			
+			DateFormat inputFormatter = new SimpleDateFormat("dd/MM/yyyy");
+			
+			output = "<table border=\"1\"> "
+					+ "<tr>"
+					+ "<th>paymentId</th> "
+					+ "<th>patientId</th> "
+					+ "<th>patientName</th> "
+					+ "<th>appointmentId</th> "
+					+ "<th>doctorId</th> "
+					+ "<th>hospitalId</th> "
+					+ "<th>paymentDate</th> "
+					+ "<th>doctorCharges</th> "
+					+ "<th>hospitalCharges</th> "
+					+ "<th>totalAmount</th> "
+					+ "<th>paymentStatus</th>"
+					+ "</tr>"; 
+			
+			while(resultset.next()) {
+				Payment payment = new Payment();
+				payment.setPaymentId(resultset.getString(Constants.COLUMN_INDEX_ONE));
+				payment.setPatientId(resultset.getString(Constants.COLUMN_INDEX_TWO));
+				payment.setPatientName(resultset.getString(Constants.COLUMN_INDEX_THREE));
+				payment.setAppointmentId(resultset.getString(Constants.COLUMN_INDEX_FOUR));
+				payment.setDoctorId(resultset.getString(Constants.COLUMN_INDEX_FIVE));
+				payment.setHospitalId(resultset.getString(Constants.COLUMN_INDEX_SIX));
+				payment.setPaymentDate(resultset.getString(Constants.COLUMN_INDEX_SEVEN));
+				payment.setDoctorCharges(resultset.getDouble(Constants.COLUMN_INDEX_EIGHT));
+				payment.setHospitalCharges(resultset.getDouble(Constants.COLUMN_INDEX_NINE));
+				payment.setTotalAmount(resultset.getDouble(Constants.COLUMN_INDEX_TEN));
+				payment.setPaymentStatus(resultset.getString(Constants.COLUMN_INDEX_ELEVEN));
+				arrayList.add(payment);
+				
+				
+				output += "<tr><td>" + resultset.getString(Constants.COLUMN_INDEX_ONE) + "</td>";
+				 output += "<td>" + resultset.getString(Constants.COLUMN_INDEX_TWO) + "</td>";
+				 output += "<td>" + resultset.getString(Constants.COLUMN_INDEX_THREE) + "</td>";
+				 output += "<td>" + resultset.getString(Constants.COLUMN_INDEX_FOUR) + "</td>"; 
+				 output += "<td>" + resultset.getString(Constants.COLUMN_INDEX_FIVE) + "</td>"; 
+				 output += "<td>" + resultset.getString(Constants.COLUMN_INDEX_SIX) + "</td>"; 
+				 output += "<td>" + resultset.getString(Constants.COLUMN_INDEX_SEVEN) + "</td>"; 
+				 output += "<td>" + resultset.getDouble(Constants.COLUMN_INDEX_EIGHT) + "</td>"; 
+				 output += "<td>" + resultset.getDouble(Constants.COLUMN_INDEX_NINE) + "</td>"; 
+				 output += "<td>" + resultset.getDouble(Constants.COLUMN_INDEX_TEN) + "</td>"; 
+				 output += "<td>" + resultset.getString(Constants.COLUMN_INDEX_ELEVEN) + "</td></tr>"; 
+				
+				
+				System.err.println("Data Retreived From DB");
+			}
+			
+			output += "</table>"; 
+			
+		} catch (Exception e) {
+			log.log(Level.SEVERE, e.getMessage());
+		
+		} finally {
+			try {
+				if(preparedstatement != null) {
+					preparedstatement.close();
+				}
+				if(connecton != null) {
+					connecton.close();
+				}
+			} catch (SQLException e) {
+				log.log(Level.SEVERE, e.getMessage());
+			}
+		}
+		
+		return output;
+	}
+
+	@Override
 	public Payment updatePayment(String paymentid, Payment p) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public String cancelPayment(String paymentId) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
