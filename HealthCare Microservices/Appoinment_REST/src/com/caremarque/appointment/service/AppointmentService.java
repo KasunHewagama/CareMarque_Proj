@@ -38,14 +38,17 @@ public class AppointmentService implements IAppointmentService {
 		//Here we call the generateAppointmentIDs method to auto generate a appointmentID
 		//To do that we pass the existing appointmentid set as an arraylist
 		String appointmentId = CommonUtils.generateAppointmentIDs(getAppointmentIDs());
+		System.out.println("AppointmentID: " +  appointmentId);
+
 
 		try {
 			con = DBConnection.getDBConnection();
 
-			String query = "INSERT INTO appointment(" + "appointmentId," + "patientId," + "patientName," + "phone," + "doctorName,"
-					+ "specialization," + "hospitalId," + "hospitalName," + "appointmentDate," + "appointmentTime,"
-					+ "lastUpdateDate," + "lastUpdateTime," + "appointmentStatus) "
-					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			String query = "INSERT INTO appointment(" 
+					+ "appointmentId,patientId,patientName,phone,doctorName,"
+					+ "specialization,hospitalId,hospitalName,appointmentDate,appointmentTime,"
+					+ "lastUpdateDate,lastUpdateTime,appointmentStatus)"
+					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 			preparedStatement = con.prepareStatement(query);
 
@@ -285,6 +288,7 @@ public class AppointmentService implements IAppointmentService {
 		}		
 	
 	}
+		System.out.println(arrayList.size());
 		return arrayList;
 	}
 
