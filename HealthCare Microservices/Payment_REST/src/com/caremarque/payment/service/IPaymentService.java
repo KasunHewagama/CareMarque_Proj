@@ -9,7 +9,7 @@ public interface IPaymentService {
 //TODO: Add all methods which should be implemented in service
 	public String createPayement(Payment p);
 	
-	public Payment getPayment(String paymentId);
+	public String getPaymentById(String paymentId);
 	
 	public String getPayments();
 	

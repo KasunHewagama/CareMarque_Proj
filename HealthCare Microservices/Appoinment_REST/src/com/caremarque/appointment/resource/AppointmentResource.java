@@ -37,6 +37,9 @@ public class AppointmentResource {
 			@FormParam("lastUpdateTime") String lastUpdateTime,
 			@FormParam("appointmentStatus") String appointmentStatus) 
 	{
+		
+		System.out.println("CREATE Appointment...!");
+		//create appointment object
 		Appointment appointment = new Appointment();
 		
 		appointment.setPatientId(patientId);
@@ -52,6 +55,7 @@ public class AppointmentResource {
 		appointment.setLastUpdateTime(lastUpdateTime);
 		appointment.setAppointmentStatus(appointmentStatus);
 		
+		//pass object to the service implementation class
 		String output = as.createAppointment(appointment);
 		
 		return output;
@@ -61,7 +65,7 @@ public class AppointmentResource {
 	
 	@GET
 	@Path("/")
-	@Produces(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.TEXT_HTML)
 	public String getAppointments() {
 		return as.getAppointments();
 	}
@@ -70,7 +74,7 @@ public class AppointmentResource {
 	@PUT
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.TEXT_HTML)
 	public String putAppointment() {
 		return null;
 		
@@ -81,7 +85,8 @@ public class AppointmentResource {
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_XML)
 	@Produces(MediaType.TEXT_PLAIN)
-	public String deleteAppointment() {
+	public String deleteAppointment(String appointmentId) {
+		
 		return null;
 		
 	}

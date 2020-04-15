@@ -96,7 +96,7 @@ public class PaymentService implements IPaymentService {
 	}
 
 	@Override
-	public Payment getPayment(String paymentId) {
+	public String getPaymentById(String paymentId) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -5,7 +5,7 @@ import java.sql.Time;
 
 public class Appointment {
 
-	private int appointmentId;
+	private String appointmentId;
 	private String patientId;
 	private String patientName;
 	private String phone;
@@ -24,11 +24,11 @@ public class Appointment {
 		super();
 	}
 
-	public int getAppointmentId() {
+	public String getAppointmentId() {
 		return appointmentId;
 	}
 
-	public void setAppointmentId(int appointmentId) {
+	public void setAppointmentId(String appointmentId) {
 		this.appointmentId = appointmentId;
 	}
 
@@ -128,7 +128,7 @@ public class Appointment {
 		this.appointmentStatus = appointmentStatus;
 	}
 
-	public Appointment(int appointmentId, String patientId, String patientName, String phone, String doctorName,
+	public Appointment(String appointmentId, String patientId, String patientName, String phone, String doctorName,
 			String specialization, String hospitalId, String hospitalName, String appointmentDate,
 			String appointmentTime, String lastUpdateDate, String lastUpdateTime, String appointmentStatus) {
 		super();
