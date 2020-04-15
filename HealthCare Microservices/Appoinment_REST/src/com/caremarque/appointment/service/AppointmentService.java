@@ -20,6 +20,7 @@ import javax.swing.JPopupMenu.Separator;
 import com.caremarque.appointment.model.Appointment;
 import com.caremarque.appointment.utils.CommonUtils;
 import com.caremarque.appointment.utils.DBConnection;
+import com.caremarque.appointment.utils.Constants;
 import com.mysql.cj.log.Log;
 
 public class AppointmentService implements IAppointmentService {
@@ -153,7 +154,8 @@ public class AppointmentService implements IAppointmentService {
 				String appointmentStatus = rs.getString("appointmentStatus");
 				arrayList.add(appointment);
 
-				output += "<tr><td>" + patientId + "</td>";
+				output += "<tr><td>" + rs.getString(Constants.COLUMN_INDEX_ONE) + "</td>";
+				output += "<td>" + patientId + "</td>";
 				output += "<td>" + patientName + "</td>";
 				output += "<td>" + phone + "</td>";
 				output += "<td>" + doctorName + "</td>";
