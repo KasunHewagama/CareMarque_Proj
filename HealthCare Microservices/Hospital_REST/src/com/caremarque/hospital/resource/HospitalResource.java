@@ -22,10 +22,14 @@ public class HospitalResource {
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.TEXT_PLAIN)
-	public String createHospitalProfile(@FormParam("hospitalId") String hospitalId,
-			@FormParam("hospitalName") String hospitalName, @FormParam("phone") String phone,
-			@FormParam("regNo") String regNo, @FormParam("address") String address,
-			@FormParam("Open_Hours") String Open_Hours, @FormParam("Close_Hours") String Close_Hours) {
+	public String createHospitalProfile(
+			@FormParam("hospitalId") String hospitalId,
+			@FormParam("hospitalName") String hospitalName, 
+			@FormParam("phone") String phone,
+			@FormParam("regNo") String regNo, 
+			@FormParam("address") String address,
+			@FormParam("Open_Hours") String Open_Hours, 
+			@FormParam("Close_Hours") String Close_Hours) {
 
 		System.out.println("Create Hospital Profile");
 
