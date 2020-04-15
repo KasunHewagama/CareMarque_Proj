@@ -17,39 +17,29 @@ import com.caremarque.appointment.model.Appointment;
 import com.caremarque.appointment.utils.DBConnection;
 import com.mysql.cj.log.Log;
 
-public class AppointmentService implements IAppointmentService{
+public class AppointmentService implements IAppointmentService {
 
 	public static final Logger log = Logger.getLogger(IAppointmentService.class.getName());
-	
+
 	@Override
 	public String createAppointment(Appointment appointment) {
 		// TODO Auto-generated method stub
-		//return "Appointment created successfully...!";
-		
+		// return "Appointment created successfully...!";
+
 		String output = "";
 		Connection con = null;
 		PreparedStatement preparedStatement = null;
-		
+
 		try {
 			con = DBConnection.getDBConnection();
-			
-			String query = "INSERT INTO appointment("
-					+ "patientId,"
-					+ "patientName,"
-					+ "phone,"
-					+ "doctorName,"
-					+ "specialization,"
-					+ "hospitalId,"
-					+ "hospitalName,"
-					+ "appointmentDate,"
-					+ "appointmentTime,"
-					+ "lastUpdateDate,"
-					+ "lastUpdateTime,"
-					+ "appointmentStatus) "
+
+			String query = "INSERT INTO appointment(" + "patientId," + "patientName," + "phone," + "doctorName,"
+					+ "specialization," + "hospitalId," + "hospitalName," + "appointmentDate," + "appointmentTime,"
+					+ "lastUpdateDate," + "lastUpdateTime," + "appointmentStatus) "
 					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-			
+
 			preparedStatement = con.prepareStatement(query);
-			
+
 			preparedStatement.setString(1, appointment.getPatientId());
 			preparedStatement.setString(2, appointment.getPatientName());
 			preparedStatement.setString(3, appointment.getPhone());
@@ -62,18 +52,17 @@ public class AppointmentService implements IAppointmentService{
 			preparedStatement.setString(10, appointment.getLastUpdateDate());
 			preparedStatement.setString(11, appointment.getLastUpdateTime());
 			preparedStatement.setString(12, appointment.getAppointmentStatus());
-			
+
 			preparedStatement.executeUpdate();
-			
+
 			output = "Inserted Successfully...!";
-			
+
 		} catch (Exception e) {
-			
+
 			output = "Error when Inserting the Appointment...!";
 			System.err.println(e.getMessage());
 			log.log(Level.SEVERE, e.getMessage());
-			
-			
+
 		} finally {
 
 			try {
@@ -101,36 +90,36 @@ public class AppointmentService implements IAppointmentService{
 
 	@Override
 	public String getAppointments() {
-		
+
 		String output = "";
 		Statement st = null;
 		ResultSet rs = null;
 		Connection con = null;
-		
+
 		try {
 			con = DBConnection.getDBConnection();
-			
+
 			String query = "SELECT * FROM appointment";
-			
+
 			st = con.createStatement();
 			rs = st.executeQuery(query);
-			
-			output = "<table border=\"1\"> "
-					+ "<th>patientId</th> "
-					+ "<th>patientName</th> "
+
+			output = "<table border=\"1\"> <tr><th>appointmentId</th> " 
+					+ "<th>patientId</th> " 
+					+ "<th>patientName</th> " 
 					+ "<th>phone</th> "
-					+ "<th>doctorName</th> "
-					+ "<th>specialization</th> "
+					+ "<th>doctorName</th> " 
+					+ "<th>specialization</th> " 
 					+ "<th>hospitalId</th> "
-					+ "<th>hospitalName</th> "
-					+ "<th>apointmentDate</th> "
+					+ "<th>hospitalName</th> " 
+					+ "<th>appointmentDate</th> " 
 					+ "<th>appointmentTime</th> "
-					+ "<th>lastUpdateDate</th> "
-					+ "<th>lastUpdateTime</th> "
+					+ "<th>lastUpdateDate</th> " 
+					+ "<th>lastUpdateTime</th> " 
 					+ "<th>appointmentStatus</th></tr>";
-			
-			while(rs.next())
-			{
+
+			while (rs.next()) {
+				String appointmentId = rs.getString("appointmentId");
 				String patientId = rs.getString("patientId");
 				String patientName = rs.getString("patientName");
 				String phone = rs.getString("phone");
@@ -138,57 +127,56 @@ public class AppointmentService implements IAppointmentService{
 				String specialization = rs.getString("specialization");
 				String hospitalId = rs.getString("hospitalId");
 				String hospitalName = rs.getString("hospitalName");
-				String apointmentDate = rs.getString("apointmentDate");
+				String appointmentDate = rs.getString("appointmentDate");
 				String appointmentTime = rs.getString("appointmentTime");
 				String lastUpdateDate = rs.getString("lastUpdateDate");
 				String lastUpdateTime = rs.getString("lastUpdateTime");
 				String appointmentStatus = rs.getString("appointmentStatus");
-				
-				
-				output += "<tr><td>" + patientId + "</td>";
-				output += "<tr><td>" + patientName + "</td>";
-				output += "<tr><td>" + phone + "</td>";
-				output += "<tr><td>" + doctorName + "</td>";
-				output += "<tr><td>" + specialization + "</td>";
-				output += "<tr><td>" + hospitalId + "</td>";
-				output += "<tr><td>" + hospitalName + "</td>";
-				output += "<tr><td>" + apointmentDate + "</td>";
-				output += "<tr><td>" + appointmentTime + "</td>";
-				output += "<tr><td>" + lastUpdateDate + "</td>";
-				output += "<tr><td>" + lastUpdateTime + "</td>";
-				output += "<tr><td>" + appointmentStatus + "</td></td>";
-				
+
+				output += "<tr><td>" + appointmentId + "</td>";
+				output += "<td>" + patientId + "</td>";
+				output += "<td>" + patientName + "</td>";
+				output += "<td>" + phone + "</td>";
+				output += "<td>" + doctorName + "</td>";
+				output += "<td>" + specialization + "</td>";
+				output += "<td>" + hospitalId + "</td>";
+				output += "<td>" + hospitalName + "</td>";
+				output += "<td>" + appointmentDate + "</td>";
+				output += "<td>" + appointmentTime + "</td>";
+				output += "<td>" + lastUpdateDate + "</td>";
+				output += "<td>" + lastUpdateTime + "</td>";
+				output += "<td>" + appointmentStatus + "</td></tr>";
+
 			}
-			
+
 			output += "</table>";
-			
+
 		} catch (Exception e) {
 
 			output = "Error while reading appointment details...!";
 			System.err.println(e.getMessage());
-			
+
 		} finally {
 
 			try {
 				if (st != null) {
 					st.close();
 				}
-				
+
 				if (con != null) {
 					con.close();
 				}
-				
-				if(rs != null) {
+
+				if (rs != null) {
 					rs.close();
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			
+
 		}
 		return output;
 
-		
 	}
 
 	@Override
@@ -204,6 +192,4 @@ public class AppointmentService implements IAppointmentService{
 		return null;
 	}
 
-
-	
 }
