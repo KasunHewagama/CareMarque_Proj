@@ -61,7 +61,7 @@ public class AppointmentResource {
 	
 	@GET
 	@Path("/")
-	@Produces(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.TEXT_HTML)
 	public String getAppointments() {
 		return as.getAppointments();
 	}
@@ -70,7 +70,7 @@ public class AppointmentResource {
 	@PUT
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.TEXT_HTML)
 	public String putAppointment() {
 		return null;
 		
