@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,14 +21,14 @@ import com.mysql.cj.log.Log;
 
 public class AppointmentService implements IAppointmentService {
 
+	//this object is for logging
 	public static final Logger log = Logger.getLogger(IAppointmentService.class.getName());
 
 	@Override
 	public String createAppointment(Appointment appointment) {
-		// TODO Auto-generated method stub
 		// return "Appointment created successfully...!";
 
-		String output = "";
+		String output = null;
 		Connection con = null;
 		PreparedStatement preparedStatement = null;
 
@@ -49,8 +51,8 @@ public class AppointmentService implements IAppointmentService {
 			preparedStatement.setString(7, appointment.getHospitalName());
 			preparedStatement.setString(8, appointment.getAppointmentDate());
 			preparedStatement.setString(9, appointment.getAppointmentTime());
-			preparedStatement.setString(10, appointment.getLastUpdateDate());
-			preparedStatement.setString(11, appointment.getLastUpdateTime());
+			preparedStatement.setString(10, LocalDate.now().toString());
+			preparedStatement.setString(11, LocalTime.now().toString());
 			preparedStatement.setString(12, appointment.getAppointmentStatus());
 
 			preparedStatement.executeUpdate();
@@ -74,7 +76,7 @@ public class AppointmentService implements IAppointmentService {
 					con.close();
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+				log.log(Level.SEVERE, e.getMessage());
 			}
 		}
 
