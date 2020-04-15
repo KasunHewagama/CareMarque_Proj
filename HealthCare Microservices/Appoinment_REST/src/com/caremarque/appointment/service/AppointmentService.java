@@ -140,19 +140,20 @@ public class AppointmentService implements IAppointmentService {
 
 			while (rs.next()) {
 				Appointment appointment = new Appointment();
-				String patientId = rs.getString("patientId");
-				String patientName = rs.getString("patientName");
-				String phone = rs.getString("phone");
-				String doctorName = rs.getString("doctorName");
-				String specialization = rs.getString("specialization");
-				String hospitalId = rs.getString("hospitalId");
-				String hospitalName = rs.getString("hospitalName");
-				String appointmentDate = rs.getString("appointmentDate");
-				String appointmentTime = rs.getString("appointmentTime");
-				String lastUpdateDate = rs.getString("lastUpdateDate");
-				String lastUpdateTime = rs.getString("lastUpdateTime");
-				String appointmentStatus = rs.getString("appointmentStatus");
+				appointment.setPatientId(rs.getString(Constants.COLUMN_INDEX_ONE));
+				appointment.setPatientName(rs.getString(Constants.COLUMN_INDEX_TWO));
+				appointment.setPhone(rs.getString(Constants.COLUMN_INDEX_THREE));
+				appointment.setDoctorName(rs.getString(Constants.COLUMN_INDEX_FOUR));
+				appointment.setSpecialization(rs.getString(Constants.COLUMN_INDEX_FIVE));
+				appointment.setHospitalId(rs.getString(Constants.COLUMN_INDEX_SIX));
+				appointment.setHospitalName(rs.getString(Constants.COLUMN_INDEX_SEVEN));
+				appointment.setAppointmentDate(rs.getString(Constants.COLUMN_INDEX_EIGHT));
+				appointment.setAppointmentTime(rs.getString(Constants.COLUMN_INDEX_NINE));
+				appointment.setLastUpdateDate(rs.getString(Constants.COLUMN_INDEX_TEN));
+				appointment.setLastUpdateTime(rs.getString(Constants.COLUMN_INDEX_ELEVEN));
+				appointment.setAppointmentStatus(rs.getString(Constants.COLUMN_INDEX_TWELVE));
 				arrayList.add(appointment);
+				
 
 				output += "<tr><td>" + rs.getString(Constants.COLUMN_INDEX_ONE) + "</td>";
 				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_TWO) + "</td>";
