@@ -330,7 +330,7 @@ public class PatientService implements IPatientService {
 	}
 
 	// to get all the registerd patients to a arraylist
-	@Override
+	/*@Override
 	public ArrayList<String> getPatientIDs() {
 
 		ArrayList<String> patientList = new ArrayList<String>();
@@ -371,6 +371,6 @@ public class PatientService implements IPatientService {
 			}
 		}
 		return patientList;
-	}
+	}*/
 
 }

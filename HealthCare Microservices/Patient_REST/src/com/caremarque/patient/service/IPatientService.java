@@ -16,6 +16,6 @@ public interface IPatientService {
 
 	public String deletePatient(String patientId);
 	
-	public ArrayList<String> getPatientIDs();
+	//public ArrayList<String> getPatientIDs();
 	
 }
