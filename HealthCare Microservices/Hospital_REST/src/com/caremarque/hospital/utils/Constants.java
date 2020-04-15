@@ -1,9 +1,9 @@
 package com.caremarque.hospital.utils;
 
 public class Constants {
-	//TODO: Declare some constant values used in project
-	
-	//Constant Values for column indexes
+	// TODO: Declare some constant values used in project
+
+	// Constant Values for column indexes
 	public static final int COLUMN_INDEX_ONE = 1;
 	public static final int COLUMN_INDEX_TWO = 2;
 	public static final int COLUMN_INDEX_THREE = 3;
@@ -19,15 +19,14 @@ public class Constants {
 	public static final int COLUMN_INDEX_THIRTEEN = 13;
 	public static final int COLUMN_INDEX_FOURTEEN = 14;
 	public static final int COLUMN_INDEX_FIFTEEN = 15;
-	
-	//ID Prefixes
+
+	// ID Prefixes
 	public static final String PAYMENT_ID_PREFIX = "PY";
-	
-	//DBConstants
+
+	// DBConstants
 	public static final String DBLOCATION_STRING = "jdbc:mysql://127.0.0.1:3306/healthcare";
 	public static final String DB_DRIVER_NAME = "com.mysql.cj.jdbc.Driver";
 	public static final String DB_USERNAME = "root";
 	public static final String DB_PASSWORD = "Avishka@98";
-	
 
 }
