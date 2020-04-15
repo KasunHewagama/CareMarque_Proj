@@ -10,8 +10,6 @@ public interface IHospitalService {
 	
 	public String getHospitals();
 	
-	
-	
 	public String updateHospital(Hospital hospital);
 	
 	public void cancelHospital(String hospitalId);
