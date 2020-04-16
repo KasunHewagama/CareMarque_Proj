@@ -1,4 +1,4 @@
-package com.caremarque.login.resource;
+package com.caremarque.userAuth.resource;
 
 import javax.ws.rs.Path;
 
