@@ -39,5 +39,10 @@ public class PaymentAuthentication {
 		this.passCode = passCode;
 	}
 	
+	@Override
+	public String toString() {
+		return "PaymentAuthentication [authId=" + authId + ", cardNo=" + cardNo + ", expDate=" + expDate + ", passCode="
+				+ passCode + "]";
+	}
 	
 }

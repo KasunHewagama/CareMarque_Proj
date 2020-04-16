@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -63,9 +64,9 @@ public class PaymentServiceImpl implements IPaymentService {
 				}
 				
 				String query = "INSERT INTO PAYMENTS ("
-						+ "paymentId, patientId, patientName, appointmentId, doctorId, hospitalId, paymentDate,"
+						+ "paymentId, patientId, patientName, appointmentId, doctorId, hospitalId, paymentDate, paymentTime,"
 						+ " doctorCharges, hospitalCharges, totalAmount, paymentStatus)"
-						+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+						+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 				
 				preparedstatement = connecton.prepareStatement(query);
 				
@@ -96,10 +97,11 @@ public class PaymentServiceImpl implements IPaymentService {
 					preparedstatement.setString(Constants.COLUMN_INDEX_FIVE, p.getDoctorId());
 					preparedstatement.setString(Constants.COLUMN_INDEX_SIX, p.getHospitalId());
 					preparedstatement.setString(Constants.COLUMN_INDEX_SEVEN, LocalDate.now().toString());
-					preparedstatement.setDouble(Constants.COLUMN_INDEX_EIGHT, p.getDoctorCharges());
-					preparedstatement.setDouble(Constants.COLUMN_INDEX_NINE, p.getHospitalCharges());
-					preparedstatement.setDouble(Constants.COLUMN_INDEX_TEN, p.getDoctorCharges() +  p.getHospitalCharges());
-					preparedstatement.setString(Constants.COLUMN_INDEX_ELEVEN, p.getPaymentStatus());
+					preparedstatement.setString(Constants.COLUMN_INDEX_EIGHT, LocalTime.now().toString());
+					preparedstatement.setDouble(Constants.COLUMN_INDEX_NINE, p.getDoctorCharges());
+					preparedstatement.setDouble(Constants.COLUMN_INDEX_TEN, p.getHospitalCharges());
+					preparedstatement.setDouble(Constants.COLUMN_INDEX_ELEVEN, p.getDoctorCharges() +  p.getHospitalCharges());
+					preparedstatement.setString(Constants.COLUMN_INDEX_TWELVE, p.getPaymentStatus());
 					preparedstatement.execute();
 					
 					output = "Data inserted successfully!";
@@ -154,6 +156,7 @@ public class PaymentServiceImpl implements IPaymentService {
 					+ "<th>doctorId</th> "
 					+ "<th>hospitalId</th> "
 					+ "<th>paymentDate</th> "
+					+ "<th>paymentTime</th> "
 					+ "<th>doctorCharges</th> "
 					+ "<th>hospitalCharges</th> "
 					+ "<th>totalAmount</th> "
@@ -169,10 +172,11 @@ public class PaymentServiceImpl implements IPaymentService {
 				payment.setDoctorId(resultset.getString(Constants.COLUMN_INDEX_FIVE));
 				payment.setHospitalId(resultset.getString(Constants.COLUMN_INDEX_SIX));
 				payment.setPaymentDate(resultset.getString(Constants.COLUMN_INDEX_SEVEN));
-				payment.setDoctorCharges(resultset.getDouble(Constants.COLUMN_INDEX_EIGHT));
-				payment.setHospitalCharges(resultset.getDouble(Constants.COLUMN_INDEX_NINE));
-				payment.setTotalAmount(resultset.getDouble(Constants.COLUMN_INDEX_TEN));
-				payment.setPaymentStatus(resultset.getString(Constants.COLUMN_INDEX_ELEVEN));
+				payment.setPaymentTime(resultset.getString(Constants.COLUMN_INDEX_EIGHT));
+				payment.setDoctorCharges(resultset.getDouble(Constants.COLUMN_INDEX_NINE));
+				payment.setHospitalCharges(resultset.getDouble(Constants.COLUMN_INDEX_TEN));
+				payment.setTotalAmount(resultset.getDouble(Constants.COLUMN_INDEX_ELEVEN));
+				payment.setPaymentStatus(resultset.getString(Constants.COLUMN_INDEX_TWELVE));
 				arrayList.add(payment);
 				
 				
@@ -183,10 +187,11 @@ public class PaymentServiceImpl implements IPaymentService {
 				 output += "<td>" + resultset.getString(Constants.COLUMN_INDEX_FIVE) + "</td>"; 
 				 output += "<td>" + resultset.getString(Constants.COLUMN_INDEX_SIX) + "</td>"; 
 				 output += "<td>" + resultset.getString(Constants.COLUMN_INDEX_SEVEN) + "</td>"; 
-				 output += "<td>" + resultset.getDouble(Constants.COLUMN_INDEX_EIGHT) + "</td>"; 
+				 output += "<td>" + resultset.getString(Constants.COLUMN_INDEX_EIGHT) + "</td>"; 
 				 output += "<td>" + resultset.getDouble(Constants.COLUMN_INDEX_NINE) + "</td>"; 
 				 output += "<td>" + resultset.getDouble(Constants.COLUMN_INDEX_TEN) + "</td>"; 
-				 output += "<td>" + resultset.getString(Constants.COLUMN_INDEX_ELEVEN) + "</td></tr>"; 
+				 output += "<td>" + resultset.getDouble(Constants.COLUMN_INDEX_ELEVEN) + "</td>"; 
+				 output += "<td>" + resultset.getString(Constants.COLUMN_INDEX_TWELVE) + "</td></tr>"; 
 				
 				
 				System.out.println("Data Retreived From DB");
@@ -238,6 +243,7 @@ public class PaymentServiceImpl implements IPaymentService {
 					+ "<th>DoctorId</th> "
 					+ "<th>HospitalId</th> "
 					+ "<th>PaymentDate</th> "
+					+ "<th>PaymentDate</th> "
 					+ "<th>DoctorCharges</th> "
 					+ "<th>HospitalCharges</th> "
 					+ "<th>TotalAmount</th> "
@@ -255,24 +261,26 @@ public class PaymentServiceImpl implements IPaymentService {
 				payment.setDoctorId(resultset.getString(Constants.COLUMN_INDEX_FIVE));
 				payment.setHospitalId(resultset.getString(Constants.COLUMN_INDEX_SIX));
 				payment.setPaymentDate(resultset.getString(Constants.COLUMN_INDEX_SEVEN));
-				payment.setDoctorCharges(resultset.getDouble(Constants.COLUMN_INDEX_EIGHT));
-				payment.setHospitalCharges(resultset.getDouble(Constants.COLUMN_INDEX_NINE));
-				payment.setTotalAmount(resultset.getDouble(Constants.COLUMN_INDEX_TEN));
-				payment.setPaymentStatus(resultset.getString(Constants.COLUMN_INDEX_ELEVEN));
+				payment.setPaymentTime(resultset.getString(Constants.COLUMN_INDEX_EIGHT));
+				payment.setDoctorCharges(resultset.getDouble(Constants.COLUMN_INDEX_NINE));
+				payment.setHospitalCharges(resultset.getDouble(Constants.COLUMN_INDEX_TEN));
+				payment.setTotalAmount(resultset.getDouble(Constants.COLUMN_INDEX_ELEVEN));
+				payment.setPaymentStatus(resultset.getString(Constants.COLUMN_INDEX_TWELVE));
 				arrayList.add(payment);
 				
 				
-				output += "<tr><td>" + resultset.getString(Constants.COLUMN_INDEX_ONE) + "</td>";
+				 output += "<tr><td>" + resultset.getString(Constants.COLUMN_INDEX_ONE) + "</td>";
 				 output += "<td>" + resultset.getString(Constants.COLUMN_INDEX_TWO) + "</td>";
 				 output += "<td>" + resultset.getString(Constants.COLUMN_INDEX_THREE) + "</td>";
 				 output += "<td>" + resultset.getString(Constants.COLUMN_INDEX_FOUR) + "</td>"; 
 				 output += "<td>" + resultset.getString(Constants.COLUMN_INDEX_FIVE) + "</td>"; 
 				 output += "<td>" + resultset.getString(Constants.COLUMN_INDEX_SIX) + "</td>"; 
 				 output += "<td>" + resultset.getString(Constants.COLUMN_INDEX_SEVEN) + "</td>"; 
-				 output += "<td>" + resultset.getDouble(Constants.COLUMN_INDEX_EIGHT) + "</td>"; 
+				 output += "<td>" + resultset.getString(Constants.COLUMN_INDEX_EIGHT) + "</td>"; 
 				 output += "<td>" + resultset.getDouble(Constants.COLUMN_INDEX_NINE) + "</td>"; 
 				 output += "<td>" + resultset.getDouble(Constants.COLUMN_INDEX_TEN) + "</td>"; 
-				 output += "<td>" + resultset.getString(Constants.COLUMN_INDEX_ELEVEN) + "</td>"; 
+				 output += "<td>" + resultset.getDouble(Constants.COLUMN_INDEX_ELEVEN) + "</td>"; 
+				 output += "<td>" + resultset.getString(Constants.COLUMN_INDEX_TWELVE) + "</td></tr>"; 
 				
 				 output +=  "<td><input name=\"btnUpdate\" type=\"button\" value=\"Update\" class=\"btn btn-secondary\"></td>"
 								 + "<td><form method=\"post\" action=\"items.jsp\">"
@@ -418,6 +426,7 @@ public class PaymentServiceImpl implements IPaymentService {
 		    System.out.println(listObj.size());
 		    
 		    for (PaymentAuthentication paymentAuthentication : listObj) {
+		    	System.out.println(paymentAuthentication);
 		    	pAuthList.add(paymentAuthentication);
 		    	
 			}
