@@ -20,6 +20,10 @@ import com.caremarque.payment.utils.Constants;
 import com.caremarque.payment.utils.DBConnection;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
@@ -41,10 +45,13 @@ public class PaymentServiceImpl implements IPaymentService {
 	public String createPayement(Payment p) {
 		
 		String output = null;
+		boolean validate = false;
 		
 		//Here we call the generatePaymentIDs method to auto generate a paymentID
 		//To do that we pass the existing paymentid set as an arraylist
 		String paymentId = CommonUtils.generatePaymentIDs(getPaymentIDs());
+		
+		List<PaymentAuthentication> pAuthList = getDetails();
 		
 		try {
 			
@@ -64,23 +71,42 @@ public class PaymentServiceImpl implements IPaymentService {
 				
 			/*
 			 * java.util.Date date = new Date() DateTimeFormatter formatter = new DateTimeFormatter("dd/MM/yyyy HH:mm:ss");
+			 *
 			 */
+				for (PaymentAuthentication paymentAuthentication : pAuthList) {
+					System.out.println("PAUTH:1 " + paymentAuthentication.getCardNo());
+					System.out.println("PAUTH:2 " + p.getCardNo());
+					System.out.println("PAUTH:1 " + paymentAuthentication.getPassCode());
+					System.out.println("PAUTH:2 " + p.getPassCode());
+					if(p.getCardNo().equals(paymentAuthentication.getCardNo()) && paymentAuthentication.getPassCode().equals(p.getPassCode())) {
+					
+							validate = true;
+							System.out.println("VALIDATE: " + validate);
+							break;
+						}
+					
+				}
 				
-				p.setPaymentId(paymentId);
-				preparedstatement.setString(Constants.COLUMN_INDEX_ONE, p.getPaymentId());
-				preparedstatement.setString(Constants.COLUMN_INDEX_TWO, p.getPatientId());
-				preparedstatement.setString(Constants.COLUMN_INDEX_THREE, p.getPatientName());
-				preparedstatement.setString(Constants.COLUMN_INDEX_FOUR, p.getAppointmentId());
-				preparedstatement.setString(Constants.COLUMN_INDEX_FIVE, p.getDoctorId());
-				preparedstatement.setString(Constants.COLUMN_INDEX_SIX, p.getHospitalId());
-				preparedstatement.setString(Constants.COLUMN_INDEX_SEVEN, LocalDate.now().toString());
-				preparedstatement.setDouble(Constants.COLUMN_INDEX_EIGHT, p.getDoctorCharges());
-				preparedstatement.setDouble(Constants.COLUMN_INDEX_NINE, p.getHospitalCharges());
-				preparedstatement.setDouble(Constants.COLUMN_INDEX_TEN, p.getDoctorCharges() +  p.getHospitalCharges());
-				preparedstatement.setString(Constants.COLUMN_INDEX_ELEVEN, p.getPaymentStatus());
-				preparedstatement.execute();
-				
-				output = "Data inserted successfully!";
+				if(validate == true) {
+					p.setPaymentId(paymentId);
+					preparedstatement.setString(Constants.COLUMN_INDEX_ONE, p.getPaymentId());
+					preparedstatement.setString(Constants.COLUMN_INDEX_TWO, p.getPatientId());
+					preparedstatement.setString(Constants.COLUMN_INDEX_THREE, p.getPatientName());
+					preparedstatement.setString(Constants.COLUMN_INDEX_FOUR, p.getAppointmentId());
+					preparedstatement.setString(Constants.COLUMN_INDEX_FIVE, p.getDoctorId());
+					preparedstatement.setString(Constants.COLUMN_INDEX_SIX, p.getHospitalId());
+					preparedstatement.setString(Constants.COLUMN_INDEX_SEVEN, LocalDate.now().toString());
+					preparedstatement.setDouble(Constants.COLUMN_INDEX_EIGHT, p.getDoctorCharges());
+					preparedstatement.setDouble(Constants.COLUMN_INDEX_NINE, p.getHospitalCharges());
+					preparedstatement.setDouble(Constants.COLUMN_INDEX_TEN, p.getDoctorCharges() +  p.getHospitalCharges());
+					preparedstatement.setString(Constants.COLUMN_INDEX_ELEVEN, p.getPaymentStatus());
+					preparedstatement.execute();
+					
+					output = "Data inserted successfully!";
+				} else {
+					output = "Authentication ERROR!!!";
+					System.out.println("Authentication ERROR!!!");
+				}
 
 		} catch (Exception e) {
 			
@@ -108,6 +134,7 @@ public class PaymentServiceImpl implements IPaymentService {
 
 		String output = null;
 		ArrayList<Payment> arrayList = new ArrayList<Payment>();
+
 		
 		try {
 			connecton = DBConnection.getDBConnection();
@@ -286,6 +313,7 @@ public class PaymentServiceImpl implements IPaymentService {
 	public String cancelPayment(String paymentId) {
 		
 		String output = "";
+		String status = "cancel";
 		
 		try {
 			connecton = DBConnection.getDBConnection();
@@ -294,15 +322,16 @@ public class PaymentServiceImpl implements IPaymentService {
 				return "Error while connecting to the database for deleteing";
 			}
 			
-			String query = "UPDATE PAYMENTS"
-					+ "SET paymentStatus = ?"
+			String query = "UPDATE payments "
+					+ "SET paymentStatus = ? "
 					+ "WHERE paymentId = ?";
+			
 			preparedstatement = connecton.prepareStatement(query);
-			preparedstatement.setString(Constants.COLUMN_INDEX_ONE, "Cancel");
+			preparedstatement.setString(Constants.COLUMN_INDEX_ONE, status);
 			preparedstatement.setString(Constants.COLUMN_INDEX_TWO, paymentId);
 			preparedstatement.execute();
 			
-			output = "Canceled " + paymentId + " Changed status to cancel!";
+			output = paymentId + " status changed to cancel!";
 
 		} catch (Exception e) {
 			log.log(Level.SEVERE, e.getMessage());
@@ -345,6 +374,7 @@ public class PaymentServiceImpl implements IPaymentService {
 			
 		} catch (Exception e) {
 			log.log(Level.SEVERE, e.getMessage());
+			
 		} finally {
 			try {
 				if(preparedstatement != null) {
@@ -360,9 +390,10 @@ public class PaymentServiceImpl implements IPaymentService {
 		return arrayList;
 	}
 	
-	public String getDetails() {
+	public List<PaymentAuthentication> getDetails() {
 		
-		//ArrayList<PaymentAuthentication> output = new ArrayList<PaymentAuthentication>();
+		List<PaymentAuthentication> pAuthList = new ArrayList<PaymentAuthentication>();
+		
 		try {
 
 			Client client = Client.create();
@@ -380,20 +411,41 @@ public class PaymentServiceImpl implements IPaymentService {
 
 			String output = response.getEntity(String.class);
 			
-			ObjectMapper mapper = new ObjectMapper();
-			List<PaymentAuthentication> pAuth = mapper.readValue(output, new TypeReference<List<PaymentAuthentication>>() {});
-			System.out.println("Output from Server .... \n");
-			System.out.println(pAuth);
-			System.out.println(pAuth.size());
-			System.out.println(pAuth.get(0).getAuthId());
+
+			Gson gson = new Gson();
+			JsonElement list = new JsonParser().parse(output).getAsJsonObject().get("paymentAuthentication");
+			List<PaymentAuthentication> listObj = gson.fromJson(list, new TypeToken<List<PaymentAuthentication>>() {}.getType());
+		    System.out.println(listObj.size());
+		    
+		    for (PaymentAuthentication paymentAuthentication : listObj) {
+		    	pAuthList.add(paymentAuthentication);
+		    	
+			}
+		    
+		    for (PaymentAuthentication paymentAuthentication : pAuthList) {
+		    	 System.out.println("ID: " + paymentAuthentication.getAuthId());
+		    	 System.out.println("CODE: " + paymentAuthentication.getCardNo());
+			}
+		   
+		    
+		    System.out.println(listObj.get(0).getAuthId());
+		    System.out.println(listObj.get(0).getCardNo());
+		    System.out.println(listObj.get(0).getExpDate());
+		    
+//			ObjectMapper mapper = new ObjectMapper();
+//			List<PaymentAuthentication> pAuth = mapper.readValue(output, new TypeReference<List<PaymentAuthentication>>() {});
+			
+//			System.out.println("Output from Server .... \n");
+//			System.out.println(pAuth);
+//			System.out.println(pAuth.size());
+//			System.out.println(pAuth.get(0).getAuthId());
 
 		  } catch (Exception e) {
-
-			e.printStackTrace();
+			log.log(Level.SEVERE, e.getMessage());
 
 		  }
 			
-		return "hello";
+		return pAuthList;
 	}
 
 }

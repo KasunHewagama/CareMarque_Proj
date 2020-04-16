@@ -34,7 +34,10 @@ public class PaymentService {
 								@FormParam("hospitalId") String hospitalId,
 								@FormParam("doctorCharges") double doctorCharges,
 								@FormParam("hospitalCharges") double hospitalCharges,
-								@FormParam("paymentStatus") String paymentStatus) {
+								@FormParam("paymentStatus") String paymentStatus,
+								@FormParam("cardNo") String cardNo,
+								@FormParam("expDate") String expDate,
+								@FormParam("passCode") String passCode) {
 		
 		System.out.println("CREATE PAYMENT");
 		//create payment object
@@ -48,6 +51,9 @@ public class PaymentService {
 		payment.setDoctorCharges(doctorCharges);
 		payment.setHospitalCharges(hospitalCharges);
 		payment.setPaymentStatus(paymentStatus);
+		payment.setCardNo(cardNo);
+		payment.setExpDate(expDate);
+		payment.setPassCode(passCode);
 		
 		//pass object to the service implementation class
 		String output = ps.createPayement(payment); 
@@ -75,24 +81,24 @@ public class PaymentService {
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_XML)
 	@Produces(MediaType.TEXT_PLAIN)
-	public String cancelPayment(String paymentId) {
+	public String cancelPayment(String paymentData) {
 		
-		Document doc = Jsoup.parse(paymentId, "", Parser.xmlParser());
+		Document doc = Jsoup.parse(paymentData, "", Parser.xmlParser());
 		
-		String paymentdata = doc.select("paymentId").text();
+		String paymentId = doc.select("paymentId").text();
 		
 		String output = ps.cancelPayment(paymentId);
 		
 		return output;
 	}
 	
-	@GET
-	@Path("/testget")
-	@Produces(MediaType.TEXT_PLAIN)
-	public String testValue() {
-		String output = ps.getDetails();
-		return output;
-		
-	}
+//	@GET
+//	@Path("/testget")
+//	@Produces(MediaType.TEXT_PLAIN)
+//	public String testValue() {
+//		String output = ps.getDetails();
+//		return output;
+//		
+//	}
 	
 }
