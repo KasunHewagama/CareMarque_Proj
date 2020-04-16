@@ -62,5 +62,13 @@ public class HospitalResource {
 		return null;
 	}
 
-	
+
+	@DELETE
+	@Path("/")
+	@Consumes(MediaType.APPLICATION_XML)
+	@Produces(MediaType.TEXT_PLAIN)
+	public String deleteHospital(String hospital) {
+		return null;
+	}
+
 }
