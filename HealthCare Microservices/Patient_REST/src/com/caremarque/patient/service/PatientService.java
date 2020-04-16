@@ -3,14 +3,21 @@ package com.caremarque.patient.service;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
+import java.util.regex.Pattern;
+
 import com.caremarque.patient.model.Patient;
 import com.caremarque.patient.utils.DBConnection;
 
-
 public class PatientService implements IPatientService {
+
+	Pattern alphaPattern = Pattern.compile("/^[a-zA-Z]+$/");
+	Pattern nicPattern = Pattern.compile("/^[0-9]{9}[vVxX]$/");
+	Pattern emailPattern = Pattern.compile("/^[\\w\\-\\.\\+]+\\@[a-zA-Z0-9\\.\\-]+\\.[a-zA-z0-9]{2,4}$/");
+	Pattern dobPattern = Pattern.compile("(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20)\\d\\d)");
+	Pattern bloodTypePattern = Pattern.compile("^(A|B|AB|O)[+-]$");
+	Pattern pwdPattern = Pattern.compile("/(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/");
+	Pattern phonePattern = Pattern.compile("/^\\d{10}$/");
 
 	//to insert patient details to the db
 	@Override
@@ -18,30 +25,121 @@ public class PatientService implements IPatientService {
 
 		String output = "";
 		Connection con = null;
-		PreparedStatement preparedStatement = null;
+		PreparedStatement preparedStmt = null;
+		
 
 		try {
 			con = DBConnection.getDBConnection();
 
 			String query = "INSERT INTO patient(firstName, lastName, gender, NIC, DOB, email, phone, bloodGroup, allergies, password, cPassword) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-			preparedStatement = con.prepareStatement(query);
+			preparedStmt = con.prepareStatement(query);
+			
+			
+			
+			preparedStmt.setString(1, patient.getFirstName());
+			preparedStmt.setString(2, patient.getLastName());
+			preparedStmt.setString(3, patient.getGender());
+			preparedStmt.setString(4, patient.getNIC());
+			preparedStmt.setString(5, patient.getDOB());
+			preparedStmt.setString(6, patient.getEmail());
+			preparedStmt.setString(7, patient.getPhone());
+			preparedStmt.setString(8, patient.getBloodGroup());
+			preparedStmt.setString(9, patient.getAllergy());
+			preparedStmt.setString(10, patient.getPassword());
+			preparedStmt.setString(11, patient.getConfirmPassword());
 
-			preparedStatement.setString(1, patient.getFirstName());
-			preparedStatement.setString(2, patient.getLastName());
-			preparedStatement.setString(3, patient.getGender());
-			preparedStatement.setString(4, patient.getNIC());
-			preparedStatement.setString(5, patient.getDOB());
-			preparedStatement.setString(6, patient.getEmail());
-			preparedStatement.setString(7, patient.getPhone());
-			preparedStatement.setString(8, patient.getBloodGroup());
-			preparedStatement.setString(9, patient.getAllergy());
-			preparedStatement.setString(10, patient.getPassword());
-			preparedStatement.setString(11, patient.getConfirmPassword());
+//			String fName = patient.getFirstName();
+//			String lName = patient.getLastName();
+//			String gender = patient.getGender();
+//			String NIC = patient.getNIC();
+//			String DOB = patient.getDOB();
+//			String email =  patient.getEmail();
+//			String phone = patient.getPhone();
+//			String bloodGroup = patient.getBloodGroup();
+//			String allergy = patient.getAllergy();
+//			String pwd = patient.getPassword();
+//			String cPwd = patient.getConfirmPassword();
+		
 
-			preparedStatement.executeUpdate();
-
-			output = "Inserted successfully";
+//				
+//			if((patient.getFirstName() != null) && (!patient.getFirstName().isEmpty()) && alphaPattern.matcher(patient.getFirstName()).matches()) 
+//				if((patient.getLastName() != null) && (!patient.getLastName().isEmpty()) && alphaPattern.matcher(patient.getLastName()).matches()) 
+//					if((patient.getGender() != null) && (!patient.getGender().isEmpty()) && alphaPattern.matcher(patient.getGender()).matches()) 
+//						if((patient.getNIC() != null) && (!patient.getNIC().isEmpty()) && nicPattern.matcher(patient.getNIC()).matches()) 
+//							   if((patient.getDOB() != null) && (!patient.getDOB().isEmpty()) && dobPattern.matcher(patient.getDOB()).matches()) 
+//								   if((patient.getEmail() != null) && (!patient.getEmail().isEmpty()) && emailPattern.matcher(patient.getEmail()).matches()) 
+//									   if((patient.getPhone() != null) && (!patient.getPhone().isEmpty()) && phonePattern.matcher(patient.getPhone()).matches()) 
+//										   if((patient.getBloodGroup() != null) && (!patient.getBloodGroup().isEmpty()) && bloodTypePattern.matcher(patient.getBloodGroup()).matches()) 
+//											   if((patient.getPassword() != null) && (!patient.getPassword().isEmpty()) && pwdPattern.matcher(patient.getPassword()).matches()) 
+//												   if((patient.getConfirmPassword() != null) && (!patient.getConfirmPassword().isEmpty()) && patient.getConfirmPassword().equals(patient.getPassword())) {
+//													   
+//														preparedStmt.setString(1, patient.getFirstName());
+//														preparedStmt.setString(2, patient.getLastName());
+//														preparedStmt.setString(3, patient.getGender());
+//														preparedStmt.setString(4, patient.getNIC());
+//														preparedStmt.setString(5, patient.getDOB());
+//														preparedStmt.setString(6, patient.getEmail());
+//														preparedStmt.setString(7, patient.getPhone());
+//														preparedStmt.setString(8, patient.getBloodGroup());
+//														preparedStmt.setString(9, patient.getAllergy());
+//														preparedStmt.setString(10, patient.getPassword());
+//														preparedStmt.setString(11, patient.getConfirmPassword());
+//													   
+//													   int result = 0;
+//													   
+//													   result = preparedStmt.executeUpdate();
+//												
+//													   if(result > 0) {
+//														output = "Inserted successfully";	
+//													   }
+//												   }else 
+//													   output="Cpassword";
+//												   
+//
+//											   else 
+//												   output="password";
+//											   
+//
+//										   else 
+//											   output="blood";
+//										   
+//
+//									   else 
+//										   output="phone";
+//									   
+// 
+//								   else 
+//									   output="DOB";
+//								   
+//
+//							   else
+//								   output="DOB";
+//							   
+//
+//						else 
+//							output="NIC";
+//						
+//
+//					else 
+//						output="gender";
+//					
+//
+//				else 
+//					output="lName";
+//				
+//
+//			else 
+//				output="fName";
+			
+				
+			 int result = 0;
+			   
+			   result = preparedStmt.executeUpdate();
+		
+			   if(result > 0) {
+				output = "Inserted successfully";	
+			   }
 
 		} catch (Exception e) {
 
@@ -51,8 +149,8 @@ public class PatientService implements IPatientService {
 		} finally {
 
 			try {
-				if (preparedStatement != null) {
-					preparedStatement.close();
+				if (preparedStmt != null) {
+					preparedStmt.close();
 				}
 
 				if (con != null) {
@@ -242,7 +340,7 @@ public class PatientService implements IPatientService {
 
 			preparedStmt = con.prepareStatement(query);
 
-			preparedStmt.setString(1, patient.getFirstName());
+			/*preparedStmt.setString(1, patient.getFirstName());
 			preparedStmt.setString(2, patient.getLastName());
 			preparedStmt.setString(3, patient.getGender());
 			preparedStmt.setString(4, patient.getNIC());
@@ -253,7 +351,134 @@ public class PatientService implements IPatientService {
 			preparedStmt.setString(9, patient.getAllergy());
 			preparedStmt.setString(10, patient.getPassword());
 			preparedStmt.setString(11, patient.getConfirmPassword());
-			preparedStmt.setInt(12, patient.getPatientId());
+			preparedStmt.setInt(12, patient.getPatientId());*/
+			
+//			int columnIndex = 0;
+//			Pattern pattern;
+//			
+//			switch (columnIndex) {
+//			case 1:
+//				
+//				pattern = Pattern.compile("/^[a-zA-Z]+$/");
+//
+//				if(patient.getFirstName() != null && pattern.matcher(patient.getFirstName()).matches()) {
+//					preparedStmt.setString(1, patient.getFirstName());
+//				}
+//				else if(patient.getFirstName() == null && patient.getFirstName().isEmpty()){
+//					output="Please enter first name..!";
+//				}
+//				else {
+//					output="Please use only alphabets for the first name..!";
+//
+//				}
+//				
+//				break;
+//				
+//			case 2:
+//				
+//				pattern = Pattern.compile("/^[a-zA-Z]+$/");
+//
+//				if(patient.getLastName() != null && pattern.matcher(patient.getLastName()).matches()) {
+//					preparedStmt.setString(2, patient.getLastName());
+//				}
+//				else if(patient.getLastName() == null && patient.getLastName().isEmpty()){
+//					output="Please enter last name..!";
+//				}
+//				else {
+//					output="Please use only alphabets for the last name..!";
+//
+//				}
+//				
+//				break;
+//				
+//	       case 3:
+//				
+//				pattern = Pattern.compile("/^[a-zA-Z]+$/");
+//
+//				if(patient.getGender() != null && pattern.matcher(patient.getGender()).matches()) {
+//					preparedStmt.setString(3, patient.getGender());
+//				}
+//				else if(patient.getGender() == null && patient.getGender().isEmpty()){
+//					output="Please enter gender..!";
+//				}
+//				else {
+//					output="Please use only alphabets for the gender..!";
+//
+//				}
+//				
+//				break;
+//				
+//	       case 4:
+//				
+//				pattern = Pattern.compile("/^[0-9]{9}[vVxX]$/");
+//
+//				if(patient.getNIC() != null && pattern.matcher(patient.getNIC()).matches()) {
+//					preparedStmt.setString(4, patient.getNIC());
+//				}
+//				else if(patient.getNIC() == null && patient.getNIC().isEmpty()){
+//					output="Please enter NIC..!";
+//				}
+//				else {
+//					output="Please enter a correct NIC number...!";
+//
+//				}
+//				
+//				break;
+//				
+//	       case 5:
+//				
+//				pattern = Pattern.compile("(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20)\\d\\d)");
+//				
+//				if(patient.getDOB() != null && pattern.matcher(patient.getDOB()).matches()) {
+//					preparedStmt.setString(5, patient.getDOB());
+//				}
+//				else if(patient.getDOB() == null && patient.getDOB().isEmpty()){
+//					output="Please enter DOB..!";
+//				}
+//				else {
+//					output="Please enter dob in format dd/mm/yyyy..!";
+//
+//				}
+//				
+//				break;
+//				
+//	       case 6:
+//				
+//				pattern = Pattern.compile("/^[\\w\\-\\.\\+]+\\@[a-zA-Z0-9\\.\\-]+\\.[a-zA-z0-9]{2,4}$/");
+//				
+//				if(patient.getEmail() != null && pattern.matcher(patient.getEmail()).matches()) {
+//					preparedStmt.setString(6, patient.getEmail());
+//				}
+//				else if(patient.getEmail() == null && patient.getEmail().isEmpty()){
+//					output="Please enter email..!";
+//				}
+//				else {
+//					output="Please enter a valid email...!";
+//
+//				}
+//				
+//				break;
+//				
+//	       case 7:
+//				
+//				pattern = Pattern.compile("/^\\d{10}$/");
+//				
+//				if(patient.getPhone() != null && pattern.matcher(patient.getPhone()).matches()) {
+//					preparedStmt.setString(7, patient.getPhone());
+//				}
+//				else if(patient.getPhone() == null && patient.getPhone().isEmpty()){
+//					output="Please enter phone..!";
+//				}
+//				else {
+//					output="Please enter a valid phone...!";
+//
+//				}
+//				
+//				break;
+//
+//			default:
+//				break;
+//			}
 
 			preparedStmt.execute();
 

@@ -40,7 +40,7 @@ public class PatientResource {
 			@FormParam("allergies") String allergies,
 			@FormParam("password") String password, 
 			@FormParam("cPassword") String cPassword) {
-
+		
 		patient.setFirstName(firstName);
 		patient.setLastName(lastName);
 		patient.setGender(gender);
@@ -52,7 +52,8 @@ public class PatientResource {
 		patient.setAllergy(allergies);
 		patient.setPassword(password);
 		patient.setConfirmPassword(cPassword);
-
+		
+		
 		String output = patientService.registerPatient(patient);
 
 		return output;
