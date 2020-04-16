@@ -219,15 +219,18 @@ public class AppointmentService implements IAppointmentService {
 		try {
 			con = DBConnection.getDBConnection();
 			
-			String query = "DELETE FROM appointment WHERE appointmentId = ?";
+			String query = "UPDATE appointment"
+					+ "SET appointmentStatus = ?"
+					+ "WHERE appointmentId = ?";
 			
 			pStatement = con.prepareStatement(query);
 			
-			pStatement.setString(1, appointmnetId);
+			pStatement.setString(Constants.COLUMN_INDEX_ONE, "Cancel");
+			pStatement.setString(Constants.COLUMN_INDEX_TWO, appointmnetId);
 			
 			pStatement.execute();
 			
-			output = "Deleted Successfully...!";
+			output = "Deleted " + appointmnetId + "Changed status to Cancel";
 			
 		} catch (Exception e) {
 
