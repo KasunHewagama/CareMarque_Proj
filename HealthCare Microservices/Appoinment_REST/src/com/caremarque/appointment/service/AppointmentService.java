@@ -20,6 +20,7 @@ import javax.swing.JPopupMenu.Separator;
 import com.caremarque.appointment.model.Appointment;
 import com.caremarque.appointment.utils.CommonUtils;
 import com.caremarque.appointment.utils.DBConnection;
+import com.caremarque.appointment.utils.Constants;
 import com.mysql.cj.log.Log;
 
 public class AppointmentService implements IAppointmentService {
@@ -38,14 +39,17 @@ public class AppointmentService implements IAppointmentService {
 		//Here we call the generateAppointmentIDs method to auto generate a appointmentID
 		//To do that we pass the existing appointmentid set as an arraylist
 		String appointmentId = CommonUtils.generateAppointmentIDs(getAppointmentIDs());
+		System.out.println("AppointmentID: " +  appointmentId);
+
 
 		try {
 			con = DBConnection.getDBConnection();
 
-			String query = "INSERT INTO appointment(" + "appointmentId," + "patientId," + "patientName," + "phone," + "doctorName,"
-					+ "specialization," + "hospitalId," + "hospitalName," + "appointmentDate," + "appointmentTime,"
-					+ "lastUpdateDate," + "lastUpdateTime," + "appointmentStatus) "
-					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			String query = "INSERT INTO appointment(" 
+					+ "appointmentId,patientId,patientName,phone,doctorName,"
+					+ "specialization,hospitalId,hospitalName,appointmentDate,appointmentTime,"
+					+ "lastUpdateDate,lastUpdateTime,appointmentStatus)"
+					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 			preparedStatement = con.prepareStatement(query);
 
@@ -136,32 +140,34 @@ public class AppointmentService implements IAppointmentService {
 
 			while (rs.next()) {
 				Appointment appointment = new Appointment();
-				String patientId = rs.getString("patientId");
-				String patientName = rs.getString("patientName");
-				String phone = rs.getString("phone");
-				String doctorName = rs.getString("doctorName");
-				String specialization = rs.getString("specialization");
-				String hospitalId = rs.getString("hospitalId");
-				String hospitalName = rs.getString("hospitalName");
-				String appointmentDate = rs.getString("appointmentDate");
-				String appointmentTime = rs.getString("appointmentTime");
-				String lastUpdateDate = rs.getString("lastUpdateDate");
-				String lastUpdateTime = rs.getString("lastUpdateTime");
-				String appointmentStatus = rs.getString("appointmentStatus");
+				appointment.setPatientId(rs.getString(Constants.COLUMN_INDEX_ONE));
+				appointment.setPatientName(rs.getString(Constants.COLUMN_INDEX_TWO));
+				appointment.setPhone(rs.getString(Constants.COLUMN_INDEX_THREE));
+				appointment.setDoctorName(rs.getString(Constants.COLUMN_INDEX_FOUR));
+				appointment.setSpecialization(rs.getString(Constants.COLUMN_INDEX_FIVE));
+				appointment.setHospitalId(rs.getString(Constants.COLUMN_INDEX_SIX));
+				appointment.setHospitalName(rs.getString(Constants.COLUMN_INDEX_SEVEN));
+				appointment.setAppointmentDate(rs.getString(Constants.COLUMN_INDEX_EIGHT));
+				appointment.setAppointmentTime(rs.getString(Constants.COLUMN_INDEX_NINE));
+				appointment.setLastUpdateDate(rs.getString(Constants.COLUMN_INDEX_TEN));
+				appointment.setLastUpdateTime(rs.getString(Constants.COLUMN_INDEX_ELEVEN));
+				appointment.setAppointmentStatus(rs.getString(Constants.COLUMN_INDEX_TWELVE));
 				arrayList.add(appointment);
+				
 
-				output += "<tr><td>" + patientId + "</td>";
-				output += "<td>" + patientName + "</td>";
-				output += "<td>" + phone + "</td>";
-				output += "<td>" + doctorName + "</td>";
-				output += "<td>" + specialization + "</td>";
-				output += "<td>" + hospitalId + "</td>";
-				output += "<td>" + hospitalName + "</td>";
-				output += "<td>" + appointmentDate + "</td>";
-				output += "<td>" + appointmentTime + "</td>";
-				output += "<td>" + lastUpdateDate + "</td>";
-				output += "<td>" + lastUpdateTime + "</td>";
-				output += "<td>" + appointmentStatus + "</td></tr>";
+				output += "<tr><td>" + rs.getString(Constants.COLUMN_INDEX_ONE) + "</td>";
+				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_TWO) + "</td>";
+				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_THREE) + "</td>";
+				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_FOUR) + "</td>";
+				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_FIVE) + "</td>";
+				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_SIX) + "</td>";
+				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_SEVEN) + "</td>";
+				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_EIGHT) + "</td>";
+				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_NINE) + "</td>";
+				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_TEN) + "</td>";
+				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_ELEVEN) + "</td>";
+				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_TWELVE) + "</td>";
+				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_THIRTEEN) + "</td></tr>";
 				
 				
 				System.out.println("Data Retrieved from database...!");
@@ -285,6 +291,7 @@ public class AppointmentService implements IAppointmentService {
 		}		
 	
 	}
+		System.out.println(arrayList.size());
 		return arrayList;
 	}
 
