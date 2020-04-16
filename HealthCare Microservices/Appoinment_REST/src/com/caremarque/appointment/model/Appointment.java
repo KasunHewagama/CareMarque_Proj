@@ -1,7 +1,6 @@
 package com.caremarque.appointment.model;
 
-import java.sql.Date;
-import java.sql.Time;
+
 
 public class Appointment {
 
