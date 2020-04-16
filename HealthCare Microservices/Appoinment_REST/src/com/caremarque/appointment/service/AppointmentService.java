@@ -205,8 +205,72 @@ public class AppointmentService implements IAppointmentService {
 
 	@Override
 	public String updateAppointment(String appointmentid, Appointment appointment) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		String output = "";
+		Connection con = null;
+		PreparedStatement pStatement = null;
+		
+		try {
+			con = DBConnection.getDBConnection();
+			
+			String query = "UPDATE appointment"
+					+ "SET "
+					+ "patientId = ?"
+					+ "patientName =?"
+					+ "phone = ?"
+					+ "doctorName = ?"
+					+ "specialization = ?"
+					+ "hospitalId = ?"
+					+ "hospitalName = ?"
+					+ "appointmentDate = ?"
+					+ "appointmentTime = ?"
+					+ "lastUpdateDate = ?"
+					+ "lastUpdateTime = ?"
+					+ "appoinmentStatus = ?"
+					+ "WHERE appointmentId = ?";
+			
+			pStatement = con.prepareStatement(query);
+			
+			pStatement.setString(1, appointment.getPatientId());
+			pStatement.setString(2, appointment.getPatientName());
+			pStatement.setString(3, appointment.getPhone());
+			pStatement.setString(4, appointment.getDoctorName());
+			pStatement.setString(5, appointment.getSpecialization());
+			pStatement.setString(6, appointment.getHospitalId());
+			pStatement.setString(7, appointment.getHospitalName());
+			pStatement.setString(8, appointment.getAppointmentDate());
+			pStatement.setString(9, appointment.getAppointmentTime());
+			pStatement.setString(10, LocalDate.now().toString());
+			pStatement.setString(11, LocalTime.now().toString());
+			pStatement.setString(11, "Pending");
+			
+			pStatement.execute();
+			
+			output = "Successfully Updated...!";
+
+
+		} catch (Exception e) {
+			
+			output = "Error while updating the Appointment...!";
+			System.err.println(e.getMessage());
+					
+		} finally {
+
+			try {
+				if (pStatement != null) {
+					pStatement.close();
+				}
+
+				if (con != null) {
+					con.close();
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return output;
 	}
 
 	@Override
