@@ -11,9 +11,9 @@ import java.util.logging.Logger;
 import com.caremarque.userAuth.model.PatientAuthentication;
 import com.caremarque.userAuth.utils.DBConnection;
 
-public class UserAuthService {
+public class UserAuthServiceImpl {
 
-	public static final Logger log = Logger.getLogger(UserAuthService.class.getName());
+	public static final Logger log = Logger.getLogger(UserAuthServiceImpl.class.getName());
 	
 	private static Connection con = null;
 	
