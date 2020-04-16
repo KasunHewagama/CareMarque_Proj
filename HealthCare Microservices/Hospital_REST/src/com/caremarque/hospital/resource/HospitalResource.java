@@ -46,6 +46,13 @@ public class HospitalResource {
 		return Hos_obj;
 
 	}
+	
+	@GET
+	@Path("/")
+	@Produces(MediaType.TEXT_HTML)
+	public String getHospitals() {
+		return as.getHospitals();
+	}
 
 	
 }
