@@ -92,7 +92,6 @@ public class PatientService implements IPatientService {
 				String lastName = rs.getString("lastName");
 				String gender = rs.getString("gender");
 				String NIC = rs.getString("NIC");
-				// String DOB = rs.getDate("DOB").toString();
 				String DOB = rs.getString("DOB");
 				String email = rs.getString("email");
 				String phone = rs.getString("phone");
@@ -172,8 +171,8 @@ public class PatientService implements IPatientService {
 				String lastName = rs.getString("lastName");
 				String gender = rs.getString("gender");
 				String NIC = rs.getString("NIC");
-				// String DOB = rs.getDate("DOB").toString();
-				String DOB = rs.getString("DOB");
+				String DOB = rs.getDate("DOB").toString();
+				//String DOB = rs.getString("DOB");
 				String email = rs.getString("email");
 				String phone = rs.getString("phone");
 				String bloodGroup = rs.getString("bloodGroup");
