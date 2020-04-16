@@ -19,7 +19,7 @@ import com.caremarque.appointment.service.AppointmentServiceImpl;
 import com.caremarque.appointment.service.IAppointmentService;
 
 @Path("/Appointment")
-public class AppointmentResource {
+public class AppointmentService {
 	
 	IAppointmentService as = new AppointmentServiceImpl();
 	
