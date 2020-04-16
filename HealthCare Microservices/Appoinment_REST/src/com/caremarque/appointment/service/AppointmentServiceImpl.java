@@ -23,7 +23,7 @@ import com.caremarque.appointment.utils.DBConnection;
 import com.caremarque.appointment.utils.Constants;
 import com.mysql.cj.log.Log;
 
-public class AppointmentService implements IAppointmentService {
+public class AppointmentServiceImpl implements IAppointmentService {
 
 	//this object is for logging
 	public static final Logger log = Logger.getLogger(IAppointmentService.class.getName());
