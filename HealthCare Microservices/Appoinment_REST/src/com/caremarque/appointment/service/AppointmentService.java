@@ -288,9 +288,9 @@ public class AppointmentService implements IAppointmentService {
 				}
 			} catch (SQLException e) {
 			log.log(Level.SEVERE, e.getMessage());
-		}		
-	
-	}
+			}
+
+		}
 		System.out.println(arrayList.size());
 		return arrayList;
 	}
