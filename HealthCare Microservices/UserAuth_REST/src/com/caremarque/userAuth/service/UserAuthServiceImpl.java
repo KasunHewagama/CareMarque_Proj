@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 import com.caremarque.userAuth.model.PatientAuthentication;
 import com.caremarque.userAuth.utils.DBConnection;
 
-public class UserAuthServiceImpl {
+public class UserAuthServiceImpl implements IUserAuthService{
 
 	public static final Logger log = Logger.getLogger(UserAuthServiceImpl.class.getName());
 	
