@@ -17,11 +17,14 @@ import org.jsoup.parser.Parser;
 import com.caremarque.appointment.model.Appointment;
 import com.caremarque.appointment.service.AppointmentServiceImpl;
 import com.caremarque.appointment.service.IAppointmentService;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 @Path("/Appointment")
 public class AppointmentService {
 	
 	IAppointmentService as = new AppointmentServiceImpl();
+	Appointment appointment = new Appointment();
 	
 	@POST
 	@Path("/")
@@ -44,7 +47,7 @@ public class AppointmentService {
 		
 		System.out.println("CREATE Appointment...!");
 		//create appointment object
-		Appointment appointment = new Appointment();
+		
 		
 		appointment.setPatientId(patientId);
 		appointment.setPatientName(patientName);
@@ -79,8 +82,41 @@ public class AppointmentService {
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_HTML)
-	public String putAppointment() {
-		return null;
+	public String putAppointment(String appointmentData) {
+		
+		JsonObject appointmentObject = new JsonParser().parse(appointmentData).getAsJsonObject();
+		
+		String appointmentId = appointmentObject.get("appointmentId").getAsString();
+		String patientId = appointmentObject.get("patientId").getAsString();
+		String patientName = appointmentObject.get("patientName").getAsString();
+		String phone = appointmentObject.get("phone").getAsString();
+		String doctorName = appointmentObject.get("doctorName").getAsString();
+		String specialization = appointmentObject.get("specialization").getAsString();
+		String hospitalId = appointmentObject.get("hospitalId").getAsString();
+		String hospitalName = appointmentObject.get("hospitalName").getAsString();
+		String appointmentDate = appointmentObject.get("appointmentDate").getAsString();
+		String appointmentTime = appointmentObject.get("appointmentTime").getAsString();
+		String lastUpdateDate = appointmentObject.get("lastUpdateDate").getAsString();
+		String lastUpdateTime = appointmentObject.get("lastUpdateTime").getAsString();
+		String appointmentStatus = appointmentObject.get("appointmentStatus").getAsString();
+		
+		appointment.setAppointmentId(appointmentId);
+		appointment.setPatientId(patientId);
+		appointment.setPatientName(patientName);
+		appointment.setPhone(phone);
+		appointment.setDoctorName(doctorName);
+		appointment.setSpecialization(specialization);
+		appointment.setHospitalId(hospitalId);
+		appointment.setHospitalName(hospitalName);
+		appointment.setAppointmentDate(appointmentDate);
+		appointment.setAppointmentTime(appointmentTime);
+		appointment.setLastUpdateDate(lastUpdateDate);
+		appointment.setLastUpdateTime(lastUpdateTime);
+		appointment.setAppointmentStatus(appointmentStatus);
+		
+		String output = as.updateAppointment(appointmentId,appointment);
+		
+		return output;
 		
 	}
 	
