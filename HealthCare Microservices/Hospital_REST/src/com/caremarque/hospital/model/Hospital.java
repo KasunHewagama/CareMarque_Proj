@@ -74,8 +74,8 @@ public class Hospital {
 		this.phone = phone;
 		this.regNo = regNo;
 		this.address = address;
-		Open_Hours = open_Hours;
-		Close_Hours = close_Hours;
+		this.Open_Hours = open_Hours;
+		this.Close_Hours = close_Hours;
 	}
 
 }
