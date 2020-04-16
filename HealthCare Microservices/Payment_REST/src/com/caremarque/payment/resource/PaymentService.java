@@ -1,9 +1,5 @@
 package com.caremarque.payment.resource;
 
-
-import java.util.Date;
-import java.util.List;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
@@ -13,16 +9,13 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import javax.xml.crypto.Data;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.parser.Parser;
 
 import com.caremarque.payment.model.Payment;
-import com.caremarque.payment.model.PaymentAuthentication;
-import com.caremarque.payment.service.IPaymentService;
 import com.caremarque.payment.service.PaymentServiceImpl;
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
 
 @Path("/Payment")
@@ -82,9 +75,15 @@ public class PaymentService {
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_XML)
 	@Produces(MediaType.TEXT_PLAIN)
-	public String deletePayment(String paymentId) {
+	public String cancelPayment(String paymentId) {
 		
-		return null;
+		Document doc = Jsoup.parse(paymentId, "", Parser.xmlParser());
+		
+		String paymentdata = doc.select("paymentId").text();
+		
+		String output = ps.cancelPayment(paymentId);
+		
+		return output;
 	}
 	
 	@GET

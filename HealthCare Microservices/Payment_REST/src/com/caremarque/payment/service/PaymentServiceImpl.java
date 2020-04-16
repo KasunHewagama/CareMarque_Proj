@@ -284,7 +284,43 @@ public class PaymentServiceImpl implements IPaymentService {
 
 	@Override
 	public String cancelPayment(String paymentId) {
-		return null;
+		
+		String output = "";
+		
+		try {
+			connecton = DBConnection.getDBConnection();
+			
+			if(connecton == null) {
+				return "Error while connecting to the database for deleteing";
+			}
+			
+			String query = "UPDATE PAYMENTS"
+					+ "SET paymentStatus = ?"
+					+ "WHERE paymentId = ?";
+			preparedstatement = connecton.prepareStatement(query);
+			preparedstatement.setString(Constants.COLUMN_INDEX_ONE, "Cancel");
+			preparedstatement.setString(Constants.COLUMN_INDEX_TWO, paymentId);
+			preparedstatement.execute();
+			
+			output = "Canceled " + paymentId + " Changed status to cancel!";
+
+		} catch (Exception e) {
+			log.log(Level.SEVERE, e.getMessage());
+		
+		} finally {
+			try {
+				if(preparedstatement != null) {
+					preparedstatement.close();
+				}
+				if(connecton != null) {
+					connecton.close();
+				}
+			} catch (SQLException e) {
+				log.log(Level.SEVERE, e.getMessage());
+			}
+		}
+		
+		return output;
 	}
 
 	//This method get all the existing paymentids and put them into a arraylist 
