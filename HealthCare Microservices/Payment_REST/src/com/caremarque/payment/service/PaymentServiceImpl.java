@@ -345,7 +345,6 @@ public class PaymentServiceImpl implements IPaymentService {
 			String output = response.getEntity(String.class);
 			
 			ObjectMapper mapper = new ObjectMapper();
-			System.out.println(output);
 			List<PaymentAuthentication> pAuth = mapper.readValue(output, new TypeReference<List<PaymentAuthentication>>() {});
 			System.out.println("Output from Server .... \n");
 			System.out.println(pAuth);
