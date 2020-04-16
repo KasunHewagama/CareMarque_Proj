@@ -8,12 +8,12 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import com.caremarque.paymentAuth.model.PaymentAuthentication;
-import com.caremarque.paymentAuth.service.PaymentAuthService;
+import com.caremarque.paymentAuth.service.PaymentAuthServiceImpl;
 
 @Path("/PaymentAuthentication")
-public class PaymentAuthenticationResource {
+public class PaymentAuthenticationService {
 
-	PaymentAuthService pAuth = new PaymentAuthService();
+	PaymentAuthServiceImpl pAuth = new PaymentAuthServiceImpl();
 	
 	@GET
 	@Path("/getAuthDetails")

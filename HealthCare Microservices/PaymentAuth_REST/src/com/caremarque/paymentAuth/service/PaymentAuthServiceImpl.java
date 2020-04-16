@@ -13,9 +13,9 @@ import com.caremarque.paymentAuth.model.PaymentAuthentication;
 import com.caremarque.paymentAuth.utils.Constants;
 import com.caremarque.paymentAuth.utils.DBConnection;
 
-public class PaymentAuthService {
+public class PaymentAuthServiceImpl {
 
-	public static final Logger log = Logger.getLogger(PaymentAuthService.class.getName());
+	public static final Logger log = Logger.getLogger(PaymentAuthServiceImpl.class.getName());
 	
 	public static Connection connecton;
 	
