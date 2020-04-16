@@ -15,13 +15,13 @@ import org.jsoup.nodes.Document;
 import org.jsoup.parser.Parser;
 
 import com.caremarque.appointment.model.Appointment;
-import com.caremarque.appointment.service.AppointmentService;
+import com.caremarque.appointment.service.AppointmentServiceImpl;
 import com.caremarque.appointment.service.IAppointmentService;
 
 @Path("/Appointment")
 public class AppointmentResource {
 	
-	IAppointmentService as = new AppointmentService();
+	IAppointmentService as = new AppointmentServiceImpl();
 	
 	@POST
 	@Path("/")
