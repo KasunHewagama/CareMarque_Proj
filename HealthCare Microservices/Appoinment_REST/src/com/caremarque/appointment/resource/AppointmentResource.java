@@ -10,6 +10,10 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.parser.Parser;
+
 import com.caremarque.appointment.model.Appointment;
 import com.caremarque.appointment.service.AppointmentService;
 import com.caremarque.appointment.service.IAppointmentService;
@@ -87,7 +91,13 @@ public class AppointmentResource {
 	@Produces(MediaType.TEXT_PLAIN)
 	public String deleteAppointment(String appointmentId) {
 		
-		return null;
+		Document document = Jsoup.parse(appointmentId, "", Parser.xmlParser());
+		
+		String appointmentData = document.select("appointmentId").text();
+		
+		String output = as.cancelAppointment(appointmentId);
+		
+		return output;
 		
 	}
 	
