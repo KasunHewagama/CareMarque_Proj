@@ -4,10 +4,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.caremarque.hospital.model.Hospital;
+import com.caremarque.hospital.utils.CommonUtils;
 import com.caremarque.hospital.utils.DBConnection;
 
 public class HospitalService implements IHospitalService {
@@ -21,7 +23,9 @@ public class HospitalService implements IHospitalService {
 		String strobj = null;
 		Connection con = null;
 		PreparedStatement preparedStatement = null;
-
+		
+		String hospitalId = CommonUtils.generateHospitalIDs(getHospitalIDs());
+		System.out.println("hospitalId" + hospitalId);
 		try {
 			con = DBConnection.getDBConnection();
 
@@ -87,8 +91,13 @@ public class HospitalService implements IHospitalService {
 			stobj = con.createStatement();
 			resultobj = stobj.executeQuery(RetriveQuery);
 
-			strobj = "<table border=\"1\"> <tr><th>HOSPITAL</th> " + "<th>hospitalId</th> " + "<th>hospitalName</th> "
-					+ "<th>phone</th> " + "<th>regNo</th> " + "<th>address</th> " + "<th>Open_Hours</th> "
+			strobj = "<table border=\"1\"> <tr><th>HOSPITAL</th> "
+					+ "<th>hospitalId</th> " 
+					+ "<th>hospitalName</th> "
+					+ "<th>phone</th> " 
+					+ "<th>regNo</th> "
+					+ "<th>address</th> " 
+					+ "<th>Open_Hours</th> "
 					+ "<th>Close_Hours</th></tr> ";
 
 			while (resultobj.next()) {
@@ -139,14 +148,22 @@ public class HospitalService implements IHospitalService {
 		return strobj;
 	}
 
-	@Override
-	public void cancelHospital(String hospitalId) {
-		// TODO Auto-generated method stub
-
-	}
+	
 
 	@Override
 	public String updateHospital(Hospital hospital) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void DeleteHospital(String hospitalId) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public ArrayList<String> getHospitalIDs() {
 		// TODO Auto-generated method stub
 		return null;
 	}
