@@ -3,35 +3,40 @@ package com.caremarque.userAuth.service;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
+import com.caremarque.userAuth.model.userAuth;
 import com.caremarque.userAuth.utils.DBConnection;
 
 public class UserAuthService {
 
 	private static Connection con = null;
 	private static PreparedStatement preparedStmt = null;
+	ResultSet resultSet = null;
 	
-	public boolean checkPatientDeails(String userName, String password) {
-		
-		try {
-			con = DBConnection.getDBConnection();
-			
-			String query ="SELECT * FROM patient WHERE email = ? and password = ? ";
-			
-			preparedStmt = con.prepareStatement(query);
-			
-			preparedStmt.setString(1, userName);
-			preparedStmt.setString(2, password);
-			
-			ResultSet rs = preparedStmt.executeQuery();
-			
-			if(rs.next()) {
-				return true;
-			}
-		}catch (Exception e) {
-			System.err.println(e.getMessage());
-		}
-		
-		return false;
-	}
+	
+//	public List<userAuth> checkPatientDetails(){
+//		
+//		List<userAuth> patientList = new ArrayList<userAuth>();
+//		
+//		try {
+//			
+//			con = DBConnection.getDBConnection();
+//			
+//			String query = "SELECT * FROM patient";
+//			
+//			preparedStmt = con.prepareStatement(query);
+//			
+//			while(resultSet.next()) {
+//				
+//				userAuth patientAuth = new userAuth();
+//				
+//				patientAuth.setUserAuthId(resultSet.getInt(1));
+//				patientAuth.set
+//			}
+//		}
+//		
+//		return patientList;
+//	}
 }
