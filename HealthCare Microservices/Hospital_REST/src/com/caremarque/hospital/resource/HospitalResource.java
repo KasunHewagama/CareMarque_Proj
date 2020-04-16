@@ -53,6 +53,14 @@ public class HospitalResource {
 	public String getHospitals() {
 		return as.getHospitals();
 	}
+	
+	@PUT
+	@Path("/")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_HTML)
+	public String putHospital() {
+		return null;
+	}
 
 	
 }
