@@ -47,27 +47,5 @@ public class HospitalResource {
 
 	}
 
-	@GET
-	@Path("/")
-	@Produces(MediaType.TEXT_HTML)
-	public String getHospitals() {
-		return as.getHospitals();
-	}
-
-	@PUT
-	@Path("/")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.TEXT_HTML)
-	public String putHospital() {
-		return null;
-	}
-
-	@DELETE
-	@Path("/")
-	@Consumes(MediaType.APPLICATION_XML)
-	@Produces(MediaType.TEXT_PLAIN)
-	public String deleteHospital(String hospital) {
-		return null;
-	}
-
+	
 }
