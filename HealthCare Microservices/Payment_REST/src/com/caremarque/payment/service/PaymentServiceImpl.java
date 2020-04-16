@@ -18,17 +18,18 @@ import com.caremarque.payment.model.PaymentAuthentication;
 import com.caremarque.payment.utils.CommonUtils;
 import com.caremarque.payment.utils.Constants;
 import com.caremarque.payment.utils.DBConnection;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
-import jersey.repackaged.org.objectweb.asm.TypeReference;
 
 
-public class PaymentService implements IPaymentService {
+public class PaymentServiceImpl implements IPaymentService {
 	
 	//this object is for logging 
-	public static final Logger log = Logger.getLogger(PaymentService.class.getName());
+	public static final Logger log = Logger.getLogger(PaymentServiceImpl.class.getName());
 	
 	public static Connection connecton;
 	
@@ -203,17 +204,19 @@ public class PaymentService implements IPaymentService {
 			
 			output = "<table border=\"1\"> "
 					+ "<tr>"
-					+ "<th>paymentId</th> "
-					+ "<th>patientId</th> "
-					+ "<th>patientName</th> "
-					+ "<th>appointmentId</th> "
-					+ "<th>doctorId</th> "
-					+ "<th>hospitalId</th> "
-					+ "<th>paymentDate</th> "
-					+ "<th>doctorCharges</th> "
-					+ "<th>hospitalCharges</th> "
-					+ "<th>totalAmount</th> "
-					+ "<th>paymentStatus</th>"
+					+ "<th>PaymentId</th> "
+					+ "<th>PatientId</th> "
+					+ "<th>PatientName</th> "
+					+ "<th>AppointmentId</th> "
+					+ "<th>DoctorId</th> "
+					+ "<th>HospitalId</th> "
+					+ "<th>PaymentDate</th> "
+					+ "<th>DoctorCharges</th> "
+					+ "<th>HospitalCharges</th> "
+					+ "<th>TotalAmount</th> "
+					+ "<th>PaymentStatus</th>"
+					+ "<th>Update</th>"
+					+ "<th>Cancel</th>"
 					+ "</tr>"; 
 			
 			while(resultset.next()) {
@@ -242,8 +245,13 @@ public class PaymentService implements IPaymentService {
 				 output += "<td>" + resultset.getDouble(Constants.COLUMN_INDEX_EIGHT) + "</td>"; 
 				 output += "<td>" + resultset.getDouble(Constants.COLUMN_INDEX_NINE) + "</td>"; 
 				 output += "<td>" + resultset.getDouble(Constants.COLUMN_INDEX_TEN) + "</td>"; 
-				 output += "<td>" + resultset.getString(Constants.COLUMN_INDEX_ELEVEN) + "</td></tr>"; 
+				 output += "<td>" + resultset.getString(Constants.COLUMN_INDEX_ELEVEN) + "</td>"; 
 				
+				 output +=  "<td><input name=\"btnUpdate\" type=\"button\" value=\"Update\" class=\"btn btn-secondary\"></td>"
+								 + "<td><form method=\"post\" action=\"items.jsp\">"
+								 + "<input name=\"btnRemove\" type=\"submit\" value=\"Remove\" class=\"btn btn-danger\">"
+								 + "<input name=\"itemID\" type=\"hidden\" value=\"" + resultset.getString(Constants.COLUMN_INDEX_ONE)
+								 + "\">" + "</form></td></tr>";
 				
 				System.err.println("Data Retreived From DB");
 			}
@@ -335,9 +343,14 @@ public class PaymentService implements IPaymentService {
 			}
 
 			String output = response.getEntity(String.class);
-
-			System.out.println("Output from Server .... \n");
+			
+			ObjectMapper mapper = new ObjectMapper();
 			System.out.println(output);
+			List<PaymentAuthentication> pAuth = mapper.readValue(output, new TypeReference<List<PaymentAuthentication>>() {});
+			System.out.println("Output from Server .... \n");
+			System.out.println(pAuth);
+			System.out.println(pAuth.size());
+			System.out.println(pAuth.get(0).getAuthId());
 
 		  } catch (Exception e) {
 

@@ -18,7 +18,7 @@ import javax.xml.crypto.Data;
 import com.caremarque.payment.model.Payment;
 import com.caremarque.payment.model.PaymentAuthentication;
 import com.caremarque.payment.service.IPaymentService;
-import com.caremarque.payment.service.PaymentService;
+import com.caremarque.payment.service.PaymentServiceImpl;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -26,9 +26,9 @@ import com.google.gson.JsonParser;
 
 
 @Path("/Payment")
-public class PaymentResource {
+public class PaymentService {
 	
-	PaymentService ps = new PaymentService(); 
+	PaymentServiceImpl ps = new PaymentServiceImpl(); 
 
 	@POST
 	@Path("/")
