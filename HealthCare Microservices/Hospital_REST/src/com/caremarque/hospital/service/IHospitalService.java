@@ -1,5 +1,7 @@
 package com.caremarque.hospital.service;
 
+import java.util.ArrayList;
+
 import com.caremarque.hospital.model.Hospital;
 
 public interface IHospitalService {
@@ -12,6 +14,8 @@ public interface IHospitalService {
 	
 	public String updateHospital(Hospital hospital);
 	
-	public void cancelHospital(String hospitalId);
+	public void DeleteHospital(String hospitalId);
+	
+	public ArrayList<String> getHospitalIDs();
 
 }
