@@ -319,7 +319,8 @@ public class AppointmentServiceImpl implements IAppointmentService {
 			pStatement.setString(9, appointment.getAppointmentTime());
 			pStatement.setString(10, LocalDate.now().toString());
 			pStatement.setString(11, LocalTime.now().toString());
-			pStatement.setString(11, "Pending");
+			pStatement.setString(12, "Pending");
+			pStatement.setString(13, appointmentId);
 			
 			pStatement.execute();
 			
@@ -354,6 +355,7 @@ public class AppointmentServiceImpl implements IAppointmentService {
 	public String cancelAppointment(String appointmnetId) {
 		
 		String output = "";
+		String state = "Cancel";
 		PreparedStatement pStatement = null;
 		
 		try {
@@ -365,7 +367,7 @@ public class AppointmentServiceImpl implements IAppointmentService {
 			
 			pStatement = con.prepareStatement(query);
 			
-			pStatement.setString(Constants.COLUMN_INDEX_ONE, "Cancel");
+			pStatement.setString(Constants.COLUMN_INDEX_ONE, state);
 			pStatement.setString(Constants.COLUMN_INDEX_TWO, appointmnetId);
 			
 			pStatement.execute();
