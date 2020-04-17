@@ -313,82 +313,53 @@ try {
 			return output;
 		}
 
-		
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+		@Override
+		public String cancelDoctor(String doctorId) {
+			/* TODO Auto-generated method stub
+			return null; */
+			
+			String output = "";
+			PreparedStatement preparedStatmnt = null;
+			Connection con = null;
+			
+			try {
+				
+				con = DBConnection.getDBConnection();
+				
+				String query = "DELETE FROM doctor WHERE doctorId = ?";
+				
+				preparedStatmnt = con.prepareStatement(query);
+				
+				//preparedStatmnt.setInt(1, Integer.parseInt(doctorId));
+				preparedStatmnt.setString(1, doctorId);
+				
+				preparedStatmnt.execute();
+				
+				output = "Deleted successfully..!";
+				
+
+			}catch(Exception e) {
+				output = "Error while deleting item..!";
+				System.out.println(e.getMessage());
+			}finally {
+				
+				try {
+					if(preparedStatmnt != null) {
+						preparedStatmnt.close();
+					}
+					
+					if(con != null) {
+						con.close();
+					}
+				}catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+			return output;
+		}
+	
+
 	@Override
 	public ArrayList<String> getDoctorIDs() {
 		
