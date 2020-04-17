@@ -2,8 +2,10 @@ package com.caremarque.doctor.resource;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
@@ -52,5 +54,21 @@ public class DoctorService {
 		return output;
 		
 	}
+	
+	
+	@GET
+	@Path("/")
+	@Produces(MediaType.TEXT_HTML)
+	public String getDoctors() {
+		return ab.getDoctors();
+	}
+	
+	@GET
+	@Path("/{doctorId}")
+	@Produces(MediaType.TEXT_HTML)
+	public String getDoctor(@PathParam("doctorId") String id) {
+		return ab.getDoctor(id);
+	}
+	
 	
 }
