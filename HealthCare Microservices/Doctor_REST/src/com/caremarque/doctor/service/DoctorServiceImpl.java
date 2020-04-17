@@ -1,5 +1,5 @@
 package com.caremarque.doctor.service;
 
-public class DoctorService {
+public class DoctorServiceImpl {
 
 }
