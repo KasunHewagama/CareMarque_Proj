@@ -23,6 +23,8 @@ public class Constants {
 	//ID Prefixes
 	public static final String PAYMENT_ID_PREFIX = "PY";
 	
+	public static final String PATIENT_ID_PREFIX = "PA";
+	
 	//DBConstants
 	public static final String DBLOCATION_STRING = "jdbc:mysql://127.0.0.1:3306/healthcare";
 	public static final String DB_DRIVER_NAME = "com.mysql.cj.jdbc.Driver";

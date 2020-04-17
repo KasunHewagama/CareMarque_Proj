@@ -336,7 +336,7 @@ public class PatientServiceImpl implements IPatientService {
 
 			preparedStmt = con.prepareStatement(query);
 
-			/*preparedStmt.setString(1, patient.getFirstName());
+			preparedStmt.setString(1, patient.getFirstName());
 			preparedStmt.setString(2, patient.getLastName());
 			preparedStmt.setString(3, patient.getGender());
 			preparedStmt.setString(4, patient.getNIC());
@@ -347,134 +347,9 @@ public class PatientServiceImpl implements IPatientService {
 			preparedStmt.setString(9, patient.getAllergy());
 			preparedStmt.setString(10, patient.getPassword());
 			preparedStmt.setString(11, patient.getConfirmPassword());
-			preparedStmt.setInt(12, patient.getPatientId());*/
+			preparedStmt.setInt(12, patient.getPatientId());
 			
-//			int columnIndex = 0;
-//			Pattern pattern;
-//			
-//			switch (columnIndex) {
-//			case 1:
-//				
-//				pattern = Pattern.compile("/^[a-zA-Z]+$/");
-//
-//				if(patient.getFirstName() != null && pattern.matcher(patient.getFirstName()).matches()) {
-//					preparedStmt.setString(1, patient.getFirstName());
-//				}
-//				else if(patient.getFirstName() == null && patient.getFirstName().isEmpty()){
-//					output="Please enter first name..!";
-//				}
-//				else {
-//					output="Please use only alphabets for the first name..!";
-//
-//				}
-//				
-//				break;
-//				
-//			case 2:
-//				
-//				pattern = Pattern.compile("/^[a-zA-Z]+$/");
-//
-//				if(patient.getLastName() != null && pattern.matcher(patient.getLastName()).matches()) {
-//					preparedStmt.setString(2, patient.getLastName());
-//				}
-//				else if(patient.getLastName() == null && patient.getLastName().isEmpty()){
-//					output="Please enter last name..!";
-//				}
-//				else {
-//					output="Please use only alphabets for the last name..!";
-//
-//				}
-//				
-//				break;
-//				
-//	       case 3:
-//				
-//				pattern = Pattern.compile("/^[a-zA-Z]+$/");
-//
-//				if(patient.getGender() != null && pattern.matcher(patient.getGender()).matches()) {
-//					preparedStmt.setString(3, patient.getGender());
-//				}
-//				else if(patient.getGender() == null && patient.getGender().isEmpty()){
-//					output="Please enter gender..!";
-//				}
-//				else {
-//					output="Please use only alphabets for the gender..!";
-//
-//				}
-//				
-//				break;
-//				
-//	       case 4:
-//				
-//				pattern = Pattern.compile("/^[0-9]{9}[vVxX]$/");
-//
-//				if(patient.getNIC() != null && pattern.matcher(patient.getNIC()).matches()) {
-//					preparedStmt.setString(4, patient.getNIC());
-//				}
-//				else if(patient.getNIC() == null && patient.getNIC().isEmpty()){
-//					output="Please enter NIC..!";
-//				}
-//				else {
-//					output="Please enter a correct NIC number...!";
-//
-//				}
-//				
-//				break;
-//				
-//	       case 5:
-//				
-//				pattern = Pattern.compile("(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20)\\d\\d)");
-//				
-//				if(patient.getDOB() != null && pattern.matcher(patient.getDOB()).matches()) {
-//					preparedStmt.setString(5, patient.getDOB());
-//				}
-//				else if(patient.getDOB() == null && patient.getDOB().isEmpty()){
-//					output="Please enter DOB..!";
-//				}
-//				else {
-//					output="Please enter dob in format dd/mm/yyyy..!";
-//
-//				}
-//				
-//				break;
-//				
-//	       case 6:
-//				
-//				pattern = Pattern.compile("/^[\\w\\-\\.\\+]+\\@[a-zA-Z0-9\\.\\-]+\\.[a-zA-z0-9]{2,4}$/");
-//				
-//				if(patient.getEmail() != null && pattern.matcher(patient.getEmail()).matches()) {
-//					preparedStmt.setString(6, patient.getEmail());
-//				}
-//				else if(patient.getEmail() == null && patient.getEmail().isEmpty()){
-//					output="Please enter email..!";
-//				}
-//				else {
-//					output="Please enter a valid email...!";
-//
-//				}
-//				
-//				break;
-//				
-//	       case 7:
-//				
-//				pattern = Pattern.compile("/^\\d{10}$/");
-//				
-//				if(patient.getPhone() != null && pattern.matcher(patient.getPhone()).matches()) {
-//					preparedStmt.setString(7, patient.getPhone());
-//				}
-//				else if(patient.getPhone() == null && patient.getPhone().isEmpty()){
-//					output="Please enter phone..!";
-//				}
-//				else {
-//					output="Please enter a valid phone...!";
-//
-//				}
-//				
-//				break;
-//
-//			default:
-//				break;
-//			}
+
 
 			preparedStmt.execute();
 
