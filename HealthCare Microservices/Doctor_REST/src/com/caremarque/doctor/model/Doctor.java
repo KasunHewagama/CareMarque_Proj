@@ -9,27 +9,18 @@ public class Doctor
 	private String regNo;
 	private String gender;
 	private String specialization;
-	private int phone;
+	private String phone;
 	private String email;
 	private String password;
 	private String confirmPassword;
 	
 	
-	
-	public Doctor(String doctorId, String firstName, String lastName, String regNo, String gender,
-			String specialization, int phone, String email, String password, String confirmPassword) {
+	public Doctor() {
+		// TODO Auto-generated constructor stub
 		super();
-		this.doctorId = doctorId;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.regNo = regNo;
-		this.gender = gender;
-		this.specialization = specialization;
-		this.phone = phone;
-		this.email = email;
-		this.password = password;
-		this.confirmPassword = confirmPassword;
 	}
+
+	
 	public String getDoctorId() {
 		return doctorId;
 	}
@@ -66,10 +57,10 @@ public class Doctor
 	public void setSpecialization(String specialization) {
 		this.specialization = specialization;
 	}
-	public int getPhone() {
+	public String getPhone() {
 		return phone;
 	}
-	public void setPhone(int phone) {
+	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 	public String getEmail() {
@@ -93,5 +84,19 @@ public class Doctor
 	}
 	
 	
+	public Doctor(String doctorId, String firstName, String lastName, String regNo, String gender,
+			String specialization, String phone, String email, String password, String confirmPassword) {
+		super();
+		this.doctorId = doctorId;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.regNo = regNo;
+		this.gender = gender;
+		this.specialization = specialization;
+		this.phone = phone;
+		this.email = email;
+		this.password = password;
+		this.confirmPassword = confirmPassword;
+	}
 	
 }
