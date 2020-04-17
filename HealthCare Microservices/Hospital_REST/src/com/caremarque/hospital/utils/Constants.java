@@ -10,11 +10,11 @@ public class Constants {
 	public static final int COLUMN_INDEX_FOUR = 4;
 	public static final int COLUMN_INDEX_FIVE = 5;
 	public static final int COLUMN_INDEX_SIX = 6;
-	/* public static final int COLUMN_INDEX_SEVEN = 7; */
+	public static final int COLUMN_INDEX_SEVEN = 7; 
 
 
 	// ID Prefixes
-	//public static final String HOSPITAL_ID_PREFIX = "HID";
+	public static final String HOSPITAL_ID_PREFIX = "HID";
 
 	// DBConstants
 	public static final String DBLOCATION_STRING = "jdbc:mysql://127.0.0.1:3306/healthcare";
