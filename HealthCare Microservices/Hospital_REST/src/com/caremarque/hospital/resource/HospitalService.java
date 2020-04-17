@@ -31,9 +31,12 @@ public class HospitalService {
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.TEXT_PLAIN)
 	public String createHospital(@FormParam("hospitalId") String hospitalId,
-			@FormParam("hospitalName") String hospitalName, @FormParam("address") String address,
-			@FormParam("phone") String phone, @FormParam("regNo") String regNo,
-			@FormParam("Open_Hours") String Open_Hours, @FormParam("Close_Hours") String Close_Hours) {
+								 @FormParam("hospitalName") String hospitalName,
+								 @FormParam("address") String address,
+								 @FormParam("phone") String phone, 
+								 @FormParam("regNo") String regNo,
+								 @FormParam("Open_Hours") String Open_Hours, 
+								 @FormParam("Close_Hours") String Close_Hours) {
 
 		System.out.println("Create Hospital...........!");
 
