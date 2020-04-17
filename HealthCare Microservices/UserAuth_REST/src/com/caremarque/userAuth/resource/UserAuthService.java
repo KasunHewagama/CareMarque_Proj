@@ -18,9 +18,9 @@ public class UserAuthService {
 	@GET
 	@Path("/getPatientAuth")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<PatientAuthentication> checkPatientDetails(){
+	public List<PatientAuthentication> checkPatientAuthDetails(){
 		
-		System.out.println(userAuth.checkPatientDetails().toString());
+		System.out.println("resource : " + userAuth.checkPatientDetails().toString());
 		return userAuth.checkPatientDetails();
 		
 		

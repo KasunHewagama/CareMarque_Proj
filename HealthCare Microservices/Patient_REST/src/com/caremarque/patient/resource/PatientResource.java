@@ -32,8 +32,7 @@ public class PatientResource {
 	@Produces(MediaType.TEXT_PLAIN)
 	public String registerPatient(
 			@NotNull @Pattern(regexp = "/^[a-zA-Z]+$/", message="First Name cannot be empty & use alphabets only") 
-			@FormParam("firstName") 
-			String firstName,
+			@FormParam("firstName") String firstName,
 			
 			@NotNull @Pattern(regexp = "/^[a-zA-Z]+$/") @FormParam("lastName") String lastName,
 			@NotNull @Pattern(regexp = "/^[a-zA-Z]+$/") @FormParam("gender") String gender,

@@ -19,25 +19,66 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
 public class PatientService implements IPatientService {
+	
+	
+	public List<PatientAuthentication> getAuthDetails() {
 
-	Pattern alphaPattern = Pattern.compile("/^[a-zA-Z]+$/");
-	Pattern nicPattern = Pattern.compile("/^[0-9]{9}[vVxX]$/");
-	Pattern emailPattern = Pattern.compile("/^[\\w\\-\\.\\+]+\\@[a-zA-Z0-9\\.\\-]+\\.[a-zA-z0-9]{2,4}$/");
-	Pattern dobPattern = Pattern.compile("(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20)\\d\\d)");
-	Pattern bloodTypePattern = Pattern.compile("^(A|B|AB|O)[+-]$");
-	Pattern pwdPattern = Pattern.compile("/(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/");
-	Pattern phonePattern = Pattern.compile("/^\\d{10}$/");
+		List<PatientAuthentication> patientAuthList = new ArrayList<PatientAuthentication>();
+
+		try {
+
+			Client client = Client.create();
+
+			WebResource webResource = client
+					.resource("http://localhost:9090/UserAuth_REST/myService/UserAuthentication/getPatientAuth");
+
+			ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);
+
+			if (response.getStatus() != 200) {
+				throw new RuntimeException("Failed : HTTP error code : " + response.getStatus());
+
+			}
+			String output = response.getEntity(String.class);
+
+			Gson gson = new Gson();
+			JsonElement list = new JsonParser().parse(output).getAsJsonObject().get("UserAuthentication");
+			List<PatientAuthentication> listObj = gson.fromJson(list, new TypeToken<List<PatientAuthentication>>() {}.getType());
+			System.out.println(listObj.size());
+
+			for (PatientAuthentication patientAuthentication : listObj) {
+				System.out.println(patientAuthentication);
+				patientAuthList.add(patientAuthentication);
+
+			}
+
+			for (PatientAuthentication patientAuthentication : patientAuthList) {
+				System.out.println("ID : " + patientAuthentication.getPatientAuthId());
+				System.out.println("email : " + patientAuthentication.getUserName());
+
+			}
+
+			System.out.println(listObj.get(0).getPatientAuthId());
+			System.out.println(listObj.get(0).getUserName());
+			System.out.println(listObj.get(0).getPassword());
+
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		return patientAuthList;
+	}
+	
+	
 
 	//to insert patient details to the db
 	@Override
 	public String registerPatient(Patient patient) {
-
+		
 		String output = "";
 		Connection con = null;
 		PreparedStatement preparedStmt = null;
 		boolean validate = false;
 		
-		List<PatientAuthentication> patientAuthList = getPatientAuthDetails();
+		List<PatientAuthentication> patientAuthList = getAuthDetails();
 		
 
 		try {
@@ -47,6 +88,8 @@ public class PatientService implements IPatientService {
 			String query = "INSERT INTO patient(firstName, lastName, gender, NIC, DOB, email, phone, bloodGroup, allergies, password, cPassword) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 			preparedStmt = con.prepareStatement(query);
+			
+			System.out.println("before for loop");
 			
 			for(PatientAuthentication patientAuthentication : patientAuthList) {
 				System.out.println("PAUTH 1 : " + patientAuthentication.getUserName());
@@ -63,23 +106,10 @@ public class PatientService implements IPatientService {
 			}
 			
 			
-			if(validate == false) {
+			if(validate == true) {
 				
+				output = "You already have an account from email" + patient.getEmail() + "..!!!";
 			
-			preparedStmt.setString(1, patient.getFirstName());
-			preparedStmt.setString(2, patient.getLastName());
-			preparedStmt.setString(3, patient.getGender());
-			preparedStmt.setString(4, patient.getNIC());
-			preparedStmt.setString(5, patient.getDOB());
-			preparedStmt.setString(6, patient.getEmail());
-			preparedStmt.setString(7, patient.getPhone());
-			preparedStmt.setString(8, patient.getBloodGroup());
-			preparedStmt.setString(9, patient.getAllergy());
-			preparedStmt.setString(10, patient.getPassword());
-			preparedStmt.setString(11, patient.getConfirmPassword());
-			
-			preparedStmt.execute();
-			output = "Inserted successfully";
 			
 //			 int result = 0;
 //			   
@@ -90,8 +120,21 @@ public class PatientService implements IPatientService {
 //			   }
 //			
 			}else {
-				output = "You already have an account from this email..!!!";
 				
+				preparedStmt.setString(1, patient.getFirstName());
+				preparedStmt.setString(2, patient.getLastName());
+				preparedStmt.setString(3, patient.getGender());
+				preparedStmt.setString(4, patient.getNIC());
+				preparedStmt.setString(5, patient.getDOB());
+				preparedStmt.setString(6, patient.getEmail());
+				preparedStmt.setString(7, patient.getPhone());
+				preparedStmt.setString(8, patient.getBloodGroup());
+				preparedStmt.setString(9, patient.getAllergy());
+				preparedStmt.setString(10, patient.getPassword());
+				preparedStmt.setString(11, patient.getConfirmPassword());
+				
+				preparedStmt.execute();
+				output = "Inserted successfully";
 			}
 
 		} catch (Exception e) {
@@ -507,52 +550,7 @@ public class PatientService implements IPatientService {
 		return output;
 	}
 	
-	public List<PatientAuthentication> getPatientAuthDetails() {
 
-		List<PatientAuthentication> patientAuthList = new ArrayList<PatientAuthentication>();
-
-		try {
-
-			Client client = Client.create();
-
-			WebResource webResource = client
-					.resource("http://localhost:9090/UserAuth_REST/myService/UserAuthentication/getPatientAuth");
-
-			ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);
-
-			if (response.getStatus() != 200) {
-				throw new RuntimeException("Failed : HTTP error code : " + response.getStatus());
-
-			}
-			String output = response.getEntity(String.class);
-
-			Gson gson = new Gson();
-			JsonElement list = new JsonParser().parse(output).getAsJsonObject().get("UserAuthentication");
-			List<PatientAuthentication> listObj = gson.fromJson(list, new TypeToken<List<PatientAuthentication>>() {
-			}.getType());
-			System.out.println(listObj.size());
-
-			for (PatientAuthentication patientAuthentication : listObj) {
-				System.out.println(patientAuthentication);
-				patientAuthList.add(patientAuthentication);
-
-			}
-
-			for (PatientAuthentication patientAuthentication : patientAuthList) {
-				System.out.println("ID : " + patientAuthentication.getPatientAuthId());
-				System.out.println("ID : " + patientAuthentication.getUserName());
-
-			}
-
-			System.out.println(listObj.get(0).getPatientAuthId());
-			System.out.println(listObj.get(0).getUserName());
-			System.out.println(listObj.get(0).getPassword());
-
-		} catch (Exception e) {
-			e.getMessage();
-		}
-		return patientAuthList;
-	}
 		
 		
 
