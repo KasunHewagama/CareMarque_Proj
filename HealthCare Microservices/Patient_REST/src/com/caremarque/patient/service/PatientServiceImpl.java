@@ -84,6 +84,14 @@ public class PatientServiceImpl implements IPatientService {
 		
 		List<PatientAuthentication> patientAuthList = getAuthDetails();
 		
+//		Pattern alphaPattern = Pattern.compile("/^[a-zA-Z]+$/");
+//		Pattern nicPattern = Pattern.compile("/^[0-9]{9}[vVxX]$/");
+//		Pattern emailPattern = Pattern.compile("/^[\\w\\-\\.\\+]+\\@[a-zA-Z0-9\\.\\-]+\\.[a-zA-z0-9]{2,4}$/");
+//		Pattern dobPattern = Pattern.compile("(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20)\\d\\d)");
+//		Pattern bloodTypePattern = Pattern.compile("^(A|B|AB|O)[+-]$");
+//		Pattern pwdPattern = Pattern.compile("/(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/");
+//		Pattern phonePattern = Pattern.compile("/^\\d{10}$/");
+		
 
 		try {
 
@@ -95,7 +103,80 @@ public class PatientServiceImpl implements IPatientService {
 			
 			System.out.println("before for loop");
 			
-			for(PatientAuthentication patientAuthentication : patientAuthList) {
+			
+			String fName = patient.getFirstName();
+			System.out.println("fname"+fName);
+			String lName = patient.getLastName();
+			String gender = patient.getGender();
+			String NIC = patient.getNIC();
+			String dob = patient.getDOB();
+			String email = patient.getEmail();
+			String phone = patient.getPhone();
+			String bloodGroup = patient.getBloodGroup();
+			String allergy = patient.getAllergy();
+			String pwd = patient.getPassword();
+			String cPwd = patient.getConfirmPassword();
+			
+			System.out.println(fName.trim().length());
+			
+//			if(fName.trim().length() < 0 && !fName.matches(alphaReg)) {
+//				output = "Please use alphabets only for first name..!";
+//			}
+//			else if(lName.trim().length() < 0 && !alphaPattern.matcher(lName).matches()) {
+//				output = "Please use alphabets only for last name..!";
+//			}
+//			else if(gender.trim().length() < 0 && !alphaPattern.matcher(gender).matches()) {
+//				output = "Please use alphabets only for gender..!";
+//			}
+//			else if(NIC.trim().length() < 0 && !nicPattern.matcher(NIC).matches()) {
+//				output = "Please enter a correct NIC number...!";
+//			}
+//			else if(dob.trim().length() < 0 && !dobPattern.matcher(dob).matches()) {
+//				output = "Please use dd/mm/yyyy format...!";
+//			}
+//			else if(email.trim().length() < 0 && !emailPattern.matcher(email).matches()) {
+//				output = "Please enter a valid email...!";
+//			}
+//			else if(phone.trim().length() < 0 && !phonePattern.matcher(phone).matches()) {
+//				output = "Please enter a valid phone number...!";
+//			}
+//			else if(bloodGroup.trim().length() < 0 && !bloodTypePattern.matcher(bloodGroup).matches()) {
+//				output = "Please enter correct blood group...!";
+//			}
+//			else if(allergy.trim().length() < 0 && !alphaPattern.matcher(allergy).matches()) {
+//				output = "Please use alphabets only for allergies..!";
+//			}
+//			else if(pwd.trim().length() < 0 && !pwdPattern.matcher(pwd).matches()) {
+//				output = "Please enter a password with at least six characters containing one number, one lowercase and one uppercase letter..!";
+//			}
+//			else if(cPwd.trim().length() < 0 && !cPwd.equals(pwd)) {
+//				output = "Passwords are not match..!";
+//			}
+			//else {
+				preparedStmt.setString(1, fName);
+				preparedStmt.setString(2, lName);
+				preparedStmt.setString(3, gender);
+				preparedStmt.setString(4, NIC);
+				preparedStmt.setString(5, dob);
+				preparedStmt.setString(6, email);
+				preparedStmt.setString(7, phone);
+				preparedStmt.setString(8, bloodGroup);
+				preparedStmt.setString(9, allergy);
+				preparedStmt.setString(10, pwd);
+				preparedStmt.setString(11, cPwd);
+				
+				int result = 0;
+				   
+				   result = preparedStmt.executeUpdate();			
+				  
+				   if(result > 0) {
+					output = "Inserted successfully";	
+				   }
+			//}
+			
+				
+			
+		/*	for(PatientAuthentication patientAuthentication : patientAuthList) {
 				System.out.println("PAUTH 1 : " + patientAuthentication.getUserName());
 				System.out.println("PAUTH 2 : " + patient.getEmail());
 				System.out.println("PAUTH 3 : " + patientAuthentication.getPassword());
@@ -139,7 +220,7 @@ public class PatientServiceImpl implements IPatientService {
 				
 				preparedStmt.execute();
 				output = "Inserted successfully";
-			}
+			}*/
 
 		} catch (Exception e) {
 
