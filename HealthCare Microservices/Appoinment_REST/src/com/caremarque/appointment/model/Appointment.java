@@ -1,7 +1,5 @@
 package com.caremarque.appointment.model;
 
-
-
 public class Appointment {
 
 	private String appointmentId;
@@ -145,10 +143,5 @@ public class Appointment {
 		this.lastUpdateTime = lastUpdateTime;
 		this.appointmentStatus = appointmentStatus;
 	}
-	
-	
-
-	
-	
 
 }
