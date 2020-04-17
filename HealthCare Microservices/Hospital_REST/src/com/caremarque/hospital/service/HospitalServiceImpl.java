@@ -19,14 +19,14 @@ public class HospitalServiceImpl implements IHospitalService{
 	public static final Logger Log = Logger.getLogger(IHospitalService.class.getName());
 
 	public static Connection con;
-	public static Statement statement;
+	public static Statement st;
 	
 	@Override
 	public String createHospital(Hospital hospital) {
 		// TODO Auto-generated method stub
 
 		String output = null;
-		Connection con = null;
+		//Connection con = null;
 		PreparedStatement preparedStatement = null;
 		
 		
@@ -81,7 +81,7 @@ public class HospitalServiceImpl implements IHospitalService{
 	}
 
 	@Override
-	public Hospital getHospital(String hospitalId) {
+	public String getHospital(String hospitalId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -90,9 +90,9 @@ public class HospitalServiceImpl implements IHospitalService{
 	public String getHospitals() {
 		// TODO Auto-generated method stub
 		String output = null;
-		Statement st = null;
+		//Statement st = null;
 		ResultSet rs = null;
-		Connection con = null;
+		//Connection con = null;
 
 		ArrayList<Hospital> arrayList = new ArrayList<Hospital>();
 		
@@ -126,16 +126,6 @@ public class HospitalServiceImpl implements IHospitalService{
 				hospital.setClose_Hours(rs.getString(Constants.COLUMN_INDEX_SIX));
 				arrayList.add(hospital);
 				
-				
-				
-				/*
-				 * String hospitalId = resultobj.getString("hospitalId"); String hospitalName =
-				 * resultobj.getString("hospitalName"); String phone =
-				 * resultobj.getString("phone"); String regNo = resultobj.getString("regNo");
-				 * String address = resultobj.getString("address"); String Open_Hours =
-				 * resultobj.getString("Open_Hours"); String Close_Hours =
-				 * resultobj.getString("Close_Hours");
-				 */
 
 				output += "<tr><td>" + rs.getString(Constants.COLUMN_INDEX_ONE) + "</td>";
 				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_TWO) + "</td>";
@@ -178,7 +168,52 @@ public class HospitalServiceImpl implements IHospitalService{
 	}
 
 	
-
+	@Override
+	public String updateHospital(String hospitalId, Hospital hospital) {
+		// TODO Auto-generated method stub
+		String output = "";
+		PreparedStatement preparedStatement = null;
+		
+		try {
+			con = DBConnection.getDBConnection();
+			
+		String query = "UPDATE hospital SET hospitalId =?, hospitalName = ?, address = ?, phone = ?, regNo = ?, Open_Hours = ?, Close_Hours = ? WHERE hospitalId = ?";
+		preparedStatement = con.prepareStatement(query);
+		
+		preparedStatement.setString(1, hospital.getHospitalId());
+		preparedStatement.setString(2, hospital.getHospitalName());
+		preparedStatement.setString(3, hospital.getAddress());
+		preparedStatement.setString(4, hospital.getPhone());
+		preparedStatement.setString(5, hospital.getRegNo());
+		preparedStatement.setString(6, hospital.getOpen_Hours());
+		preparedStatement.setString(7, hospital.getClose_Hours());
+		
+		preparedStatement.execute();
+		
+		output = "Successfully Updated";
+		
+		} catch (Exception e) {
+			// TODO: handle exception
+			
+			output = "Update Error has Occured";
+			System.err.println(e.getMessage());
+			Log.log(Level.SEVERE, e.getMessage());
+		}finally {
+			try {
+				if(preparedStatement != null) {
+					preparedStatement.close();
+				}
+				if(con != null) {
+					con.close();
+				}
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+				Log.log(Level.SEVERE,e.getMessage());
+			}
+		}
+		return output;
+	}
 
 	@Override
 	public String DeleteHospital(String hospitalId) {
@@ -231,16 +266,15 @@ public class HospitalServiceImpl implements IHospitalService{
 		
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet= null;
-		Connection connection=null;
 		
 		ArrayList<String> arrayList = new ArrayList<String>();
 		
 		try {
-			connection = DBConnection.getDBConnection();
+			con = DBConnection.getDBConnection();
 			
 			String queryString = "SELECT hospital.hospitalId FROM hospital";
 			
-			preparedStatement = connection.prepareStatement(queryString);
+			preparedStatement = con.prepareStatement(queryString);
 			resultSet = preparedStatement.executeQuery();
 			
 			while(resultSet.next()) {
@@ -256,10 +290,10 @@ public class HospitalServiceImpl implements IHospitalService{
 				if(preparedStatement != null) {
 					preparedStatement.close();
 				}
-				if(connection != null) {
-					connection.close();
+				if(con != null) {
+					con.close();
 				}
-			}catch (Exception e) {
+			}catch (SQLException e) {
 				// TODO: handle exception
 				Log.log(Level.SEVERE, e.getMessage());
 			}
@@ -268,57 +302,5 @@ public class HospitalServiceImpl implements IHospitalService{
 			return arrayList;
 		}
 
-	@Override
-	public String updateHospital(String hospitalId, Hospital hospital) {
-		// TODO Auto-generated method stub
-		String output = "";
-		PreparedStatement preparedStatement = null;
-		
-		try {
-			con = DBConnection.getDBConnection();
-			
-			String query = "UPDATE hospital"
-					+ "SET"
-					+ "hospitalName = ?"
-					+ "address = ?"
-					+ "phone = ?"
-					+ "regNo = ?"
-					+ "Open_Hours = ?"
-					+ "Close_Hours = ?"
-					+ "WHERE hospitalId = ?";
-		preparedStatement = con.prepareStatement(query);
-		
-		preparedStatement.setString(1, hospital.getHospitalName());
-		preparedStatement.setString(2, hospital.getAddress());
-		preparedStatement.setString(3, hospital.getPhone());
-		preparedStatement.setString(4, hospital.getRegNo());
-		preparedStatement.setString(5, hospital.getOpen_Hours());
-		preparedStatement.setString(6, hospital.getClose_Hours());
-		
-		preparedStatement.execute();
-		
-		output = "Successfully Updated";
-		
-		} catch (Exception e) {
-			// TODO: handle exception
-			
-			output = "Update Error has Occured";
-			System.err.println(e.getMessage());
-			Log.log(Level.SEVERE, e.getMessage());
-		}finally {
-			try {
-				if(preparedStatement != null) {
-					preparedStatement.close();
-				}
-				if(con != null) {
-					con.close();
-				}
-			} catch (Exception e) {
-				// TODO: handle exception
-				e.printStackTrace();
-				Log.log(Level.SEVERE,e.getMessage());
-			}
-		}
-		return output;
-	}
+	
 }

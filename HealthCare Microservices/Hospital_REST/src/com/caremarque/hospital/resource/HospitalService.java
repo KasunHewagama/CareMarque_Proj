@@ -110,11 +110,11 @@ public class HospitalService {
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_XML)
 	@Produces(MediaType.TEXT_PLAIN)
-	public String deleteHospital(String hospitalId) {
+	public String deleteHospital(String appointmentData) {
 		
-		Document document = Jsoup.parse(hospitalId, "", Parser.xmlParser());
+		Document document = Jsoup.parse(appointmentData, "", Parser.xmlParser());
 		
-		String HospitalData = document.select("hospitalId").text();
+		String hospitalId = document.select("hospitalId").text();
 		
 		String output = as.DeleteHospital(hospitalId);
 		
