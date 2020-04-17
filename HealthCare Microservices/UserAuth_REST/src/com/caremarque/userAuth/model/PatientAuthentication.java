@@ -1,5 +1,8 @@
 package com.caremarque.userAuth.model;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class PatientAuthentication {
 
 	private int patientAuthId;
