@@ -20,11 +20,13 @@ import com.caremarque.appointment.service.AppointmentServiceImpl;
 import com.caremarque.appointment.service.IAppointmentService;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.sun.jersey.api.client.Client;
 
 @Path("/Appointment")
 public class AppointmentService {
 	
 	IAppointmentService as = new AppointmentServiceImpl();
+	AppointmentServiceImpl as2 = new AppointmentServiceImpl();
 	Appointment appointment = new Appointment();
 	
 	@POST
@@ -148,25 +150,13 @@ public class AppointmentService {
 	}
 	
 	//To Connect with payment resource
-//	@GET
-//	@Path("/createPayment")
-//	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-//	@Produces(MediaType.TEXT_PLAIN)
-//	public String createPayment(@FormParam ("patientId") String patientId,
-//							@FormParam("patientName") String patientName,
-//							@FormParam("appointmentId") String appointmentId,
-//							@FormParam("doctorId") String doctorId,
-//							@FormParam("hospitalId") String hospitalId,
-//							@FormParam("doctorCharges") double doctorCharges,
-//							@FormParam("hospitalCharges") double hospitalCharges,
-//							@FormParam("paymentStatus") String paymentStatus) {
-//		
-//		PaymentResource pr = new PaymentResource(); 
-//		
-//		String output = pr.createPayment(patientId,patientName, appointmentId, doctorId,hospitalId, doctorCharges, hospitalCharges, paymentStatus);
-//		
-//		return output;
-//		
-//	}
+	@GET
+	@Path("/createPayment/{appointmentId}")
+	@Produces(MediaType.TEXT_PLAIN)
+	public void createPayment(@PathParam("appointmentId") String appointmentId) {
+		as2.createPayment(appointmentId);
+		System.out.println("TRIGGERED");
+		
+	}
 
 }

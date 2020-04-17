@@ -1,4 +1,4 @@
-package com.caremarque.appointment.model;
+package com.caremarque.payment.model;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
