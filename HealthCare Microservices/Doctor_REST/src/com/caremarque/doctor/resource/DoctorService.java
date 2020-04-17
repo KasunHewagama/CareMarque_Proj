@@ -45,6 +45,9 @@ public class DoctorService {
 			@FormParam("confirmPassword") String confirmPassword)
 	
 	{
+		System.out.println("CREATE Doctor...!");
+		//create appointment object
+		
 		//Doctor doctor = new Doctor();
 		doctor.setDoctorId(doctorId);
 		doctor.setFirstName(firstName);
@@ -57,6 +60,7 @@ public class DoctorService {
 		doctor.setPassword(password);
 		doctor.setConfirmPassword(confirmPassword);
 		
+		//pass object to the service implementation class
 		String output = ab.createDoctor(doctor);
 		
 		return output;
