@@ -16,14 +16,14 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.parser.Parser;
 import com.caremarque.patient.model.Patient;
-import com.caremarque.patient.service.PatientService;
+import com.caremarque.patient.service.PatientServiceImpl;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 @Path("/Patients")
-public class PatientResource {
+public class PatientService {
 
-	PatientService patientService = new PatientService();
+	PatientServiceImpl patientServiceImpl = new PatientServiceImpl();
 	Patient patient = new Patient();
 
 	@POST
@@ -57,7 +57,7 @@ public class PatientResource {
 		patient.setPassword(password);
 		patient.setConfirmPassword(cPassword);
 
-		String output = patientService.registerPatient(patient);
+		String output = patientServiceImpl.registerPatient(patient);
 		//patientService.registerPatient(patient);
 		return output;
 	}
@@ -67,7 +67,7 @@ public class PatientResource {
 	@Produces(MediaType.TEXT_HTML)
 	public String getAllPatients() {
 
-		return patientService.getAllPatients();
+		return patientServiceImpl.getAllPatients();
 
 	}
 
@@ -76,7 +76,7 @@ public class PatientResource {
 	@Produces(MediaType.TEXT_HTML)
 	public String getPatientDetail(@PathParam("patientId") int id) {
 
-		return patientService.getPatientDetail(id);
+		return patientServiceImpl.getPatientDetail(id);
 
 	}
 
@@ -90,7 +90,7 @@ public class PatientResource {
 
 		String patientId = doc.select("patientId").text();
 
-		String output = patientService.deletePatient(patientId);
+		String output = patientServiceImpl.deletePatient(patientId);
 
 		return output;
 
@@ -130,7 +130,7 @@ public class PatientResource {
 		patient.setPassword(password);
 		patient.setConfirmPassword(cPassword);
 
-		String output = patientService.updatePatientDetails(patient);
+		String output = patientServiceImpl.updatePatientDetails(patient);
 
 		return output;
 
