@@ -77,6 +77,10 @@ public class AppointmentService {
 		return as.getAppointments();
 	}
 	
+//	@GET
+//	@Path("/")
+//	@Produ
+	
 	
 	@PUT
 	@Path("/")
