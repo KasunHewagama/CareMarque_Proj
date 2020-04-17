@@ -290,8 +290,7 @@ public class AppointmentServiceImpl implements IAppointmentService {
 		try {
 			con = DBConnection.getDBConnection();
 			
-			String query = "UPDATE appointment SET appointmentId = ?, patientId = ?, patientName = ?, phone = ?, doctorName = ?, specialization = ?"
-					+ ", hospitalId = ?, hospitalName = ?, appointmentDate = ?, appointmentTime = ?, lastUpdateDate = ?, lastUpdateTime = ?, appointmentStatus = ? WHERE appointmentId = ?";
+			String query = "UPDATE appointment SET appointmentId = ?, patientId = ?, patientName = ?, phone = ?, doctorName = ?, specialization = ?, hospitalId = ?, hospitalName = ?, appointmentDate = ?, appointmentTime = ?, lastUpdateDate = ?, lastUpdateTime = ?, appointmentStatus = ? WHERE appointmentId = ?";
 			
 			pStatement = con.prepareStatement(query);
 			
