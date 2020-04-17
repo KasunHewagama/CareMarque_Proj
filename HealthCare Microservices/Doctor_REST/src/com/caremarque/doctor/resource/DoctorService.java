@@ -118,7 +118,7 @@ public class DoctorService {
 		doctor.setPassword(password);
 		doctor.setConfirmPassword(confirmPassword);
 		
-		String output = ab.updateDoctor(doctor);
+		String output = ab.updateDoctor(doctorId,doctor);
 		
 		return output;
 	}
