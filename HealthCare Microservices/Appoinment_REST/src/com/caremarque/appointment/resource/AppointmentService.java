@@ -91,8 +91,8 @@ public class AppointmentService {
 	@PUT
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.TEXT_HTML)
-	public String putAppointment(String appointmentData) {
+	@Produces(MediaType.TEXT_PLAIN)
+	public String updateAppointment(String appointmentData) {
 		
 		JsonObject appointmentObject = new JsonParser().parse(appointmentData).getAsJsonObject();
 		
@@ -106,9 +106,9 @@ public class AppointmentService {
 		String hospitalName = appointmentObject.get("hospitalName").getAsString();
 		String appointmentDate = appointmentObject.get("appointmentDate").getAsString();
 		String appointmentTime = appointmentObject.get("appointmentTime").getAsString();
-		String lastUpdateDate = appointmentObject.get("lastUpdateDate").getAsString();
-		String lastUpdateTime = appointmentObject.get("lastUpdateTime").getAsString();
-		String appointmentStatus = appointmentObject.get("appointmentStatus").getAsString();
+//		String lastUpdateDate = appointmentObject.get("lastUpdateDate").getAsString();
+//		String lastUpdateTime = appointmentObject.get("lastUpdateTime").getAsString();
+//		String appointmentStatus = appointmentObject.get("appointmentStatus").getAsString();
 		
 		appointment.setAppointmentId(appointmentId);
 		appointment.setPatientId(patientId);
@@ -120,9 +120,9 @@ public class AppointmentService {
 		appointment.setHospitalName(hospitalName);
 		appointment.setAppointmentDate(appointmentDate);
 		appointment.setAppointmentTime(appointmentTime);
-		appointment.setLastUpdateDate(lastUpdateDate);
-		appointment.setLastUpdateTime(lastUpdateTime);
-		appointment.setAppointmentStatus(appointmentStatus);
+//		appointment.setLastUpdateDate(lastUpdateDate);
+//		appointment.setLastUpdateTime(lastUpdateTime);
+//		appointment.setAppointmentStatus(appointmentStatus);
 		
 		String output = as.updateAppointment(appointmentId,appointment);
 		
@@ -135,11 +135,11 @@ public class AppointmentService {
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_XML)
 	@Produces(MediaType.TEXT_PLAIN)
-	public String deleteAppointment(String appointmentId) {
+	public String deleteAppointment(String appointmentData) {
 		
-		Document document = Jsoup.parse(appointmentId, "", Parser.xmlParser());
+		Document document = Jsoup.parse(appointmentData, "", Parser.xmlParser());
 		
-		String appointmentData = document.select("appointmentId").text();
+		String appointmentId= document.select("appointmentId").text();
 		
 		String output = as.cancelAppointment(appointmentId);
 		
