@@ -18,7 +18,7 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
-public class PatientService implements IPatientService {
+public class PatientServiceImpl implements IPatientService {
 	
 	
 	public List<PatientAuthentication> getAuthDetails() {
