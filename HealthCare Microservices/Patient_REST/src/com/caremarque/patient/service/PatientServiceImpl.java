@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 import javax.ws.rs.core.Context;
@@ -24,6 +26,8 @@ import com.sun.jersey.api.client.WebResource;
 
 public class PatientServiceImpl implements IPatientService {
 	
+	public static final Logger log = Logger.getLogger(PatientServiceImpl.class.getName());
+
 	
 	public List<PatientAuthentication> getAuthDetails() {
 
@@ -225,7 +229,7 @@ public class PatientServiceImpl implements IPatientService {
 		} catch (Exception e) {
 
 			output = "Error while inserting the item..!";
-			System.err.println(e.getMessage());
+			log.log(Level.SEVERE, e.getMessage());
 
 		} finally {
 
@@ -238,7 +242,7 @@ public class PatientServiceImpl implements IPatientService {
 					con.close();
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+				log.log(Level.SEVERE, e.getMessage());
 			}
 		}
 
@@ -300,7 +304,7 @@ public class PatientServiceImpl implements IPatientService {
 		} catch (Exception e) {
 
 			output = "Error while reading the patient details...!";
-			System.err.println(e.getMessage());
+			log.log(Level.SEVERE, e.getMessage());
 
 		} finally {
 
@@ -318,7 +322,7 @@ public class PatientServiceImpl implements IPatientService {
 				}
 
 			} catch (Exception e) {
-				e.printStackTrace();
+				log.log(Level.SEVERE, e.getMessage());
 			}
 		}
 		return output;
@@ -379,7 +383,7 @@ public class PatientServiceImpl implements IPatientService {
 		} catch (Exception e) {
 
 			output = "Error while reading the patient details...!";
-			System.err.println(e.getMessage());
+			log.log(Level.SEVERE, e.getMessage());
 
 		} finally {
 
@@ -397,7 +401,7 @@ public class PatientServiceImpl implements IPatientService {
 				}
 
 			} catch (Exception e) {
-				e.printStackTrace();
+				log.log(Level.SEVERE, e.getMessage());
 			}
 		}
 		return output;
@@ -443,7 +447,7 @@ public class PatientServiceImpl implements IPatientService {
 		} catch (Exception e) {
 
 			output = "Error while updating the item..!";
-			System.err.println(e.getMessage());
+			log.log(Level.SEVERE, e.getMessage());
 
 		} finally {
 
@@ -457,7 +461,7 @@ public class PatientServiceImpl implements IPatientService {
 				}
 
 			} catch (Exception e) {
-				e.printStackTrace();
+				log.log(Level.SEVERE, e.getMessage());
 			}
 		}
 
@@ -489,7 +493,7 @@ public class PatientServiceImpl implements IPatientService {
 		} catch (Exception e) {
 
 			output = "Error while deleting the item..!";
-			System.err.println(e.getMessage());
+			log.log(Level.SEVERE, e.getMessage());
 
 		} finally {
 
@@ -503,7 +507,7 @@ public class PatientServiceImpl implements IPatientService {
 				}
 
 			} catch (Exception e) {
-				e.printStackTrace();
+				log.log(Level.SEVERE, e.getMessage());
 			}
 		}
 
