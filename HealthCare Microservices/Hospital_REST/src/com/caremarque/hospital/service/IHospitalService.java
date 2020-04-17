@@ -14,7 +14,7 @@ public interface IHospitalService {
 	
 	public String updateHospital(String hospitalId,Hospital hospital);
 	
-	public void DeleteHospital(String hospitalId);
+	public String DeleteHospital(String hospitalId);
 	
 	public ArrayList<String> getHospitalIDs();
 
