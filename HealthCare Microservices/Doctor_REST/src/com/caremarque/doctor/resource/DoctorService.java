@@ -98,8 +98,8 @@ public class DoctorService {
 		String doctorId = dObject.get("doctorId").getAsString();
 		String firstName = dObject.get("firstName").getAsString();
 		String lastName = dObject.get("lastName").getAsString();
-		String gender = dObject.get("regNo").getAsString();
-		String regNo = dObject.get("gender").getAsString();
+		String regNo = dObject.get("regNo").getAsString();
+		String gender = dObject.get("gender").getAsString();
 		String specialization = dObject.get("specialization").getAsString();
 		String phone = dObject.get("phone").getAsString();
 		String email = dObject.get("email").getAsString();
