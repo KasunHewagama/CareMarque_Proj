@@ -58,28 +58,28 @@ public class Hospital {
 		return Open_Hours;
 	}
 
-	public void setOpen_Hours(String open_Hours) {
-		Open_Hours = open_Hours;
+	public void setOpen_Hours(String Open_Hours) {
+		this.Open_Hours = Open_Hours;
 	}
 
 	public String getClose_Hours() {
 		return Close_Hours;
 	}
 
-	public void setClose_Hours(String close_Hours) {
-		Close_Hours = close_Hours;
+	public void setClose_Hours(String Close_Hours) {
+		this.Close_Hours = Close_Hours;
 	}
 
 	public Hospital(String hospitalId, String hospitalName, String phone, String regNo, String address,
-			String open_Hours, String close_Hours) {
+			String Open_Hours, String Close_Hours) {
 		super();
 		this.hospitalId = hospitalId;
 		this.hospitalName = hospitalName;
 		this.phone = phone;
 		this.regNo = regNo;
 		this.address = address;
-		this.Open_Hours = open_Hours;
-		this.Close_Hours = close_Hours;
+		this.Open_Hours = Open_Hours;
+		this.Close_Hours = Close_Hours;
 	}
 
 	

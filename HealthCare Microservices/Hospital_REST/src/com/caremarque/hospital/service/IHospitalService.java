@@ -12,7 +12,7 @@ public interface IHospitalService {
 	
 	public String getHospitals();
 	
-	public String updateHospital(Hospital hospital);
+	public String updateHospital(String hospitalId,Hospital hospital);
 	
 	public void DeleteHospital(String hospitalId);
 	
