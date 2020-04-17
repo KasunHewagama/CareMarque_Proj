@@ -4,6 +4,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -12,6 +13,8 @@ import javax.ws.rs.core.MediaType;
 import com.caremarque.doctor.model.Doctor;
 import com.caremarque.doctor.service.DoctorServiceImpl;
 import com.caremarque.doctor.service.IDoctorService;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 @Path("/Doctor")
 public class DoctorService {
@@ -70,5 +73,45 @@ public class DoctorService {
 		return ab.getDoctor(id);
 	}
 	
+	
+	
+	@PUT
+	@Path("/")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
+	
+	public String updateDoctor(String doctorData) {
+		
+		//com.google.gson.JsonParser parser = new com.google.gson.JsonParser();
+		
+		JsonObject dObject = new JsonParser().parse(doctorData).getAsJsonObject();
+		
+		String doctorId = dObject.get("doctorId").getAsString();
+		String firstName = dObject.get("firstName").getAsString();
+		String lastName = dObject.get("lastName").getAsString();
+		String gender = dObject.get("regNo").getAsString();
+		String regNo = dObject.get("gender").getAsString();
+		String specialization = dObject.get("specialization").getAsString();
+		String phone = dObject.get("phone").getAsString();
+		String email = dObject.get("email").getAsString();
+		String password = dObject.get("password").getAsString();
+		String confirmPassword = dObject.get("confirmPassword").getAsString();
+		
+		//doctor.setDoctorId(Integer.parseInt(doctorId));
+		doctor.setDoctorId(doctorId);
+		doctor.setFirstName(firstName);
+		doctor.setLastName(lastName);
+		doctor.setRegNo(regNo);
+		doctor.setGender(gender);
+		doctor.setSpecialization(specialization);
+		doctor.setPhone(phone);
+		doctor.setEmail(email);
+		doctor.setPassword(password);
+		doctor.setConfirmPassword(confirmPassword);
+		
+		String output = ab.updateDoctor(doctor);
+		
+		return output;
+	}
 	
 }
