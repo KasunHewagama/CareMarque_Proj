@@ -293,7 +293,7 @@ public class AppointmentServiceImpl implements IAppointmentService {
 			String query = "UPDATE appointment"
 					+ "SET "
 					+ "patientId = ?"
-					+ "patientName =?"
+					+ "patientName = ?"
 					+ "phone = ?"
 					+ "doctorName = ?"
 					+ "specialization = ?"
@@ -331,6 +331,7 @@ public class AppointmentServiceImpl implements IAppointmentService {
 			
 			output = "Error while updating the Appointment...!";
 			System.err.println(e.getMessage());
+			log.log(Level.SEVERE, e.getMessage());
 					
 		} finally {
 
@@ -345,6 +346,7 @@ public class AppointmentServiceImpl implements IAppointmentService {
 
 			} catch (Exception e) {
 				e.printStackTrace();
+				log.log(Level.SEVERE, e.getMessage());
 			}
 		}
 		
@@ -378,6 +380,7 @@ public class AppointmentServiceImpl implements IAppointmentService {
 
 			output = "Error while deleting the appointment";
 			System.err.println(e.getMessage());
+			log.log(Level.SEVERE, e.getMessage());
 		
 		} finally {
 
@@ -391,7 +394,7 @@ public class AppointmentServiceImpl implements IAppointmentService {
 				}
 
 			} catch (Exception e) {
-				e.printStackTrace();
+				log.log(Level.SEVERE, e.getMessage());
 			}
 		}
 
