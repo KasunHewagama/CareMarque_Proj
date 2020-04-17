@@ -8,7 +8,7 @@ public interface IHospitalService {
 	
 	public String createHospital(Hospital hospital);
 	
-	public Hospital getHospital(String hospitalId);
+	public String getHospital(String hospitalId);
 	
 	public String getHospitals();
 	
