@@ -13,7 +13,7 @@ public interface IPaymentService {
 	
 	public String getPayments();
 	
-	public Payment updatePayment(String paymentid, Payment p);
+	public String updatePayment(String paymentid, String telPhone, String email);
 	
 	public String cancelPayment(String paymentId);
 	

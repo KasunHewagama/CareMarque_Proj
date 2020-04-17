@@ -5,6 +5,7 @@ import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -16,6 +17,8 @@ import org.jsoup.parser.Parser;
 
 import com.caremarque.payment.model.Payment;
 import com.caremarque.payment.service.PaymentServiceImpl;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 
 @Path("/Payment")
@@ -37,7 +40,9 @@ public class PaymentService {
 								@FormParam("paymentStatus") String paymentStatus,
 								@FormParam("cardNo") String cardNo,
 								@FormParam("expDate") String expDate,
-								@FormParam("passCode") String passCode) {
+								@FormParam("passCode") String passCode,
+								@FormParam("telPhone") String telPhone,
+								@FormParam("email") String email) {
 		
 		System.out.println("CREATE PAYMENT");
 		//create payment object
@@ -54,6 +59,8 @@ public class PaymentService {
 		payment.setCardNo(cardNo);
 		payment.setExpDate(expDate);
 		payment.setPassCode(passCode);
+		payment.setTelPhone(telPhone);
+		payment.setEmail(email);
 		
 		//pass object to the service implementation class
 		String output = ps.createPayement(payment); 
@@ -77,6 +84,22 @@ public class PaymentService {
 		return ps.getPaymentById(paymentId);
 	}
 	
+	@PUT
+	@Path("/")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
+	public String updatePayment(String paymentData) {
+		
+		JsonObject paymentObj = new JsonParser().parse(paymentData).getAsJsonObject();
+		
+		String paymentId = paymentObj.get("paymentId").getAsString();
+		String telPhone = paymentObj.get("telPhone").getAsString();
+		String email = paymentObj.get("email").getAsString();
+		
+		return ps.updatePayment(paymentId, telPhone, email);
+	}
+	
+	
 	@DELETE
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_XML)
@@ -86,10 +109,8 @@ public class PaymentService {
 		Document doc = Jsoup.parse(paymentData, "", Parser.xmlParser());
 		
 		String paymentId = doc.select("paymentId").text();
-		
-		String output = ps.cancelPayment(paymentId);
-		
-		return output;
+
+		return ps.cancelPayment(paymentId);
 	}
 	
 //	@GET
