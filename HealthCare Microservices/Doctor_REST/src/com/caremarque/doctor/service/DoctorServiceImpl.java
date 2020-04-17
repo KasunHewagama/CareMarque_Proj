@@ -61,10 +61,17 @@ public static final Logger log = Logger.getLogger(IDoctorService.class.getName()
 			preparedStatement.setString(9, doctor.getPassword());
 			preparedStatement.setString(10, doctor.getConfirmPassword());
 			
+			if(!doctor.getPassword().equals(doctor.getConfirmPassword())) {
+				output="Password Mismatching";
+			}else {
+				if(doctor.getFirstName().equals("") || doctor.getLastName().equals("") || doctor.getSpecialization().equals("")) {
+					output="Enter firstnam";
+				}else {
+					preparedStatement.executeUpdate();
+					output = "Inserted Successfully...!";
+				}
+			}
 			
-			preparedStatement.executeUpdate();
-			
-			output = "Inserted Successfully...!";
 		
 		}catch (Exception e) {
 			
@@ -291,11 +298,20 @@ try {
 				preparedStatement.setString(9, doctor.getPassword());
 				preparedStatement.setString(10, doctor.getConfirmPassword());
 				preparedStatement.setString(11, doctor.getDoctorId());
-				preparedStatement.execute();
+				//preparedStatement.execute();
 				
-				output = "Updated Successfully....!";
+				//output = "Updated Successfully....!";
+				if(!doctor.getPassword().equals(doctor.getConfirmPassword())) {
+					output="Password Mismatching";
+				}else {
+					if(doctor.getFirstName().equals("") || doctor.getLastName().equals("") || doctor.getSpecialization().equals("")) {
+						output="Enter firstnam";
+					}else {
+						preparedStatement.executeUpdate();
+						output = "Updated Successfully....!";
 					
-				
+					}
+				}
 			}catch(Exception e) {
 				
 				output = "Error while updating the doctor..!";
