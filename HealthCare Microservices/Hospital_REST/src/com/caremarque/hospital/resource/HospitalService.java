@@ -30,20 +30,15 @@ public class HospitalService {
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.TEXT_PLAIN)
-	public String createHospital(
-			@FormParam("hospitalId") String hospitalId,
-			@FormParam("hospitalName") String hospitalName, 
-			@FormParam("address") String address,
-			@FormParam("phone") String phone,
-			@FormParam("regNo") String regNo,
-			@FormParam("Open_Hours") String Open_Hours, 
-			@FormParam("Close_Hours") String Close_Hours)
-	{
+	public String createHospital(@FormParam("hospitalId") String hospitalId,
+			@FormParam("hospitalName") String hospitalName, @FormParam("address") String address,
+			@FormParam("phone") String phone, @FormParam("regNo") String regNo,
+			@FormParam("Open_Hours") String Open_Hours, @FormParam("Close_Hours") String Close_Hours) {
 
 		System.out.println("Create Hospital...........!");
 
 		Hospital hospital = new Hospital();
-		
+
 		hospital.setHospitalId(hospitalId);
 		hospital.setHospitalName(hospitalName);
 		hospital.setAddress(address);
@@ -56,7 +51,7 @@ public class HospitalService {
 		return output;
 
 	}
-	
+
 	@GET
 	@Path("/")
 	@Produces(MediaType.TEXT_HTML)
@@ -81,9 +76,9 @@ public class HospitalService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_HTML)
 	public String putHospital(String hospitalData) {
-		
-		JsonObject hosJsonObject =  new JsonParser().parse(hospitalData).getAsJsonObject();
-		
+
+		JsonObject hosJsonObject = new JsonParser().parse(hospitalData).getAsJsonObject();
+
 		String hospitalId = hosJsonObject.get("hospitalId").getAsString();
 		String hospitalName = hosJsonObject.get("hospitalName").getAsString();
 		String address = hosJsonObject.get("address").getAsString();
@@ -91,7 +86,7 @@ public class HospitalService {
 		String regNo = hosJsonObject.get("regNo").getAsString();
 		String Open_Hours = hosJsonObject.get("Open_Hours").getAsString();
 		String Close_Hours = hosJsonObject.get("Close_Hours").getAsString();
-		
+
 		hospital.setHospitalId(hospitalId);
 		hospital.setHospitalName(hospitalName);
 		hospital.setAddress(address);
@@ -99,27 +94,26 @@ public class HospitalService {
 		hospital.setRegNo(regNo);
 		hospital.setOpen_Hours(Open_Hours);
 		hospital.setClose_Hours(Close_Hours);
-		
+
 		String output = as.updateHospital(hospitalId, hospital);
 		return output;
-	
-	}
 
+	}
 
 	@DELETE
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_XML)
 	@Produces(MediaType.TEXT_PLAIN)
 	public String deleteHospital(String appointmentData) {
-		
+
 		Document document = Jsoup.parse(appointmentData, "", Parser.xmlParser());
-		
+
 		String hospitalId = document.select("hospitalId").text();
-		
+
 		String output = as.DeleteHospital(hospitalId);
-		
+
 		return output;
-	
+
 	}
 
 }
