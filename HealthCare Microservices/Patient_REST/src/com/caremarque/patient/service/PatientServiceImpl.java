@@ -3,6 +3,7 @@ package com.caremarque.patient.service;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,7 @@ import javax.ws.rs.core.UriInfo;
 
 import com.caremarque.patient.model.Patient;
 import com.caremarque.patient.model.PatientAuthentication;
+import com.caremarque.patient.utils.CommonUtils;
 import com.caremarque.patient.utils.DBConnection;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -91,7 +93,7 @@ public class PatientServiceImpl implements IPatientService {
 		
 		List<PatientAuthentication> patientAuthList = getAuthDetails();
 		
-		//String patientId = 
+		//String patientId = CommonUtils.generatePatientIDs(getPatientIDs());
 		
 //		Pattern alphaPattern = Pattern.compile("/^[a-zA-Z]+$/");
 //		Pattern nicPattern = Pattern.compile("/^[0-9]{9}[vVxX]$/");
@@ -112,7 +114,7 @@ public class PatientServiceImpl implements IPatientService {
 			
 			System.out.println("before for loop");
 			
-			
+			//String pId = patient.getPatientId();
 			String fName = patient.getFirstName();
 			System.out.println("fname"+fName);
 			String lName = patient.getLastName();
@@ -162,6 +164,7 @@ public class PatientServiceImpl implements IPatientService {
 //				output = "Passwords are not match..!";
 //			}
 			//else {
+				//patient.setPatientId(patientId);
 				preparedStmt.setString(1, fName);
 				preparedStmt.setString(2, lName);
 				preparedStmt.setString(3, gender);
@@ -526,7 +529,7 @@ public class PatientServiceImpl implements IPatientService {
 	
 
 	// to get all the registerd patients to a arraylist
-	/*@Override
+	@Override
 	public ArrayList<String> getPatientIDs() {
 
 		ArrayList<String> patientList = new ArrayList<String>();
@@ -552,7 +555,7 @@ public class PatientServiceImpl implements IPatientService {
 
 		} catch (Exception e) {
 
-			System.err.println(e.getMessage());
+			log.log(Level.SEVERE, e.getMessage());
 
 		} finally {
 			try {
@@ -563,10 +566,10 @@ public class PatientServiceImpl implements IPatientService {
 					con.close();
 				}
 			} catch (SQLException e) {
-				System.err.println(e.getMessage());
+				log.log(Level.SEVERE, e.getMessage());
 			}
 		}
 		return patientList;
-	}*/
+	}
 
 }
