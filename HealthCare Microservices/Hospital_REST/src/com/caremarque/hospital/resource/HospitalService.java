@@ -7,6 +7,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
@@ -30,6 +31,7 @@ public class HospitalService {
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.TEXT_PLAIN)
 	public String createHospital(
+			@FormParam("hospitalId") String hospitalId,
 			@FormParam("hospitalName") String hospitalName, 
 			@FormParam("address") String address,
 			@FormParam("phone") String phone,
@@ -42,6 +44,7 @@ public class HospitalService {
 
 		Hospital hospital = new Hospital();
 		
+		hospital.setHospitalId(hospitalId);
 		hospital.setHospitalName(hospitalName);
 		hospital.setAddress(address);
 		hospital.setPhone(phone);
@@ -60,7 +63,19 @@ public class HospitalService {
 	public String getHospitals() {
 		return as.getHospitals();
 	}
-	
+
+	/*
+	 * @GET
+	 * 
+	 * @Path("/{appointmentId}")
+	 * 
+	 * @Produces(MediaType.TEXT_HTML) public String
+	 * getAppointment(@PathParam("appointmentId") String appointmentId) {
+	 * 
+	 * return as.getAppointment(appointmentId);
+	 * 
+	 * }
+	 */
 	@PUT
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_JSON)
