@@ -8,7 +8,7 @@ public interface IAppointmentService {
 
 	public String createAppointment(Appointment appointment);
 	
-	public Appointment getAppointment(String appointmentId);
+	public String getAppointment(String appointmentId);
 	
 	public String getAppointments();	
 	
