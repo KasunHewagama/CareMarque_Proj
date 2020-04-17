@@ -15,12 +15,12 @@ public class PatientLoggingFilter implements ContainerRequestFilter {
 
 	private static final String AUTHORIZATION_HEADER_KEY = "Authorization";
 	private static final String AUTHORIZATION_HEADER_PREFIX = "Basic ";
-	private static final String SECURED_URL_PREFIX = "secured";
+	//private static final String SECURED_URL_PREFIX = "secured";
 	
 	@Override
 	public void filter(ContainerRequestContext requestContext) throws IOException {
 		
-		if (requestContext.getUriInfo().getPath().contains(SECURED_URL_PREFIX)) {
+		//if (requestContext.getUriInfo().getPath().contains(SECURED_URL_PREFIX)) {
 			
 		
 		
@@ -49,5 +49,5 @@ public class PatientLoggingFilter implements ContainerRequestFilter {
 		
 		requestContext.abortWith(unauthorizedStatus);
 	}
-	}
+	//}
 }
