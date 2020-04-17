@@ -9,7 +9,7 @@ public class Hospital {
 	private String address;
 	private String Open_Hours;
 	private String Close_Hours;
-	
+
 	public Hospital() {
 		// TODO Auto-generated constructor stub
 		super();
@@ -82,7 +82,5 @@ public class Hospital {
 		this.Open_Hours = Open_Hours;
 		this.Close_Hours = Close_Hours;
 	}
-
-	
 
 }
