@@ -288,49 +288,37 @@ public class HospitalServiceImpl implements IHospitalService{
 					+ "WHERE hospitalId = ?";
 		preparedStatement = con.prepareStatement(query);
 		
+		preparedStatement.setString(1, hospital.getHospitalName());
+		preparedStatement.setString(2, hospital.getAddress());
+		preparedStatement.setString(3, hospital.getPhone());
+		preparedStatement.setString(4, hospital.getRegNo());
+		preparedStatement.setString(5, hospital.getOpen_Hours());
+		preparedStatement.setString(6, hospital.getClose_Hours());
+		
+		preparedStatement.execute();
+		
+		output = "Successfully Updated";
 		
 		} catch (Exception e) {
 			// TODO: handle exception
+			
+			output = "Update Error has Occured";
+			System.err.println(e.getMessage());
+			Log.log(Level.SEVERE, e.getMessage());
+		}finally {
+			try {
+				if(preparedStatement != null) {
+					preparedStatement.close();
+				}
+				if(con != null) {
+					con.close();
+				}
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+				Log.log(Level.SEVERE,e.getMessage());
+			}
 		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		return null;
+		return output;
 	}
 }
