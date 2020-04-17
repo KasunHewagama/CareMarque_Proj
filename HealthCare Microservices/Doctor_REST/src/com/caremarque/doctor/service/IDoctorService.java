@@ -15,4 +15,6 @@ public interface IDoctorService {
 	public String getDoctors();
 
 	public String updateDoctor(Doctor doctor);
+
+	public String cancelDoctor(String doctorId);
 }
