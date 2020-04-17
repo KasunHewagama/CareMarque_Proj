@@ -15,6 +15,7 @@ import com.caremarque.doctor.util.DBConnection;
 
 public class DoctorServiceImpl implements IDoctorService {
 
+	//This object is for logging
 public static final Logger log = Logger.getLogger(IDoctorService.class.getName());
 	
 	@Override
@@ -262,7 +263,7 @@ try {
 	
 	
 	 @Override
-		public String updateDoctor(Doctor doctor) {
+		public String updateDoctor(String doctorId,Doctor doctor) {
 			// TODO Auto-generated method stub
 			//System.out.println("ABC");
 			//return null; 
@@ -274,21 +275,22 @@ try {
 			try {
 				
 				con = DBConnection.getDBConnection();
-				String query = "UPDATE doctor SET firstName=?, lastName=?, regNo=?, gender=?, specialization=?, phone=?, email=?, password=?, confirmPassword=? WHERE doctorId=?";
+				String query = "UPDATE doctor SET doctorId=?,firstName=?, lastName=?, regNo=?, gender=?, specialization=?, phone=?, email=?, password=?, confirmPassword=? WHERE doctorId=?";
 				
 				preparedStatement = con.prepareStatement(query);
 				
-				preparedStatement.setString(1, doctor.getFirstName());
-				preparedStatement.setString(2, doctor.getLastName());
-				preparedStatement.setString(3, doctor.getRegNo());
-				preparedStatement.setString(4, doctor.getGender());
-				preparedStatement.setString(5, doctor.getSpecialization());
-				preparedStatement.setString(6, doctor.getPhone());
-				preparedStatement.setString(7, doctor.getEmail());
-				preparedStatement.setString(8, doctor.getPassword());
-				preparedStatement.setString(9, doctor.getConfirmPassword());
+				preparedStatement.setString(1, doctor.getDoctorId());
+				preparedStatement.setString(2, doctor.getFirstName());
+				preparedStatement.setString(3, doctor.getLastName());
+				preparedStatement.setString(4, doctor.getRegNo());
+				preparedStatement.setString(5, doctor.getGender());
+				preparedStatement.setString(6, doctor.getSpecialization());
+				preparedStatement.setString(7, doctor.getPhone());
+				preparedStatement.setString(8, doctor.getEmail());
+				preparedStatement.setString(9, doctor.getPassword());
+				preparedStatement.setString(10, doctor.getConfirmPassword());
 				
-				preparedStatement.executeUpdate();
+				preparedStatement.execute();
 				
 				output = "Updated Successfully..!";
 					
