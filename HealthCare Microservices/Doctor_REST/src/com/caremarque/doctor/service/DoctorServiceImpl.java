@@ -293,7 +293,7 @@ try {
 				preparedStatement.setString(11, doctor.getDoctorId());
 				preparedStatement.execute();
 				
-				output = "Updated Successfully..!";
+				output = "Updated Successfully....!";
 					
 				
 			}catch(Exception e) {
