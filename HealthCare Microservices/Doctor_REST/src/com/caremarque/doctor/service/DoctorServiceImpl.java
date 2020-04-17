@@ -261,6 +261,59 @@ try {
 			}
 	
 	
+	 @Override
+		public String updateDoctor(Doctor doctor) {
+			// TODO Auto-generated method stub
+			//System.out.println("ABC");
+			//return null; 
+			
+			String output = "";
+			Connection con = null;
+			PreparedStatement preparedStatement = null;
+			
+			try {
+				
+				con = DBConnection.getDBConnection();
+				String query = "UPDATE doctor SET firstName=?, lastName=?, regNo=?, gender=?, specialization=?, phone=?, email=?, password=?, confirmPassword=? WHERE doctorId=?";
+				
+				preparedStatement = con.prepareStatement(query);
+				
+				preparedStatement.setString(1, doctor.getFirstName());
+				preparedStatement.setString(2, doctor.getLastName());
+				preparedStatement.setString(3, doctor.getRegNo());
+				preparedStatement.setString(4, doctor.getGender());
+				preparedStatement.setString(5, doctor.getSpecialization());
+				preparedStatement.setString(6, doctor.getPhone());
+				preparedStatement.setString(7, doctor.getEmail());
+				preparedStatement.setString(8, doctor.getPassword());
+				preparedStatement.setString(9, doctor.getConfirmPassword());
+				
+				preparedStatement.executeUpdate();
+				
+				output = "Updated Successfully..!";
+					
+				
+			}catch(Exception e) {
+				
+				output = "Error while updating the doctor..!";
+				System.out.println(e.getMessage());
+			}finally {
+				try {
+					if(preparedStatement != null) {
+						preparedStatement.close();
+					}
+					
+					if(con != null) {
+						con.close();
+					}
+				}catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+			return output;
+		}
+
+		
 	
 	
 	
