@@ -7,6 +7,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
+
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.UriInfo;
+
 import com.caremarque.patient.model.Patient;
 import com.caremarque.patient.model.PatientAuthentication;
 import com.caremarque.patient.utils.DBConnection;
@@ -28,7 +32,7 @@ public class PatientServiceImpl implements IPatientService {
 		try {
 
 			Client client = Client.create();
-
+			
 			WebResource webResource = client
 					.resource("http://localhost:9090/UserAuth_REST/myService/UserAuthentication/getPatientAuth");
 

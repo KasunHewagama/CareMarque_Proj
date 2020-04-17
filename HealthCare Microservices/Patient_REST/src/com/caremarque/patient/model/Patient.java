@@ -5,6 +5,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Patient {
 
+	
 	private int patientId;
 	private String firstName;
 	private String lastName;

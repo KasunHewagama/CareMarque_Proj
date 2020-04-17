@@ -21,7 +21,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 @Path("/Patients")
-public class PatientResource {
+public class PatientService {
 
 	PatientServiceImpl patientServiceImpl = new PatientServiceImpl();
 	Patient patient = new Patient();
