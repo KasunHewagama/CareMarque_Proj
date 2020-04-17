@@ -187,6 +187,7 @@ public class HospitalServiceImpl implements IHospitalService{
 		preparedStatement.setString(5, hospital.getRegNo());
 		preparedStatement.setString(6, hospital.getOpen_Hours());
 		preparedStatement.setString(7, hospital.getClose_Hours());
+		preparedStatement.setString(8, hospital.getHospitalId());
 		
 		preparedStatement.execute();
 		
