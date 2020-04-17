@@ -11,4 +11,6 @@ public interface IDoctorService {
 	public ArrayList<String> getDoctorIDs();
 
 	public String getDoctor(String doctorId);
+
+	public String getDoctors();
 }
