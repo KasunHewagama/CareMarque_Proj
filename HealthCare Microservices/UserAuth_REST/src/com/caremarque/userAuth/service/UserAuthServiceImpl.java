@@ -3,6 +3,7 @@ package com.caremarque.userAuth.service;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -17,7 +18,7 @@ public class UserAuthServiceImpl implements IUserAuthService{
 	
 	private static Connection con = null;
 	
-	private static PreparedStatement preparedStmt = null;
+	private static Statement statement = null;
 	
 	ResultSet resultSet = null;
 	
@@ -30,9 +31,11 @@ public class UserAuthServiceImpl implements IUserAuthService{
 			
 			con = DBConnection.getDBConnection();
 			
-			String query = "SELECT patientId, email, password FROM patient";
+			statement = con.createStatement();
 			
-			preparedStmt = con.prepareStatement(query);
+			String query = "SELECT * FROM patient";
+			
+			resultSet = statement.executeQuery(query);
 			
 			while(resultSet.next()) {
 				
@@ -42,12 +45,13 @@ public class UserAuthServiceImpl implements IUserAuthService{
 				System.out.println("authId : " + resultSet.getInt("patientId"));
 				
 				patientAuth.setUserName(resultSet.getString("email"));
-				System.out.println("authemail : " + resultSet.getInt("email"));
+				System.out.println("authemail : " + resultSet.getString("email"));
 
 				patientAuth.setPassword(resultSet.getString("password"));
-				System.out.println("authpassword : " + resultSet.getInt("password"));
+				System.out.println("authpassword : " + resultSet.getString("password"));
 
 				patientList.add(patientAuth);
+				System.out.println(patientList);
 			}
 			System.out.println("Data retrived from DB");
 		

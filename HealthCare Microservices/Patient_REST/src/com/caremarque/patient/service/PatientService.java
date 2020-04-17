@@ -4,143 +4,138 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
-
 import com.caremarque.patient.model.Patient;
+import com.caremarque.patient.model.PatientAuthentication;
 import com.caremarque.patient.utils.DBConnection;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
 
 public class PatientService implements IPatientService {
+	
+	
+	public List<PatientAuthentication> getAuthDetails() {
 
-	Pattern alphaPattern = Pattern.compile("/^[a-zA-Z]+$/");
-	Pattern nicPattern = Pattern.compile("/^[0-9]{9}[vVxX]$/");
-	Pattern emailPattern = Pattern.compile("/^[\\w\\-\\.\\+]+\\@[a-zA-Z0-9\\.\\-]+\\.[a-zA-z0-9]{2,4}$/");
-	Pattern dobPattern = Pattern.compile("(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20)\\d\\d)");
-	Pattern bloodTypePattern = Pattern.compile("^(A|B|AB|O)[+-]$");
-	Pattern pwdPattern = Pattern.compile("/(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/");
-	Pattern phonePattern = Pattern.compile("/^\\d{10}$/");
+		List<PatientAuthentication> patientAuthList = new ArrayList<PatientAuthentication>();
+
+		try {
+
+			Client client = Client.create();
+
+			WebResource webResource = client
+					.resource("http://localhost:9090/UserAuth_REST/myService/UserAuthentication/getPatientAuth");
+
+			ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);
+
+			if (response.getStatus() != 200) {
+				throw new RuntimeException("Failed : HTTP error code : " + response.getStatus());
+
+			}
+			String output = response.getEntity(String.class);
+
+			Gson gson = new Gson();
+			JsonElement list = new JsonParser().parse(output).getAsJsonObject().get("UserAuthentication");
+			List<PatientAuthentication> listObj = gson.fromJson(list, new TypeToken<List<PatientAuthentication>>() {}.getType());
+			System.out.println(listObj.size());
+
+			for (PatientAuthentication patientAuthentication : listObj) {
+				System.out.println(patientAuthentication);
+				patientAuthList.add(patientAuthentication);
+
+			}
+
+			for (PatientAuthentication patientAuthentication : patientAuthList) {
+				System.out.println("ID : " + patientAuthentication.getPatientAuthId());
+				System.out.println("email : " + patientAuthentication.getUserName());
+
+			}
+
+			System.out.println(listObj.get(0).getPatientAuthId());
+			System.out.println(listObj.get(0).getUserName());
+			System.out.println(listObj.get(0).getPassword());
+
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		return patientAuthList;
+	}
+	
+	
 
 	//to insert patient details to the db
 	@Override
 	public String registerPatient(Patient patient) {
-
+		
 		String output = "";
 		Connection con = null;
 		PreparedStatement preparedStmt = null;
+		boolean validate = false;
+		
+		List<PatientAuthentication> patientAuthList = getAuthDetails();
 		
 
 		try {
+
 			con = DBConnection.getDBConnection();
 
 			String query = "INSERT INTO patient(firstName, lastName, gender, NIC, DOB, email, phone, bloodGroup, allergies, password, cPassword) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 			preparedStmt = con.prepareStatement(query);
 			
+			System.out.println("before for loop");
 			
-			
-			preparedStmt.setString(1, patient.getFirstName());
-			preparedStmt.setString(2, patient.getLastName());
-			preparedStmt.setString(3, patient.getGender());
-			preparedStmt.setString(4, patient.getNIC());
-			preparedStmt.setString(5, patient.getDOB());
-			preparedStmt.setString(6, patient.getEmail());
-			preparedStmt.setString(7, patient.getPhone());
-			preparedStmt.setString(8, patient.getBloodGroup());
-			preparedStmt.setString(9, patient.getAllergy());
-			preparedStmt.setString(10, patient.getPassword());
-			preparedStmt.setString(11, patient.getConfirmPassword());
+			for(PatientAuthentication patientAuthentication : patientAuthList) {
+				System.out.println("PAUTH 1 : " + patientAuthentication.getUserName());
+				System.out.println("PAUTH 2 : " + patient.getEmail());
+				System.out.println("PAUTH 3 : " + patientAuthentication.getPassword());
+				System.out.println("PAUTH 4 : " + patient.getPassword());
 
-//			String fName = patient.getFirstName();
-//			String lName = patient.getLastName();
-//			String gender = patient.getGender();
-//			String NIC = patient.getNIC();
-//			String DOB = patient.getDOB();
-//			String email =  patient.getEmail();
-//			String phone = patient.getPhone();
-//			String bloodGroup = patient.getBloodGroup();
-//			String allergy = patient.getAllergy();
-//			String pwd = patient.getPassword();
-//			String cPwd = patient.getConfirmPassword();
-		
-
-//				
-//			if((patient.getFirstName() != null) && (!patient.getFirstName().isEmpty()) && alphaPattern.matcher(patient.getFirstName()).matches()) 
-//				if((patient.getLastName() != null) && (!patient.getLastName().isEmpty()) && alphaPattern.matcher(patient.getLastName()).matches()) 
-//					if((patient.getGender() != null) && (!patient.getGender().isEmpty()) && alphaPattern.matcher(patient.getGender()).matches()) 
-//						if((patient.getNIC() != null) && (!patient.getNIC().isEmpty()) && nicPattern.matcher(patient.getNIC()).matches()) 
-//							   if((patient.getDOB() != null) && (!patient.getDOB().isEmpty()) && dobPattern.matcher(patient.getDOB()).matches()) 
-//								   if((patient.getEmail() != null) && (!patient.getEmail().isEmpty()) && emailPattern.matcher(patient.getEmail()).matches()) 
-//									   if((patient.getPhone() != null) && (!patient.getPhone().isEmpty()) && phonePattern.matcher(patient.getPhone()).matches()) 
-//										   if((patient.getBloodGroup() != null) && (!patient.getBloodGroup().isEmpty()) && bloodTypePattern.matcher(patient.getBloodGroup()).matches()) 
-//											   if((patient.getPassword() != null) && (!patient.getPassword().isEmpty()) && pwdPattern.matcher(patient.getPassword()).matches()) 
-//												   if((patient.getConfirmPassword() != null) && (!patient.getConfirmPassword().isEmpty()) && patient.getConfirmPassword().equals(patient.getPassword())) {
-//													   
-//														preparedStmt.setString(1, patient.getFirstName());
-//														preparedStmt.setString(2, patient.getLastName());
-//														preparedStmt.setString(3, patient.getGender());
-//														preparedStmt.setString(4, patient.getNIC());
-//														preparedStmt.setString(5, patient.getDOB());
-//														preparedStmt.setString(6, patient.getEmail());
-//														preparedStmt.setString(7, patient.getPhone());
-//														preparedStmt.setString(8, patient.getBloodGroup());
-//														preparedStmt.setString(9, patient.getAllergy());
-//														preparedStmt.setString(10, patient.getPassword());
-//														preparedStmt.setString(11, patient.getConfirmPassword());
-//													   
-//													   int result = 0;
-//													   
-//													   result = preparedStmt.executeUpdate();
-//												
-//													   if(result > 0) {
-//														output = "Inserted successfully";	
-//													   }
-//												   }else 
-//													   output="Cpassword";
-//												   
-//
-//											   else 
-//												   output="password";
-//											   
-//
-//										   else 
-//											   output="blood";
-//										   
-//
-//									   else 
-//										   output="phone";
-//									   
-// 
-//								   else 
-//									   output="DOB";
-//								   
-//
-//							   else
-//								   output="DOB";
-//							   
-//
-//						else 
-//							output="NIC";
-//						
-//
-//					else 
-//						output="gender";
-//					
-//
-//				else 
-//					output="lName";
-//				
-//
-//			else 
-//				output="fName";
+				if(patient.getEmail().equals(patientAuthentication.getUserName())){
+					
+					validate = true;
+					System.out.println("VALIDATE : " + validate);
+					break;
+				}
+			}
 			
+			
+			if(validate == true) {
 				
-			 int result = 0;
-			   
-			   result = preparedStmt.executeUpdate();
-		
-			   if(result > 0) {
-				output = "Inserted successfully";	
-			   }
+				output = "You already have an account from email" + patient.getEmail() + "..!!!";
+			
+			
+//			 int result = 0;
+//			   
+//			   result = preparedStmt.executeUpdate();
+//		
+//			   if(result > 0) {
+//				output = "Inserted successfully";	
+//			   }
+//			
+			}else {
+				
+				preparedStmt.setString(1, patient.getFirstName());
+				preparedStmt.setString(2, patient.getLastName());
+				preparedStmt.setString(3, patient.getGender());
+				preparedStmt.setString(4, patient.getNIC());
+				preparedStmt.setString(5, patient.getDOB());
+				preparedStmt.setString(6, patient.getEmail());
+				preparedStmt.setString(7, patient.getPhone());
+				preparedStmt.setString(8, patient.getBloodGroup());
+				preparedStmt.setString(9, patient.getAllergy());
+				preparedStmt.setString(10, patient.getPassword());
+				preparedStmt.setString(11, patient.getConfirmPassword());
+				
+				preparedStmt.execute();
+				output = "Inserted successfully";
+			}
 
 		} catch (Exception e) {
 
@@ -554,6 +549,11 @@ public class PatientService implements IPatientService {
 
 		return output;
 	}
+	
+
+		
+		
+
 	
 
 	// to get all the registerd patients to a arraylist

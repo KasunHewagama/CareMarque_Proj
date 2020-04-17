@@ -1,6 +1,8 @@
 package com.caremarque.patient.model;
 
+import javax.xml.bind.annotation.XmlRootElement;
 
+@XmlRootElement
 public class Patient {
 
 	private int patientId;
