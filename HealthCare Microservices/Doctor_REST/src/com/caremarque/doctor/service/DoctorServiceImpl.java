@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -87,11 +88,177 @@ public static final Logger log = Logger.getLogger(IDoctorService.class.getName()
 	}
 		return output;
 		
-
 }
 	
+
+	
+	@Override
+	public String getDoctor(String doctorId) {
+		// TODO Auto-generated method stub
+		
+		String output = "";
+		Statement st = null;
+		ResultSet rs = null;
+		Connection con = null;
+		
+try {
+			
+			con = DBConnection.getDBConnection();
+			
+			String query = "SELECT * FROM doctor doctorId = '"+ doctorId + "'";
+			
+			st = con.createStatement();
+			rs = st.executeQuery(query);
+			
+			output = "<table border=\"1\">"						
+					+"<tr>"+"<th>firstName</th>"
+					+"<th>lastName</th>"
+					+"<th>regNo</th>"
+					+"<th>gender</th>"
+					+"<th>specialization</th>"
+					+"<th>phone</th>"
+					+"<th>email</th>"
+					+"<th>password</th>"
+					+"<th>confirmPassword</th></tr>";
+			
+			while(rs.next()) {
+				
+				//String doctorId = Integer.toString(rs.getInt("doctorId"));
+				String firstName = rs.getString("firstName");
+				String lastName = rs.getString("lastName");
+				String regNo =  rs.getString("regNo");
+				String gender = rs.getString("gender");
+				String specialization = rs.getString("specialization");
+				String phone = rs.getString("phone");
+				String email = rs.getString("email");
+				String password = rs.getString("password");
+				String confirmPassword = rs.getString("confirmPassword");
+				
+				output += "<tr><td>" + doctorId + "</td>";
+				output += "<tr><td>" + firstName + "</td>";
+				output += "<td>" + lastName + "</td>";
+				output += "<td>" + regNo + "</td>";
+				output += "<td>" + gender + "</td>";
+				output += "<td>" + specialization + "</td>";
+				output += "<td>" + phone + "</td>";
+				output += "<td>" + email + "</td>";
+				output += "<td>" + password + "</td>";
+				output += "<td>" + confirmPassword + "</td>";
+			}
+			
+			output += "</table>";
+		} catch(Exception e) {
+			
+			output = "Error while reading doctor details...!";
+			System.err.println(e.getMessage());
+		
+		}finally {
+			
+			try {
+				
+				if (st != null) {
+					st.close();
+				}
+				
+				if (con != null) {
+					con.close();
+				}
+				
+				if(rs != null) {
+					rs.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+		}
+		return output;
+	}
 	
 	
+	@Override
+	public String getDoctors() {
+		// TODO Auto-generated method stub
+
+		String output = "";
+		Statement st = null;
+		ResultSet rs = null;
+		Connection con = null;
+		
+		try {
+			
+			con = DBConnection.getDBConnection();
+			
+			String query = "SELECT * FROM doctor";
+			
+			st = con.createStatement();
+			rs = st.executeQuery(query);
+			
+			output = "<table border=\"1\">"						
+					+"<tr>"+"<th>doctorId</th>"
+					+"<th>firstName</th>"
+					+"<th>lastName</th>"
+					+"<th>regNo</th>"
+					+"<th>gender</th>"
+					+"<th>specialization</th>"
+					+"<th>phone</th>"
+					+"<th>email</th>"
+					+"<th>password</th>"
+					+"<th>confirmPassword</th></tr>";
+			
+			while(rs.next()) {
+				String doctorId = Integer.toString(rs.getInt("doctorId"));
+				String firstName = rs.getString("firstName");
+				String lastName = rs.getString("lastName");
+				String regNo =  rs.getString("regNo");
+				String gender = rs.getString("gender");
+				String specialization = rs.getString("specialization");
+				String phone = rs.getString("phone");
+				String email = rs.getString("email");
+				String password = rs.getString("password");
+				String confirmPassword = rs.getString("confirmPassword");
+				
+				output += "<tr><td>" + doctorId + "</td>";
+				output += "<td>" + firstName + "</td>";
+				output += "<td>" + lastName + "</td>";
+				output += "<td>" + regNo + "</td>";
+				output += "<td>" + gender + "</td>";
+				output += "<td>" + specialization + "</td>";
+				output += "<td>" + phone + "</td>";
+				output += "<td>" + email + "</td>";
+				output += "<td>" + password + "</td>";
+				output += "<td>" + confirmPassword + "</td></tr>";
+			}
+			
+			output += "</table>";
+		} catch(Exception e) {
+			
+			output = "Error while reading doctor details...!";
+			System.err.println(e.getMessage());
+		
+		}finally {
+			
+			try {
+				
+				if (st != null) {
+					st.close();
+				}
+				
+				if (con != null) {
+					con.close();
+				}
+				
+				if(rs != null) {
+					rs.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+		}
+		return output;
+
+			}
 	
 	
 	
@@ -209,4 +376,8 @@ public static final Logger log = Logger.getLogger(IDoctorService.class.getName()
 		System.out.println(arrayList.size());
 		return arrayList;
 	}
+
+
+
+	
 }
