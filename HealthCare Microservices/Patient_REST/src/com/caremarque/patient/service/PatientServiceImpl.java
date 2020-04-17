@@ -28,6 +28,11 @@ public class PatientServiceImpl implements IPatientService {
 	
 	public static final Logger log = Logger.getLogger(PatientServiceImpl.class.getName());
 
+	public static Connection con;
+	
+	public static PreparedStatement preparedStmt;
+	
+	public static Statement st;
 	
 	public List<PatientAuthentication> getAuthDetails() {
 
@@ -70,7 +75,7 @@ public class PatientServiceImpl implements IPatientService {
 			System.out.println(listObj.get(0).getPassword());
 
 		} catch (Exception e) {
-			e.getMessage();
+			log.log(Level.SEVERE, e.getMessage());
 		}
 		return patientAuthList;
 	}
@@ -82,11 +87,11 @@ public class PatientServiceImpl implements IPatientService {
 	public String registerPatient(Patient patient) {
 		
 		String output = "";
-		Connection con = null;
-		PreparedStatement preparedStmt = null;
 		boolean validate = false;
 		
 		List<PatientAuthentication> patientAuthList = getAuthDetails();
+		
+		//String patientId = 
 		
 //		Pattern alphaPattern = Pattern.compile("/^[a-zA-Z]+$/");
 //		Pattern nicPattern = Pattern.compile("/^[0-9]{9}[vVxX]$/");
@@ -255,9 +260,9 @@ public class PatientServiceImpl implements IPatientService {
 	public String getPatientDetail(int patientId) {
 		
 		String output = "";
-		Statement st = null;
+//		Statement st = null;
 		ResultSet rs = null;
-		Connection con = null;
+	//	Connection con = null;
 
 		try {
 			con = DBConnection.getDBConnection();
@@ -334,9 +339,9 @@ public class PatientServiceImpl implements IPatientService {
 	public String getAllPatients() {
 
 		String output = "";
-		Statement st = null;
+		//Statement st = null;
 		ResultSet rs = null;
-		Connection con = null;
+		//Connection con = null;
 
 		try {
 			con = DBConnection.getDBConnection();
@@ -413,8 +418,8 @@ public class PatientServiceImpl implements IPatientService {
 	public String updatePatientDetails(Patient patient) {
 
 		String output = "";
-		Connection con = null;
-		PreparedStatement preparedStmt = null;
+		//Connection con = null;
+		//PreparedStatement preparedStmt = null;
 
 		try {
 
@@ -473,8 +478,8 @@ public class PatientServiceImpl implements IPatientService {
 	public String deletePatient(String patientId) {
 
 		String output = "";
-		PreparedStatement preparedStmt = null;
-		Connection con = null;
+		//PreparedStatement preparedStmt = null;
+		//Connection con = null;
 
 		try {
 
