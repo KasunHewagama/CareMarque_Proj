@@ -208,7 +208,8 @@ try {
 					+"<th>confirmPassword</th></tr>";
 			
 			while(rs.next()) {
-				String doctorId = Integer.toString(rs.getInt("doctorId"));
+				//String doctorId = Integer.toString(rs.getInt("doctorId"));
+				String doctorId = rs.getString("doctorId");
 				String firstName = rs.getString("firstName");
 				String lastName = rs.getString("lastName");
 				String regNo =  rs.getString("regNo");
@@ -289,7 +290,7 @@ try {
 				preparedStatement.setString(8, doctor.getEmail());
 				preparedStatement.setString(9, doctor.getPassword());
 				preparedStatement.setString(10, doctor.getConfirmPassword());
-				
+				preparedStatement.setString(11, doctor.getDoctorId());
 				preparedStatement.execute();
 				
 				output = "Updated Successfully..!";
