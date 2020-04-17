@@ -77,6 +77,7 @@ public class PaymentService {
 		
 		String result = "Record Taken: " + appointment;
 		return Response.status(201).entity(result).build();
+		//TODO: IMPLENTATION OF OTHER CREATION WITH APPOINTMENT
 	}
 	
 	@GET
