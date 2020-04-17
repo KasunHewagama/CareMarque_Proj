@@ -28,12 +28,15 @@ public class AppointmentServiceImpl implements IAppointmentService {
 	//this object is for logging
 	public static final Logger log = Logger.getLogger(IAppointmentService.class.getName());
 
+	public static Connection con;
+	
+	public static Statement st;
+	
 	@Override
 	public String createAppointment(Appointment appointment) {
 		// return "Appointment created successfully...!";
 
 		String output = null;
-		Connection con = null;
 		PreparedStatement preparedStatement = null;
 		
 		//Here we call the generateAppointmentIDs method to auto generate a appointmentID
@@ -98,18 +101,93 @@ public class AppointmentServiceImpl implements IAppointmentService {
 	}
 
 	@Override
-	public Appointment getAppointment(String appointmentId) {
-		// TODO Auto-generated method stub
-		return null;
+	public String getAppointment(String appointmentId) {
+		
+		String output = null;
+		ArrayList<Appointment> arrayList = new ArrayList<Appointment>();
+		
+		try {
+			con = DBConnection.getDBConnection();
+			
+			String query = "SELECT * FROM appointment "
+					+ "WHERE appointmentId = '"+ appointmentId + "'";
+			
+			PreparedStatement pStatement = con.prepareStatement(query);
+			ResultSet rs = pStatement.executeQuery();
+			
+			output = "<table border=\"1\"> <tr><th>appointmentId</th> " 
+					+ "<th>patientId</th> " 
+					+ "<th>patientName</th> " 
+					+ "<th>phone</th> "
+					+ "<th>doctorName</th> " 
+					+ "<th>specialization</th> " 
+					+ "<th>hospitalId</th> "
+					+ "<th>hospitalName</th> " 
+					+ "<th>appointmentDate</th> " 
+					+ "<th>appointmentTime</th> "
+					+ "<th>lastUpdateDate</th> " 
+					+ "<th>lastUpdateTime</th> " 
+					+ "<th>appointmentStatus</th></tr>";
+			
+			while(rs.next()) {
+				Appointment appointment = new Appointment();
+				appointment.setPatientId(rs.getString(Constants.COLUMN_INDEX_ONE));
+				appointment.setPatientName(rs.getString(Constants.COLUMN_INDEX_TWO));
+				appointment.setPhone(rs.getString(Constants.COLUMN_INDEX_THREE));
+				appointment.setDoctorName(rs.getString(Constants.COLUMN_INDEX_FOUR));
+				appointment.setSpecialization(rs.getString(Constants.COLUMN_INDEX_FIVE));
+				appointment.setHospitalId(rs.getString(Constants.COLUMN_INDEX_SIX));
+				appointment.setHospitalName(rs.getString(Constants.COLUMN_INDEX_SEVEN));
+				appointment.setAppointmentDate(rs.getString(Constants.COLUMN_INDEX_EIGHT));
+				appointment.setAppointmentTime(rs.getString(Constants.COLUMN_INDEX_NINE));
+				appointment.setLastUpdateDate(rs.getString(Constants.COLUMN_INDEX_TEN));
+				appointment.setLastUpdateTime(rs.getString(Constants.COLUMN_INDEX_ELEVEN));
+				appointment.setAppointmentStatus(rs.getString(Constants.COLUMN_INDEX_TWELVE));
+				arrayList.add(appointment);
+				
+				output += "<tr><td>" + rs.getString(Constants.COLUMN_INDEX_ONE) + "</td>";
+				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_TWO) + "</td>";
+				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_THREE) + "</td>";
+				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_FOUR) + "</td>";
+				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_FIVE) + "</td>";
+				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_SIX) + "</td>";
+				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_SEVEN) + "</td>";
+				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_EIGHT) + "</td>";
+				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_NINE) + "</td>";
+				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_TEN) + "</td>";
+				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_ELEVEN) + "</td>";
+				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_TWELVE) + "</td>";
+				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_THIRTEEN) + "</td></tr>";
+				
+				System.out.println("Data Retrieved from DB...!");
+			}
+			
+			output += "</table>";
+		
+		} catch (Exception e) {
+			log.log(Level.SEVERE, e.getMessage());
+		
+		} finally {
+			try {
+				if(st != null) {
+					st.close();
+				}
+				if(con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				log.log(Level.SEVERE, e.getMessage());
+			}
+		}
+		
+		return output;
 	}
 
 	@Override
 	public String getAppointments() {
 
 		String output = null;
-		Statement st = null;
 		ResultSet rs = null;
-		Connection con = null;
 		
 		ArrayList<Appointment> arrayList = new ArrayList<Appointment>();
 
@@ -204,10 +282,9 @@ public class AppointmentServiceImpl implements IAppointmentService {
 	}
 
 	@Override
-	public String updateAppointment(String appointmentid, Appointment appointment) {
+	public String updateAppointment(String appointmentId, Appointment appointment) {
 		
 		String output = "";
-		Connection con = null;
 		PreparedStatement pStatement = null;
 		
 		try {
@@ -278,7 +355,6 @@ public class AppointmentServiceImpl implements IAppointmentService {
 		
 		String output = "";
 		PreparedStatement pStatement = null;
-		Connection con = null;
 		
 		try {
 			con = DBConnection.getDBConnection();
@@ -326,7 +402,6 @@ public class AppointmentServiceImpl implements IAppointmentService {
 		
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
-		Connection con = null;
 		
 		ArrayList<String> arrayList = new ArrayList<String>();
 		
