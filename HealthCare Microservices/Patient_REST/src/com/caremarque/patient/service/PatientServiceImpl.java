@@ -117,7 +117,7 @@ public class PatientServiceImpl implements IPatientService {
 
 			if (validate == true) {
 
-				output = "You already have an account from email" + patient.getEmail() + "..!!!";
+				output = "You already have an account from email " + patient.getEmail() + " ..!!!";
 
 			} else {
 
@@ -141,8 +141,8 @@ public class PatientServiceImpl implements IPatientService {
 
 				if (result > 0) {
 
-					output = "Patient" + patient.getFirstName() + patient.getLastName()
-							+ "successfully registered to the system..!";
+					output = patient.getFirstName() + " " + patient.getLastName()
+							+ ", You are successfully registered to the system..!";
 				}
 			}
 

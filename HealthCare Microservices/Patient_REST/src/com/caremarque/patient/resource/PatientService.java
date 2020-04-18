@@ -155,20 +155,20 @@ public class PatientService {
 			@NotNull(message = "confirm Password cannot be empty..!") 
 			@FormParam("cPassword") String cPassword) {
 
-		patient.setFirstName(firstName);
-		patient.setLastName(lastName);
-		patient.setGender(gender);
-		patient.setNIC(NIC);
-		patient.setDOB(DOB);
-		patient.setEmail(email);
-		patient.setPhone(phone);
-		patient.setBloodGroup(bloodGroup);
-		patient.setAllergy(allergies);
-		patient.setPassword(password);
-		patient.setConfirmPassword(cPassword);
-
-		String output = patientServiceImpl.registerPatient(patient);
-		return output;
+				patient.setFirstName(firstName);
+				patient.setLastName(lastName);
+				patient.setGender(gender);
+				patient.setNIC(NIC);
+				patient.setDOB(DOB);
+				patient.setEmail(email);
+				patient.setPhone(phone);
+				patient.setBloodGroup(bloodGroup);
+				patient.setAllergy(allergies);
+				patient.setPassword(password);
+				patient.setConfirmPassword(cPassword);
+		
+				String output = patientServiceImpl.registerPatient(patient);
+				return output;
 	}
 
 	// getAllPatientDetails
