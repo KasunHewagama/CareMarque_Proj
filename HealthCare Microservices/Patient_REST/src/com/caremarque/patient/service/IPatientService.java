@@ -1,6 +1,6 @@
 package com.caremarque.patient.service;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import com.caremarque.patient.model.Patient;
 
@@ -16,6 +16,6 @@ public interface IPatientService {
 
 	public String deletePatient(String patientId);
 	
-	public ArrayList<String> getPatientIDs();
+	public List<String> getPatientIDs();
 	
 }

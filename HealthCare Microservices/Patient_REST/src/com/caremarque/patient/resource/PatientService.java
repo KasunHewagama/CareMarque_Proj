@@ -13,8 +13,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.parser.Parser;
@@ -136,10 +134,10 @@ public class PatientService {
 			@FormParam("gender") String gender,
 
 			@NotNull(message = "NIC cannot be empty..!") @Pattern(regexp = "/^[0-9]{9}[vVxX]$/", message = "Enter valid NIC") 
-			@FormParam("NIC") String NIC,
+			@FormParam("NIC") String nic,
 
 			@NotNull(message = "DOB cannot be empty..!") @Pattern(regexp = "(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20)\\d\\d)", message = "Use dd/mm/yyyy format") 
-			@FormParam("DOB") String DOB,
+			@FormParam("DOB") String dob,
 
 			@NotNull(message = "email cannot be empty..!") @Pattern(regexp = "/^[\\w\\-\\.\\+]+\\@[a-zA-Z0-9\\.\\-]+\\.[a-zA-z0-9]{2,4}$/", message = "Enter valid email") 
 			@FormParam("email") String email,
@@ -163,8 +161,8 @@ public class PatientService {
 				patient.setFirstName(firstName);
 				patient.setLastName(lastName);
 				patient.setGender(gender);
-				patient.setNIC(NIC);
-				patient.setDOB(DOB);
+				patient.setNIC(nic);
+				patient.setDOB(dob);
 				patient.setEmail(email);
 				patient.setPhone(phone);
 				patient.setBloodGroup(bloodGroup);
@@ -207,9 +205,7 @@ public class PatientService {
 
 		String patientId = doc.select("patientId").text();
 
-		String output = patientServiceImpl.deletePatient(patientId);
-
-		return output;
+		return patientServiceImpl.deletePatient(patientId);
 
 	}
 
@@ -226,8 +222,8 @@ public class PatientService {
 		String firstName = patientObj.get("firstName").getAsString();
 		String lastName = patientObj.get("lastName").getAsString();
 		String gender = patientObj.get("gender").getAsString();
-		String NIC = patientObj.get("NIC").getAsString();
-		String DOB = patientObj.get("DOB").getAsString();
+		String nic = patientObj.get("NIC").getAsString();
+		String dob = patientObj.get("DOB").getAsString();
 		String email = patientObj.get("email").getAsString();
 		String phone = patientObj.get("phone").getAsString();
 		String bloodGroup = patientObj.get("bloodGroup").getAsString();
@@ -239,8 +235,8 @@ public class PatientService {
 		patient.setFirstName(firstName);
 		patient.setLastName(lastName);
 		patient.setGender(gender);
-		patient.setNIC(NIC);
-		patient.setDOB(DOB);
+		patient.setNIC(nic);
+		patient.setDOB(dob);
 		patient.setEmail(email);
 		patient.setPhone(phone);
 		patient.setBloodGroup(bloodGroup);
@@ -248,9 +244,7 @@ public class PatientService {
 		patient.setPassword(password);
 		patient.setConfirmPassword(cPassword);
 
-		String output = patientServiceImpl.updatePatientDetails(patient);
-
-		return output;
+		return patientServiceImpl.updatePatientDetails(patient);
 
 	}
 

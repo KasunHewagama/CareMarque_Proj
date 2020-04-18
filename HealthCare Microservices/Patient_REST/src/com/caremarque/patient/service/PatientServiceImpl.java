@@ -195,8 +195,8 @@ public class PatientServiceImpl implements IPatientService {
 				String firstName = rs.getString("firstName");
 				String lastName = rs.getString("lastName");
 				String gender = rs.getString("gender");
-				String NIC = rs.getString("NIC");
-				String DOB = rs.getString("DOB");
+				String nic = rs.getString("NIC");
+				String dob = rs.getString("DOB");
 				String email = rs.getString("email");
 				String phone = rs.getString("phone");
 				String bloodGroup = rs.getString("bloodGroup");
@@ -207,8 +207,8 @@ public class PatientServiceImpl implements IPatientService {
 				output += "<td>" + firstName + "</td>";
 				output += "<td>" + lastName + "</td>";
 				output += "<td>" + gender + "</td>";
-				output += "<td>" + NIC + "</td>";
-				output += "<td>" + DOB + "</td>";
+				output += "<td>" + nic + "</td>";
+				output += "<td>" + dob + "</td>";
 				output += "<td>" + email + "</td>";
 				output += "<td>" + phone + "</td>";
 				output += "<td>" + bloodGroup + "</td>";
@@ -383,8 +383,6 @@ public class PatientServiceImpl implements IPatientService {
 	public String deletePatient(String patientId) {
 
 		String output = "";
-		// PreparedStatement preparedStmt = null;
-		// Connection con = null;
 
 		try {
 
@@ -431,8 +429,6 @@ public class PatientServiceImpl implements IPatientService {
 		ArrayList<String> patientList = new ArrayList<String>();
 
 		String output = "";
-		Connection con = null;
-		PreparedStatement preparedStmt = null;
 		ResultSet rs = null;
 
 		try {
