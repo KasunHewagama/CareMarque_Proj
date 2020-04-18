@@ -1,7 +1,6 @@
 package com.caremarque.patient.utils;
 
 public class Constants {
-	//TODO: Declare some constant values used in project
 	
 	//Constant Values for column indexes
 	public static final int COLUMN_INDEX_ONE = 1;
@@ -16,13 +15,9 @@ public class Constants {
 	public static final int COLUMN_INDEX_TEN = 10;
 	public static final int COLUMN_INDEX_ELEVEN = 11;
 	public static final int COLUMN_INDEX_TWELVE = 12;
-	public static final int COLUMN_INDEX_THIRTEEN = 13;
-	public static final int COLUMN_INDEX_FOURTEEN = 14;
-	public static final int COLUMN_INDEX_FIFTEEN = 15;
 	
-	//ID Prefixes
-	public static final String PAYMENT_ID_PREFIX = "PY";
 	
+	//ID Prefixes	
 	public static final String PATIENT_ID_PREFIX = "PA";
 	
 	//DBConstants
