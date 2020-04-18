@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 //import org.apache.tomcat.util.security.Escape;
 
 import com.caremarque.appointment.model.Appointment;
+import com.caremarque.appointment.model.Payment;
 import com.caremarque.appointment.utils.CommonUtils;
 import com.caremarque.appointment.utils.DBConnection;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -461,31 +462,41 @@ public class AppointmentServiceImpl implements IAppointmentService {
 		return arrayList;
 	}
 
-	public String createPayment(String appointmentId) {
+	public String createPayment(String appointmentId, Payment payment) {
 
 		Client client = Client.create();
 		String result = "";
 		ArrayList<Appointment> appList = new ArrayList<Appointment>();
+		
 		appList = getAppointmentByID(appointmentId);
 
+		payment.setPatientId(appList.get(0).getPatientId());
+		payment.setPatientName(appList.get(0).getPatientName());
+		payment.setAppointmentId(appList.get(0).getAppointmentId());
+		payment.setDoctorId(appList.get(0).getDoctorName());
+		payment.setHospitalId(appList.get(0).getHospitalId());
+
+		
 		WebResource webResource = client
 				.resource("http://localhost:8088/Payment_REST/paymentService/Payment/fromAppointment");
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonInput = "";
 
 		try {
-			jsonInput = mapper.writeValueAsString(appList.get(0));
+			jsonInput = mapper.writeValueAsString(payment);
 			System.out.println("JSON: " + jsonInput);
 		} catch (Exception e) {
 			log.log(Level.SEVERE, e.getMessage());
 		}
+		
+		
 
 		try {
 			ClientResponse response = webResource.accept("application/json").type("application/json")
 					.post(ClientResponse.class, jsonInput);
-			if (response.getStatus() != 201) {
-				throw new RuntimeException("HTTP Error: " + response.getStatus());
-			}
+//			if (response.getStatus() != 201) {
+//				throw new RuntimeException("HTTP Error: " + response.getStatus());
+//			}
 			result = response.getEntity(String.class);
 		} catch (Exception e) {
 			System.out.println("CAUTHE HERE");
@@ -496,6 +507,7 @@ public class AppointmentServiceImpl implements IAppointmentService {
 		System.out.println(result);
 
 		return result;
+		
 	}
 
 }

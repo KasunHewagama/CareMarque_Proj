@@ -73,11 +73,17 @@ public class PaymentService {
 	@POST
 	@Path("/fromAppointment")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response createPaymentFromAppointment(Appointment appointment) {
+	public String createPaymentFromAppointment(Payment payment) {
 		System.out.println("Hello");
-		String result = "Record Taken: " + appointment;
-		System.out.println(appointment);
-		return Response.status(201).entity(result).build();
+		String result = "Record Taken: " + payment;
+		System.out.println(payment);
+		payment.setHospitalCharges(2000.00);
+		payment.setDoctorCharges(1500.00);
+		payment.setPaymentStatus("active");
+		System.out.println(payment);
+		
+		
+		return ps.createPayement(payment);
 		
 	}
 	

@@ -1,4 +1,4 @@
-package com.caremarque.payment.model;
+package com.caremarque.appointment.model;
 
 import java.util.Date;
 
@@ -163,17 +163,6 @@ public class Payment {
 	public void setPaymentStatus(String paymentStatus) {
 		this.paymentStatus = paymentStatus;
 	}
-
-	@Override
-	public String toString() {
-		return "Payment [paymentId=" + paymentId + ", patientId=" + patientId + ", patientName=" + patientName
-				+ ", appointmentId=" + appointmentId + ", doctorId=" + doctorId + ", hospitalId=" + hospitalId
-				+ ", paymentDate=" + paymentDate + ", paymentTime=" + paymentTime + ", doctorCharges=" + doctorCharges
-				+ ", hospitalCharges=" + hospitalCharges + ", totalAmount=" + totalAmount + ", cardNo=" + cardNo
-				+ ", expDate=" + expDate + ", passCode=" + passCode + ", telPhone=" + telPhone + ", email=" + email
-				+ ", paymentStatus=" + paymentStatus + "]";
-	}
-	
 	
 
 

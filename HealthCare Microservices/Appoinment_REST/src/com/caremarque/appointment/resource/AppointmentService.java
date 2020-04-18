@@ -21,6 +21,7 @@ import org.jsoup.parser.Parser;
 
 import com.caremarque.appointment.model.Appointment;
 import com.caremarque.appointment.model.Hospital;
+import com.caremarque.appointment.model.Payment;
 import com.caremarque.appointment.service.AppointmentServiceImpl;
 import com.caremarque.appointment.service.IAppointmentService;
 import com.google.gson.JsonObject;
@@ -150,12 +151,27 @@ public class AppointmentService {
 	}
 	
 	//To Connect with payment resource
-	@GET
+	@POST
 	@Path("/createPayment/{appointmentId}")
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.TEXT_PLAIN)
-	public String createPayment(@PathParam("appointmentId") String appointmentId) {
-		as2.createPayment(appointmentId);
-		return ("Payment has been done for: " + appointmentId);
+	public String createPayment(@PathParam("appointmentId") String appointmentId,
+							@FormParam("cardNo") String cardNo,
+							@FormParam("expDate") String expDate,
+							@FormParam("passCode") String passCode,
+							@FormParam("telPhone") String telPhone,
+							@FormParam("email") String email) {
+
+		Payment p = new Payment();
+		p.setCardNo(cardNo);
+		p.setExpDate(expDate);
+		p.setPassCode(passCode);
+		p.setTelPhone(telPhone);
+		p.setEmail(email);
+		System.out.println(cardNo);
+		as2.createPayment(appointmentId, p);
+		
+		return as2.createPayment(appointmentId, p);
 		
 	}
 	
