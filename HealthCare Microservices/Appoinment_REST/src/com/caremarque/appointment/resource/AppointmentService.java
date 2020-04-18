@@ -1,5 +1,8 @@
 package com.caremarque.appointment.resource;
 
+import javax.validation.ValidationException;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
@@ -34,18 +37,18 @@ public class AppointmentService {
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.TEXT_PLAIN)
 	public String createAppointment(
-			@FormParam("patientId") String patientId,
-			@FormParam("patientName") String patientName,
-			@FormParam("phone") String phone,
-			@FormParam("doctorName") String doctorName,
-			@FormParam("specialization") String specialization,
-			@FormParam("hospitalId") String hospitalId,
-			@FormParam("hospitalName") String hospitalName,
-			@FormParam("appointmentDate") String appointmentDate,
-			@FormParam("appointmentTime") String appointmentTime,
-			@FormParam("lastUpdateDate") String lastUpdateDate,
-			@FormParam("lastUpdateTime") String lastUpdateTime,
-			@FormParam("appointmentStatus") String appointmentStatus) 
+			@NotEmpty	@Pattern(regexp = "/^[a-zA-Z] [0-9]+$/")	@FormParam("patientId") String patientId,
+			@NotEmpty	@Pattern(regexp = "/^[a-zA-Z]+$/", message = "Use only alphabets")	@FormParam("patientName") String patientName,
+			@NotEmpty	@Pattern(regexp = "/^\\d{10}$/")	@FormParam("phone") String phone,
+			@NotEmpty	@Pattern(regexp = "/^[a-zA-Z]+$/", message = "Use only alphabets")	@FormParam("doctorName") String doctorName,
+			@NotEmpty	@Pattern(regexp = "/^[a-zA-Z]+$/", message = "Use only alphabets")	@Pattern(regexp = "/^[a-zA-Z]+$/", message = "Use only alphabets")	@FormParam("specialization") String specialization,
+			@NotEmpty 	@Pattern(regexp = "/^[a-zA-Z][0-9]+$/")	@FormParam("hospitalId") String hospitalId,
+			@NotEmpty	@Pattern(regexp = "/^[a-zA-Z]+$/", message = "Use only alphabets")	@FormParam("hospitalName") String hospitalName,
+			@NotEmpty	@Pattern(regexp = "(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20)\\d\\d)")	@FormParam("appointmentDate") String appointmentDate,
+			@NotEmpty	@Pattern(regexp = "(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20)\\d\\d)")	@FormParam("appointmentTime") String appointmentTime,
+			@NotEmpty	@Pattern(regexp = "(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20)\\d\\d)")	@FormParam("lastUpdateDate") String lastUpdateDate,
+			@NotEmpty	@Pattern(regexp = "(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20)\\d\\d)")	@FormParam("lastUpdateTime") String lastUpdateTime,
+			@NotEmpty	@Pattern(regexp = "/^[a-zA-Z]+$/", message = "Use only alphabets")	@FormParam("appointmentStatus") String appointmentStatus) 
 	{
 		
 		System.out.println("CREATE Appointment...!");
