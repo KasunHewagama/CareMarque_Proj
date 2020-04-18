@@ -24,6 +24,7 @@ import com.google.gson.JsonParser;
 @Path("/Hospital")
 public class HospitalService {
 	IHospitalService as = new HospitalServiceImpl();
+	HospitalServiceImpl as2 = new HospitalServiceImpl();
 	Hospital hospital = new Hospital();
 
 	@POST
@@ -117,6 +118,15 @@ public class HospitalService {
 
 		return output;
 
+	}
+	
+	//To Connect with payment resource
+	@GET
+	@Path("/createAppointment/{hospitalId}")
+	@Produces(MediaType.TEXT_PLAIN)
+	public void createAppointment(@PathParam("hospitalId") String hospitalId) {
+		as2.createAppointment(hospitalId);
+		System.out.println("TRIGGERED");
 	}
 
 }
