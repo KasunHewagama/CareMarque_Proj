@@ -43,9 +43,10 @@ public static final Logger log = Logger.getLogger(IDoctorService.class.getName()
 						+"specialization,"
 						+"phone,"
 						+"email,"
+						+"doctorCharges,"
 						+"password,"
 						+"confirmPassword)"
-						+"VALUES(?,?,?,?,?,?,?,?,?,?)";
+						+"VALUES(?,?,?,?,?,?,?,?,?,?,?)";
 			
 			preparedStatement = con.prepareStatement(query);
 			
@@ -58,8 +59,9 @@ public static final Logger log = Logger.getLogger(IDoctorService.class.getName()
 			preparedStatement.setString(6, doctor.getSpecialization());
 			preparedStatement.setString(7, doctor.getPhone());
 			preparedStatement.setString(8, doctor.getEmail());
-			preparedStatement.setString(9, doctor.getPassword());
-			preparedStatement.setString(10, doctor.getConfirmPassword());
+			preparedStatement.setDouble(9, doctor.getDoctorCharges());
+			preparedStatement.setString(10, doctor.getPassword());
+			preparedStatement.setString(11, doctor.getConfirmPassword());
 			
 			if(!doctor.getPassword().equals(doctor.getConfirmPassword())) {
 				output="Password Mismatching";
@@ -132,6 +134,7 @@ try {
 			while(rs.next()) {
 				
 				//String doctorId = Integer.toString(rs.getInt("doctorId"));
+				//String doctorId = rs.getString("doctorId");
 				String firstName = rs.getString("firstName");
 				String lastName = rs.getString("lastName");
 				String regNo =  rs.getString("regNo");
@@ -211,6 +214,7 @@ try {
 					+"<th>specialization</th>"
 					+"<th>phone</th>"
 					+"<th>email</th>"
+					+"<th>doctorCharges</th>"
 					+"<th>password</th>"
 					+"<th>confirmPassword</th></tr>";
 			
@@ -224,6 +228,7 @@ try {
 				String specialization = rs.getString("specialization");
 				String phone = rs.getString("phone");
 				String email = rs.getString("email");
+				double doctorCharges = rs.getDouble("doctorCharges");
 				String password = rs.getString("password");
 				String confirmPassword = rs.getString("confirmPassword");
 				
@@ -235,6 +240,7 @@ try {
 				output += "<td>" + specialization + "</td>";
 				output += "<td>" + phone + "</td>";
 				output += "<td>" + email + "</td>";
+				output += "<td>" + doctorCharges + "</td>";
 				output += "<td>" + password + "</td>";
 				output += "<td>" + confirmPassword + "</td></tr>";
 			}
@@ -283,7 +289,7 @@ try {
 			try {
 				
 				con = DBConnection.getDBConnection();
-				String query = "UPDATE doctor SET doctorId=?,firstName=?, lastName=?, regNo=?, gender=?, specialization=?, phone=?, email=?, password=?, confirmPassword=? WHERE doctorId=?";
+				String query = "UPDATE doctor SET doctorId=?,firstName=?, lastName=?, regNo=?, gender=?, specialization=?, phone=?, email=?, doctorCharges=?, password=?, confirmPassword=? WHERE doctorId=?";
 				
 				preparedStatement = con.prepareStatement(query);
 				
@@ -295,9 +301,10 @@ try {
 				preparedStatement.setString(6, doctor.getSpecialization());
 				preparedStatement.setString(7, doctor.getPhone());
 				preparedStatement.setString(8, doctor.getEmail());
-				preparedStatement.setString(9, doctor.getPassword());
-				preparedStatement.setString(10, doctor.getConfirmPassword());
-				preparedStatement.setString(11, doctor.getDoctorId());
+				preparedStatement.setDouble(9, doctor.getDoctorCharges());
+				preparedStatement.setString(10, doctor.getPassword());
+				preparedStatement.setString(11, doctor.getConfirmPassword());
+				preparedStatement.setString(12, doctor.getDoctorId());
 				//preparedStatement.execute();
 				
 				//output = "Updated Successfully....!";
@@ -419,7 +426,93 @@ try {
 		System.out.println(arrayList.size());
 		return arrayList;
 	}
+	
+	
+	
+	
+	
+	
+	
 
+	
+	
+	
+	
+	
+	@Override
+	public String getAllAppointments(String doctorId) {
+		// TODO Auto-generated method stub
+
+		String output = "";
+		//Statement st = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+		Connection con = null;
+		
+		try {
+			
+			con = DBConnection.getDBConnection();
+			
+			//String query = "SELECT a.hospitalName,a.COUNT(appointmentId) FROM appointment a,doctor d WHERE d.doctorId=?";
+			String query = "SELECT a.hospitalName , COUNT(a.appointmentId) AS num FROM appointment a ,doctor d WHERE (a.doctorId=d.doctorId) and a.doctorId= ? group by a.hospitalName";
+
+			/*st = con.createStatement();
+			st.setString(1, doctorId);
+			rs = st.executeQuery(query);*/
+			
+			preparedStatement = con.prepareStatement(query);
+			preparedStatement.setString(1, doctorId);
+			rs = preparedStatement.executeQuery();
+			
+			output = "<table border=\"1\">"						
+					+"<tr>"+"<th>hospitalName</th>"
+					+"<th>NumberOfAppointments</th>"
+					+"<th>Status</th></tr>";
+			
+			while(rs.next()) {
+			
+				String hospitalName = rs.getString("hospitalName");
+				int noOfAppointments = rs.getInt("num");
+				//String Status = rs.getString("");
+				String Status="Decline";
+				if(noOfAppointments>=4) {
+					Status="Accept";
+				}
+				
+				output += "<tr><td>" + hospitalName + "</td>";
+				output += "<td>" + noOfAppointments + "</td>";
+				output += "<td>" + Status + "</td></tr>";
+			}
+			
+			output += "</table>";
+		} catch(Exception e) {
+			
+			output = "Error while taking appointments details...!";
+			System.err.println(e.getMessage());
+		
+		}finally {
+			
+			try {
+				
+				if (preparedStatement != null) {
+					preparedStatement.close();
+				}
+				
+				if (con != null) {
+					con.close();
+				}
+				
+				if(rs != null) {
+					rs.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+		}
+		return output;
+
+			}
 
 
 	
