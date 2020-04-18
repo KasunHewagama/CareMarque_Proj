@@ -469,7 +469,6 @@ public class PaymentServiceImpl implements IPaymentService {
 			}
 
 			String output = response.getEntity(String.class);
-			
 
 			Gson gson = new Gson();
 			JsonElement list = new JsonParser().parse(output).getAsJsonObject().get("paymentAuthentication");
