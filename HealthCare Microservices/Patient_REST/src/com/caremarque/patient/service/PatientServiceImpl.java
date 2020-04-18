@@ -3,6 +3,7 @@ package com.caremarque.patient.service;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,7 @@ import javax.ws.rs.core.UriInfo;
 
 import com.caremarque.patient.model.Patient;
 import com.caremarque.patient.model.PatientAuthentication;
+import com.caremarque.patient.utils.CommonUtils;
 import com.caremarque.patient.utils.DBConnection;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -28,6 +30,11 @@ public class PatientServiceImpl implements IPatientService {
 	
 	public static final Logger log = Logger.getLogger(PatientServiceImpl.class.getName());
 
+	public static Connection con;
+	
+	public static PreparedStatement preparedStmt;
+	
+	public static Statement st;
 	
 	public List<PatientAuthentication> getAuthDetails() {
 
@@ -70,7 +77,7 @@ public class PatientServiceImpl implements IPatientService {
 			System.out.println(listObj.get(0).getPassword());
 
 		} catch (Exception e) {
-			e.getMessage();
+			log.log(Level.SEVERE, e.getMessage());
 		}
 		return patientAuthList;
 	}
@@ -79,22 +86,23 @@ public class PatientServiceImpl implements IPatientService {
 
 	//to insert patient details to the db
 	@Override
-	public String registerPatient(Patient patient) {
+	//public String registerPatient(Patient patient) {
+	public Patient registerPatient(Patient patient) {
 		
 		String output = "";
-		Connection con = null;
-		PreparedStatement preparedStmt = null;
 		boolean validate = false;
 		
 		List<PatientAuthentication> patientAuthList = getAuthDetails();
 		
-//		Pattern alphaPattern = Pattern.compile("/^[a-zA-Z]+$/");
-//		Pattern nicPattern = Pattern.compile("/^[0-9]{9}[vVxX]$/");
-//		Pattern emailPattern = Pattern.compile("/^[\\w\\-\\.\\+]+\\@[a-zA-Z0-9\\.\\-]+\\.[a-zA-z0-9]{2,4}$/");
-//		Pattern dobPattern = Pattern.compile("(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20)\\d\\d)");
-//		Pattern bloodTypePattern = Pattern.compile("^(A|B|AB|O)[+-]$");
-//		Pattern pwdPattern = Pattern.compile("/(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/");
-//		Pattern phonePattern = Pattern.compile("/^\\d{10}$/");
+		//String patientId = CommonUtils.generatePatientIDs(getPatientIDs());
+		
+		Pattern alphaPattern = Pattern.compile("/^[a-zA-Z]+$/");
+		Pattern nicPattern = Pattern.compile("/^[0-9]{9}[vVxX]$/");
+		Pattern emailPattern = Pattern.compile("/^[\\w\\-\\.\\+]+\\@[a-zA-Z0-9\\.\\-]+\\.[a-zA-z0-9]{2,4}$/");
+		Pattern dobPattern = Pattern.compile("(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20)\\d\\d)");
+		Pattern bloodTypePattern = Pattern.compile("^(A|B|AB|O)[+-]$");
+		Pattern pwdPattern = Pattern.compile("/(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/");
+		Pattern phonePattern = Pattern.compile("/^\\d{10}$/");
 		
 
 		try {
@@ -107,7 +115,7 @@ public class PatientServiceImpl implements IPatientService {
 			
 			System.out.println("before for loop");
 			
-			
+			//String pId = patient.getPatientId();
 			String fName = patient.getFirstName();
 			System.out.println("fname"+fName);
 			String lName = patient.getLastName();
@@ -123,40 +131,40 @@ public class PatientServiceImpl implements IPatientService {
 			
 			System.out.println(fName.trim().length());
 			
-//			if(fName.trim().length() < 0 && !fName.matches(alphaReg)) {
-//				output = "Please use alphabets only for first name..!";
-//			}
-//			else if(lName.trim().length() < 0 && !alphaPattern.matcher(lName).matches()) {
-//				output = "Please use alphabets only for last name..!";
-//			}
-//			else if(gender.trim().length() < 0 && !alphaPattern.matcher(gender).matches()) {
-//				output = "Please use alphabets only for gender..!";
-//			}
-//			else if(NIC.trim().length() < 0 && !nicPattern.matcher(NIC).matches()) {
-//				output = "Please enter a correct NIC number...!";
-//			}
-//			else if(dob.trim().length() < 0 && !dobPattern.matcher(dob).matches()) {
-//				output = "Please use dd/mm/yyyy format...!";
-//			}
-//			else if(email.trim().length() < 0 && !emailPattern.matcher(email).matches()) {
-//				output = "Please enter a valid email...!";
-//			}
-//			else if(phone.trim().length() < 0 && !phonePattern.matcher(phone).matches()) {
-//				output = "Please enter a valid phone number...!";
-//			}
-//			else if(bloodGroup.trim().length() < 0 && !bloodTypePattern.matcher(bloodGroup).matches()) {
-//				output = "Please enter correct blood group...!";
-//			}
-//			else if(allergy.trim().length() < 0 && !alphaPattern.matcher(allergy).matches()) {
-//				output = "Please use alphabets only for allergies..!";
-//			}
-//			else if(pwd.trim().length() < 0 && !pwdPattern.matcher(pwd).matches()) {
-//				output = "Please enter a password with at least six characters containing one number, one lowercase and one uppercase letter..!";
-//			}
-//			else if(cPwd.trim().length() < 0 && !cPwd.equals(pwd)) {
-//				output = "Passwords are not match..!";
-//			}
-			//else {
+			/*if(fName == null || !alphaPattern.matcher(fName).matches()) {
+				output = "Please use alphabets only for first name..!";
+			}
+			else if(lName == null || !alphaPattern.matcher(lName).matches()) {
+				output = "Please use alphabets only for last name..!";
+			}
+			else if(gender.trim().length() < 0 || !alphaPattern.matcher(gender).matches()) {
+				output = "Please use alphabets only for gender..!";
+			}
+			else if(NIC.trim().length() < 0 || !nicPattern.matcher(NIC).matches()) {
+				output = "Please enter a correct NIC number...!";
+			}
+			else if(dob.trim().length() < 0 || !dobPattern.matcher(dob).matches()) {
+				output = "Please use dd/mm/yyyy format...!";
+			}
+			else if(email.trim().length() < 0 || !emailPattern.matcher(email).matches()) {
+				output = "Please enter a valid email...!";
+			}
+			else if(phone.trim().length() < 0 || !phonePattern.matcher(phone).matches()) {
+				output = "Please enter a valid phone number...!";
+			}
+			else if(bloodGroup.trim().length() < 0 || !bloodTypePattern.matcher(bloodGroup).matches()) {
+				output = "Please enter correct blood group...!";
+			}
+			else if(allergy.trim().length() < 0 || !alphaPattern.matcher(allergy).matches()) {
+				output = "Please use alphabets only for allergies..!";
+			}
+			else if(pwd.trim().length() < 0 || !pwdPattern.matcher(pwd).matches()) {
+				output = "Please enter a password with at least six characters containing one number, one lowercase and one uppercase letter..!";
+			}
+			else if(cPwd.trim().length() < 0 || !cPwd.equals(pwd)) {
+				output = "Passwords are not match..!";
+			}
+			else {*/
 				preparedStmt.setString(1, fName);
 				preparedStmt.setString(2, lName);
 				preparedStmt.setString(3, gender);
@@ -246,7 +254,8 @@ public class PatientServiceImpl implements IPatientService {
 			}
 		}
 
-		return output;
+		//return output;
+		return patient;
 
 	}
 
@@ -255,9 +264,9 @@ public class PatientServiceImpl implements IPatientService {
 	public String getPatientDetail(int patientId) {
 		
 		String output = "";
-		Statement st = null;
+//		Statement st = null;
 		ResultSet rs = null;
-		Connection con = null;
+	//	Connection con = null;
 
 		try {
 			con = DBConnection.getDBConnection();
@@ -334,9 +343,9 @@ public class PatientServiceImpl implements IPatientService {
 	public String getAllPatients() {
 
 		String output = "";
-		Statement st = null;
+		//Statement st = null;
 		ResultSet rs = null;
-		Connection con = null;
+		//Connection con = null;
 
 		try {
 			con = DBConnection.getDBConnection();
@@ -413,8 +422,8 @@ public class PatientServiceImpl implements IPatientService {
 	public String updatePatientDetails(Patient patient) {
 
 		String output = "";
-		Connection con = null;
-		PreparedStatement preparedStmt = null;
+		//Connection con = null;
+		//PreparedStatement preparedStmt = null;
 
 		try {
 
@@ -473,8 +482,8 @@ public class PatientServiceImpl implements IPatientService {
 	public String deletePatient(String patientId) {
 
 		String output = "";
-		PreparedStatement preparedStmt = null;
-		Connection con = null;
+		//PreparedStatement preparedStmt = null;
+		//Connection con = null;
 
 		try {
 
@@ -521,7 +530,7 @@ public class PatientServiceImpl implements IPatientService {
 	
 
 	// to get all the registerd patients to a arraylist
-	/*@Override
+	@Override
 	public ArrayList<String> getPatientIDs() {
 
 		ArrayList<String> patientList = new ArrayList<String>();
@@ -547,7 +556,7 @@ public class PatientServiceImpl implements IPatientService {
 
 		} catch (Exception e) {
 
-			System.err.println(e.getMessage());
+			log.log(Level.SEVERE, e.getMessage());
 
 		} finally {
 			try {
@@ -558,10 +567,10 @@ public class PatientServiceImpl implements IPatientService {
 					con.close();
 				}
 			} catch (SQLException e) {
-				System.err.println(e.getMessage());
+				log.log(Level.SEVERE, e.getMessage());
 			}
 		}
 		return patientList;
-	}*/
+	}
 
 }
