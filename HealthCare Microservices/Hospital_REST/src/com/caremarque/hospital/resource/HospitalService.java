@@ -62,18 +62,16 @@ public class HospitalService {
 		return as.getHospitals();
 	}
 
-	/*
-	 * @GET
-	 * 
-	 * @Path("/{appointmentId}")
-	 * 
-	 * @Produces(MediaType.TEXT_HTML) public String
-	 * getAppointment(@PathParam("appointmentId") String appointmentId) {
-	 * 
-	 * return as.getAppointment(appointmentId);
-	 * 
-	 * }
-	 */
+	
+	  @GET
+	 
+	  @Path("/{hospitalId}")
+	  @Produces(MediaType.TEXT_HTML)
+	  public String getHospital(@PathParam("hospitalId") String hospitalId) {
+	  return as.getHospital(hospitalId);
+	  
+	  }
+	 
 	@PUT
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_JSON)
