@@ -124,23 +124,23 @@ public class PatientService {
 		return output;
 	}*/
 
-	
+	//register a patient to the system
 	@POST
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Patient registerPatient(
-			 @Pattern(regexp = "/^[a-zA-Z]+$/", message="use alphabets only") @FormParam("firstName") String firstName,			
-			 @Pattern(regexp = "/^[a-zA-Z]+$/") @FormParam("lastName") String lastName,
-			 @Pattern(regexp = "/^[a-zA-Z]+$/") @FormParam("gender") String gender,
-			 @Pattern(regexp = "/^[0-9]{9}[vVxX]$/") @FormParam("NIC") String NIC,
-			 @Pattern(regexp = "(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20)\\d\\d)") @FormParam("DOB") String DOB,
-			 @Pattern(regexp = "/^[\\w\\-\\.\\+]+\\@[a-zA-Z0-9\\.\\-]+\\.[a-zA-z0-9]{2,4}$/") @FormParam("email") String email,
-			 @Pattern(regexp = "/^\\d{10}$/") @FormParam("phone") String phone,
-			 @Pattern(regexp = "^(A|B|AB|O)[+-]$") @FormParam("bloodGroup") String bloodGroup,
-			 @FormParam("allergies") String allergies,
+			@NotNull @Pattern(regexp = "/^[a-zA-Z]+$/", message = "use alphabets only") @FormParam("firstName") String firstName,
+			@NotNull @Pattern(regexp = "/^[a-zA-Z]+$/") @FormParam("lastName") String lastName,
+			@NotNull @Pattern(regexp = "/^[a-zA-Z]+$/") @FormParam("gender") String gender,
+			@NotNull @Pattern(regexp = "/^[0-9]{9}[vVxX]$/") @FormParam("NIC") String NIC,
+			@NotNull @Pattern(regexp = "(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20)\\d\\d)") @FormParam("DOB") String DOB,
+			@NotNull @Pattern(regexp = "/^[\\w\\-\\.\\+]+\\@[a-zA-Z0-9\\.\\-]+\\.[a-zA-z0-9]{2,4}$/") @FormParam("email") String email,
+			@NotNull @Pattern(regexp = "/^\\d{10}$/") @FormParam("phone") String phone,
+			@NotNull @Pattern(regexp = "^(A|B|AB|O)[+-]$") @FormParam("bloodGroup") String bloodGroup,
+			@NotNull @FormParam("allergies") String allergies,
 			@NotNull @Pattern(regexp = "/(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/") @FormParam("password") String password,
-			@FormParam("cPassword") String cPassword){
+			@NotNull @FormParam("cPassword") String cPassword) {
 
 		patient.setFirstName(firstName);
 		patient.setLastName(lastName);
@@ -154,11 +154,12 @@ public class PatientService {
 		patient.setPassword(password);
 		patient.setConfirmPassword(cPassword);
 
-		//String output = patientServiceImpl.registerPatient(patient);
+		// String output = patientServiceImpl.registerPatient(patient);
 		return patientServiceImpl.registerPatient(patient);
-		//return output;
+		// return output;
 	}
 
+	//getAllPatientDetails
 	@GET
 	@Path("/")
 	@Produces(MediaType.TEXT_HTML)
@@ -168,6 +169,7 @@ public class PatientService {
 
 	}
 
+	//get a patient detail by Id
 	@GET
 	@Path("/{patientId}")
 	@Produces(MediaType.TEXT_HTML)
@@ -177,6 +179,7 @@ public class PatientService {
 
 	}
 
+	//delete a patient
 	@DELETE
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_XML)
@@ -193,6 +196,7 @@ public class PatientService {
 
 	}
 
+	//update patient detail
 	@PUT
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_JSON)
