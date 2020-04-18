@@ -454,7 +454,7 @@ public class PaymentServiceImpl implements IPaymentService {
 
 			//for the current moment all the services has been configured in a one server, but it is also works for separate services
 			WebResource webResource = client
-			   .resource("http://localhost:8088/PaymentAuth_REST/myService/PaymentAuthentication/getAuthDetails");
+			   .resource("http://localhost:8088/PaymentAuth_REST/paymentAuthService/PaymentAuthentication/getAuthDetails");
 			
 			//this one is for if we run this service in a separate servier which has port number: 8090
 //			WebResource webResource = client

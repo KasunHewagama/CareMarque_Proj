@@ -20,8 +20,12 @@ import java.util.logging.Logger;
 import com.caremarque.appointment.model.Appointment;
 import com.caremarque.appointment.utils.CommonUtils;
 import com.caremarque.appointment.utils.DBConnection;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.caremarque.appointment.utils.Constants;
 import com.mysql.cj.log.Log;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
 
 public class AppointmentServiceImpl implements IAppointmentService {
 
@@ -181,6 +185,65 @@ public class AppointmentServiceImpl implements IAppointmentService {
 		}
 		
 		return output;
+	}
+	
+	//TO RETURN A APPOINTMENT LIST
+
+	public ArrayList<Appointment> getAppointmentByID(String appointmentId) {
+		
+		String output = null;
+		ArrayList<Appointment> arrayList = new ArrayList<Appointment>();
+		
+		try {
+			con = DBConnection.getDBConnection();
+			
+			String query = "SELECT * FROM appointment "
+					+ "WHERE appointmentId = '"+ appointmentId + "'";
+			
+			PreparedStatement pStatement = con.prepareStatement(query);
+			ResultSet rs = pStatement.executeQuery();
+			
+			
+			while(rs.next()) {
+				Appointment appointment = new Appointment();
+				appointment.setAppointmentId(appointmentId);
+				appointment.setPatientId(rs.getString(Constants.COLUMN_INDEX_ONE));
+				appointment.setPatientName(rs.getString(Constants.COLUMN_INDEX_TWO));
+				appointment.setPhone(rs.getString(Constants.COLUMN_INDEX_THREE));
+				appointment.setDoctorName(rs.getString(Constants.COLUMN_INDEX_FOUR));
+				appointment.setSpecialization(rs.getString(Constants.COLUMN_INDEX_FIVE));
+				appointment.setHospitalId(rs.getString(Constants.COLUMN_INDEX_SIX));
+				appointment.setHospitalName(rs.getString(Constants.COLUMN_INDEX_SEVEN));
+				appointment.setAppointmentDate(rs.getString(Constants.COLUMN_INDEX_EIGHT));
+				appointment.setAppointmentTime(rs.getString(Constants.COLUMN_INDEX_NINE));
+				appointment.setLastUpdateDate(rs.getString(Constants.COLUMN_INDEX_TEN));
+				appointment.setLastUpdateTime(rs.getString(Constants.COLUMN_INDEX_ELEVEN));
+				appointment.setAppointmentStatus(rs.getString(Constants.COLUMN_INDEX_TWELVE));
+				arrayList.add(appointment);
+
+				
+				System.out.println("Data Retrieved from DB...!");
+			}
+			
+			
+		
+		} catch (Exception e) {
+			log.log(Level.SEVERE, e.getMessage());
+		
+		} finally {
+			try {
+				if(st != null) {
+					st.close();
+				}
+				if(con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				log.log(Level.SEVERE, e.getMessage());
+			}
+		}
+		
+		return arrayList;
 	}
 
 	@Override
@@ -428,5 +491,29 @@ public class AppointmentServiceImpl implements IAppointmentService {
 		System.out.println(arrayList.size());
 		return arrayList;
 	}
+	
+	
+	public String createPayment(String appointmentId) {
+		
+		Client client = Client.create();
+		ArrayList<Appointment> appList = new ArrayList<Appointment>();
+		appList = getAppointmentByID(appointmentId);
+		
+		WebResource webResource = client.resource("http://localhost:8088/Payment_REST/myService/Payment/fromAppointment");
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonInput ="";
+		try {
+			jsonInput = mapper.writeValueAsString(appList.get(0));
+			System.out.println("JSON: " + jsonInput);
+		} catch (Exception e) {
+			log.log(Level.SEVERE, e.getMessage());
+		}
+		
+		ClientResponse response = webResource.type("application/json").post(ClientResponse.class, jsonInput);
+		return response.getEntity(String.class);
+	}
+	
+	
+	
 
 }

@@ -10,11 +10,13 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.parser.Parser;
 
+import com.caremarque.payment.model.Appointment;
 import com.caremarque.payment.model.Payment;
 import com.caremarque.payment.service.PaymentServiceImpl;
 import com.google.gson.JsonObject;
@@ -66,6 +68,16 @@ public class PaymentService {
 		String output = ps.createPayement(payment); 
 		
 		return output;
+	}
+	
+	@POST
+	@Path("/fromAppointment")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response createPaymentFromAppointment(Appointment appointment) {
+		
+		String result = "Record Taken: " + appointment;
+		return Response.status(201).entity(result).build();
+		//TODO: IMPLENTATION OF OTHER CREATION WITH APPOINTMENT
 	}
 	
 	@GET

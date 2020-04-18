@@ -27,6 +27,9 @@ public class Constants {
 	public static final String DBLOCATION_STRING = "jdbc:mysql://127.0.0.1:3306/healthcare";
 	public static final String DB_DRIVER_NAME = "com.mysql.cj.jdbc.Driver";
 	public static final String DB_USERNAME = "root";
-	public static final String DB_PASSWORD = "cubieboard";
+	public static final String DB_PASSWORD = "root";
+	
+	//URLS
+	public static final String CREATE_PAYMENT_POST_URL = "http://localhost:8088/Payment_REST/myService/Payment/fromAppointment";
 
 }
