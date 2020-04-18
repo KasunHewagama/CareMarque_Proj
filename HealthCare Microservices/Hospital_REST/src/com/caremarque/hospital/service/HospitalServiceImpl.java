@@ -81,8 +81,67 @@ public class HospitalServiceImpl implements IHospitalService {
 
 	@Override
 	public String getHospital(String hospitalId) {
-		// TODO Auto-generated method stub
-		return null;
+		String output = null;
+		ArrayList<Hospital> arrayList=new ArrayList<Hospital>();
+		
+		try {
+			con=DBConnection.getDBConnection();
+			
+			String query = "SELECT * FROM hospital "
+					+ "WHERE hospitalId = '"+ hospitalId + "'";
+			
+			PreparedStatement preparedStatement=con.prepareStatement(query);
+			ResultSet rSet=preparedStatement.executeQuery();
+			
+			output = "<table border=\"1\"> <tr>" + "<th>hospitalId</th> " + "<th>hospitalName</th> " + "<th>phone</th> "
+					+ "<th>regNo</th> " + "<th>address</th> " + "<th>Open_Hours</th> " + "<th>Close_Hours</th></tr> ";
+
+
+			while (rSet.next()) {
+
+				Hospital hospital = new Hospital();
+
+				// hospital.setHospitalId(rs.getString(Constants.COLUMN_INDEX_ONE));
+				hospital.setHospitalName(rSet.getString(Constants.COLUMN_INDEX_ONE));
+				hospital.setAddress(rSet.getString(Constants.COLUMN_INDEX_TWO));
+				hospital.setPhone(rSet.getString(Constants.COLUMN_INDEX_THREE));
+				hospital.setRegNo(rSet.getString(Constants.COLUMN_INDEX_FOUR));
+				hospital.setOpen_Hours(rSet.getString(Constants.COLUMN_INDEX_FIVE));
+				hospital.setClose_Hours(rSet.getString(Constants.COLUMN_INDEX_SIX));
+				arrayList.add(hospital);
+
+				output += "<tr><td>" + rSet.getString(Constants.COLUMN_INDEX_ONE) + "</td>";
+				output += "<td>" + rSet.getString(Constants.COLUMN_INDEX_TWO) + "</td>";
+				output += "<td>" + rSet.getString(Constants.COLUMN_INDEX_THREE) + "</td>";
+				output += "<td>" + rSet.getString(Constants.COLUMN_INDEX_FOUR) + "</td>";
+				output += "<td>" + rSet.getString(Constants.COLUMN_INDEX_FIVE) + "</td>";
+				output += "<td>" + rSet.getString(Constants.COLUMN_INDEX_SIX) + "</td>";
+				output += "<td>" + rSet.getString(Constants.COLUMN_INDEX_SEVEN) + "</td>";
+
+				System.out.println("Data Retrived");
+
+			}
+
+			output += "</table>";
+
+			
+		} catch (Exception e) {
+			Log.log(Level.SEVERE, e.getMessage());
+		}finally {
+
+			try {
+				if(st != null) {
+					st.close();
+				}
+				if(con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				Log.log(Level.SEVERE, e.getMessage());
+			}
+		
+		}
+		return output;
 	}
 
 	@Override
