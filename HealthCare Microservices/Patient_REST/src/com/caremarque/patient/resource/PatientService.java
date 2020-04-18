@@ -26,14 +26,111 @@ public class PatientService {
 	PatientServiceImpl patientServiceImpl = new PatientServiceImpl();
 	Patient patient = new Patient();
 
+	/*@POST
+	@Path("/")
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	//@Produces(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Patient registerPatient(
+			@FormParam("firstName") String firstName,		
+			@FormParam("lastName") String lastName,
+			@FormParam("gender") String gender,
+			@FormParam("NIC") String NIC,
+			@FormParam("DOB") String DOB,
+			@FormParam("email") String email,
+			@FormParam("phone") String phone,
+			@FormParam("bloodGroup") String bloodGroup,
+			@FormParam("allergies") String allergies,
+			@FormParam("password") String password,
+			@FormParam("cPassword") String cPassword){*/
+
+		//String output = null;
+		
+		/*String alphaPattern = "/^[a-zA-Z]+$/";
+		String nicPattern = "/^[0-9]{9}[vVxX]$/";
+		String emailPattern = "/^[\\w\\-\\.\\+]+\\@[a-zA-Z0-9\\.\\-]+\\.[a-zA-z0-9]{2,4}$/";
+		String dobPattern = "(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20)\\d\\d)";
+		String bloodTypePattern = "^(A|B|AB|O)[+-]$";
+		String pwdPattern = "/(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/";
+		String phonePattern = "/^\\d{10}$/";
+		
+		if(firstName == null || !firstName.matches(alphaPattern)) {
+			System.out.println("1");
+			output = "Please use alphabets only for first name..!";
+		}
+		else if(lastName.trim().length() < 0 || !lastName.matches(alphaPattern)) {
+			output = "Please use alphabets only for last name..!";
+		}
+		else if(gender.trim().length() < 0 || !gender.matches(alphaPattern)) {
+			output = "Please use alphabets only for gender..!";
+		}
+		else if(NIC.trim().length() < 0 || !firstName.matches(nicPattern)) {
+			output = "Please enter a correct NIC number...!";
+		}
+		else if(DOB.trim().length() < 0 || !firstName.matches(dobPattern)) {
+			output = "Please use dd/mm/yyyy format...!";
+		}
+		else if(email.trim().length() < 0 || !firstName.matches(emailPattern)) {
+			output = "Please enter a valid email...!";
+		}
+		else if(phone.trim().length() < 0 || !firstName.matches(phonePattern)) {
+			output = "Please enter a valid phone number...!";
+		}
+		else if(bloodGroup.trim().length() < 0 || !firstName.matches(bloodTypePattern)) {
+			output = "Please enter correct blood group...!";
+		}
+		else if(allergies.trim().length() < 0 || !firstName.matches(alphaPattern)) {
+			output = "Please use alphabets only for allergies..!";
+		}
+		else if(password.trim().length() < 0 || !firstName.matches(pwdPattern)) {
+			output = "Please enter a password with at least six characters containing one number, one lowercase and one uppercase letter..!";
+		}
+		else if(cPassword.trim().length() < 0 || !cPassword.equals(password)) {
+			output = "Passwords are not match..!";
+		}
+		else {*/
+			/*patient.setFirstName(firstName);
+			patient.setLastName(lastName);
+			patient.setGender(gender);
+			patient.setNIC(NIC);
+			patient.setDOB(DOB);
+			patient.setEmail(email);
+			patient.setPhone(phone);
+			patient.setBloodGroup(bloodGroup);
+			patient.setAllergy(allergies);
+			patient.setPassword(password);
+			patient.setConfirmPassword(cPassword);
+
+			//output = patientServiceImpl.registerPatient(patient);
+			return patientServiceImpl.registerPatient(patient);
+		//}
+		//return output;
+	}*/
+		
+		/*patient.setFirstName(firstName);
+		patient.setLastName(lastName);
+		patient.setGender(gender);
+		patient.setNIC(NIC);
+		patient.setDOB(DOB);
+		patient.setEmail(email);
+		patient.setPhone(phone);
+		patient.setBloodGroup(bloodGroup);
+		patient.setAllergy(allergies);
+		patient.setPassword(password);
+		patient.setConfirmPassword(cPassword);
+
+		output = patientServiceImpl.registerPatient(patient);
+		//patientService.registerPatient(patient);
+		return output;
+	}*/
+
+	//register a patient to the system
 	@POST
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	@Produces(MediaType.TEXT_PLAIN)
-	public String registerPatient(
-			@NotNull @Pattern(regexp = "/^[a-zA-Z]+$/", message="First Name cannot be empty & use alphabets only") 
-			@FormParam("firstName") String firstName,
-			
+	@Produces(MediaType.APPLICATION_JSON)
+	public Patient registerPatient(
+			@NotNull @Pattern(regexp = "/^[a-zA-Z]+$/", message = "use alphabets only") @FormParam("firstName") String firstName,
 			@NotNull @Pattern(regexp = "/^[a-zA-Z]+$/") @FormParam("lastName") String lastName,
 			@NotNull @Pattern(regexp = "/^[a-zA-Z]+$/") @FormParam("gender") String gender,
 			@NotNull @Pattern(regexp = "/^[0-9]{9}[vVxX]$/") @FormParam("NIC") String NIC,
@@ -41,7 +138,7 @@ public class PatientService {
 			@NotNull @Pattern(regexp = "/^[\\w\\-\\.\\+]+\\@[a-zA-Z0-9\\.\\-]+\\.[a-zA-z0-9]{2,4}$/") @FormParam("email") String email,
 			@NotNull @Pattern(regexp = "/^\\d{10}$/") @FormParam("phone") String phone,
 			@NotNull @Pattern(regexp = "^(A|B|AB|O)[+-]$") @FormParam("bloodGroup") String bloodGroup,
-			@FormParam("allergies") String allergies,
+			@NotNull @FormParam("allergies") String allergies,
 			@NotNull @Pattern(regexp = "/(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/") @FormParam("password") String password,
 			@NotNull @FormParam("cPassword") String cPassword) {
 
@@ -57,11 +154,12 @@ public class PatientService {
 		patient.setPassword(password);
 		patient.setConfirmPassword(cPassword);
 
-		String output = patientServiceImpl.registerPatient(patient);
-		//patientService.registerPatient(patient);
-		return output;
+		// String output = patientServiceImpl.registerPatient(patient);
+		return patientServiceImpl.registerPatient(patient);
+		// return output;
 	}
 
+	//getAllPatientDetails
 	@GET
 	@Path("/")
 	@Produces(MediaType.TEXT_HTML)
@@ -71,6 +169,7 @@ public class PatientService {
 
 	}
 
+	//get a patient detail by Id
 	@GET
 	@Path("/{patientId}")
 	@Produces(MediaType.TEXT_HTML)
@@ -80,6 +179,7 @@ public class PatientService {
 
 	}
 
+	//delete a patient
 	@DELETE
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_XML)
@@ -96,6 +196,7 @@ public class PatientService {
 
 	}
 
+	//update patient detail
 	@PUT
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_JSON)

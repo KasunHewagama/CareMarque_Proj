@@ -1,7 +1,6 @@
 package com.caremarque.userAuth.service;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -33,7 +32,7 @@ public class UserAuthServiceImpl implements IUserAuthService{
 			
 			statement = con.createStatement();
 			
-			String query = "SELECT * FROM patient";
+			String query = "SELECT email FROM patient";
 			
 			resultSet = statement.executeQuery(query);
 			
@@ -41,14 +40,14 @@ public class UserAuthServiceImpl implements IUserAuthService{
 				
 				PatientAuthentication patientAuth = new PatientAuthentication();
 				
-				patientAuth.setPatientAuthId(resultSet.getInt("patientId"));
-				System.out.println("authId : " + resultSet.getInt("patientId"));
+//				patientAuth.setPatientAuthId(resultSet.getInt("patientId"));
+//				System.out.println("authId : " + resultSet.getInt("patientId"));
 				
 				patientAuth.setUserName(resultSet.getString("email"));
 				System.out.println("authemail : " + resultSet.getString("email"));
 
-				patientAuth.setPassword(resultSet.getString("password"));
-				System.out.println("authpassword : " + resultSet.getString("password"));
+//				patientAuth.setPassword(resultSet.getString("password"));
+//				System.out.println("authpassword : " + resultSet.getString("password"));
 
 				patientList.add(patientAuth);
 				System.out.println(patientList);

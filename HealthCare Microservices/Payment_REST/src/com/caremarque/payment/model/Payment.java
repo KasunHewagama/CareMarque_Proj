@@ -21,6 +21,8 @@ public class Payment {
 	private String cardNo;
 	private String expDate;
 	private String passCode;
+	private String telPhone;
+	private String email;
 	private String paymentStatus;
 
 
@@ -137,7 +139,22 @@ public class Payment {
 	public void setPassCode(String passCode) {
 		this.passCode = passCode;
 	}
-	
+
+	public String getTelPhone() {
+		return telPhone;
+	}
+
+	public void setTelPhone(String telPhone) {
+		this.telPhone = telPhone;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
 	public String getPaymentStatus() {
 		return paymentStatus;
