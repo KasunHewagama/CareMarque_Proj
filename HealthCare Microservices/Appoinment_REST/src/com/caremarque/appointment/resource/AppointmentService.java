@@ -80,15 +80,6 @@ public class AppointmentService {
 		return as.getAppointments();
 	}
 	
-	@GET
-	@Path("/{appointmentId}")
-	@Produces(MediaType.TEXT_HTML)
-	public String getAppointment(@PathParam("appointmentId") String appointmentId) {
-		
-		return as.getAppointment(appointmentId);
-		
-	}
-	
 	
 	@PUT
 	@Path("/")
@@ -108,9 +99,6 @@ public class AppointmentService {
 		String hospitalName = appointmentObject.get("hospitalName").getAsString();
 		String appointmentDate = appointmentObject.get("appointmentDate").getAsString();
 		String appointmentTime = appointmentObject.get("appointmentTime").getAsString();
-//		String lastUpdateDate = appointmentObject.get("lastUpdateDate").getAsString();
-//		String lastUpdateTime = appointmentObject.get("lastUpdateTime").getAsString();
-//		String appointmentStatus = appointmentObject.get("appointmentStatus").getAsString();
 		
 		appointment.setAppointmentId(appointmentId);
 		appointment.setPatientId(patientId);
@@ -122,9 +110,6 @@ public class AppointmentService {
 		appointment.setHospitalName(hospitalName);
 		appointment.setAppointmentDate(appointmentDate);
 		appointment.setAppointmentTime(appointmentTime);
-//		appointment.setLastUpdateDate(lastUpdateDate);
-//		appointment.setLastUpdateTime(lastUpdateTime);
-//		appointment.setAppointmentStatus(appointmentStatus);
 		
 		String output = as.updateAppointment(appointmentId,appointment);
 		
@@ -146,6 +131,16 @@ public class AppointmentService {
 		String output = as.cancelAppointment(appointmentId);
 		
 		return output;
+		
+	}
+	
+	
+	@GET
+	@Path("/{appointmentId}")
+	@Produces(MediaType.TEXT_HTML)
+	public String getAppointment(@PathParam("appointmentId") String appointmentId) {
+		
+		return as.getAppointment(appointmentId);
 		
 	}
 	
