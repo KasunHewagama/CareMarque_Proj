@@ -129,7 +129,7 @@ public class PatientService {
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Patient registerPatient(
+	public String registerPatient(
 			@NotNull @Pattern(regexp = "/^[a-zA-Z]+$/", message = "use alphabets only") @FormParam("firstName") String firstName,
 			@NotNull @Pattern(regexp = "/^[a-zA-Z]+$/") @FormParam("lastName") String lastName,
 			@NotNull @Pattern(regexp = "/^[a-zA-Z]+$/") @FormParam("gender") String gender,
@@ -154,9 +154,8 @@ public class PatientService {
 		patient.setPassword(password);
 		patient.setConfirmPassword(cPassword);
 
-		// String output = patientServiceImpl.registerPatient(patient);
-		return patientServiceImpl.registerPatient(patient);
-		// return output;
+		String output = patientServiceImpl.registerPatient(patient);
+		return output;
 	}
 
 	//getAllPatientDetails
@@ -218,7 +217,7 @@ public class PatientService {
 		String password = patientObj.get("password").getAsString();
 		String cPassword = patientObj.get("cPassword").getAsString();
 
-		patient.setPatientId(Integer.parseInt(patientId));
+		patient.setPatientId(patientId);
 		patient.setFirstName(firstName);
 		patient.setLastName(lastName);
 		patient.setGender(gender);

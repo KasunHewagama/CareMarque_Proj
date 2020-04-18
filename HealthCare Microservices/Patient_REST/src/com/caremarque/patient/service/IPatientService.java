@@ -6,7 +6,7 @@ import com.caremarque.patient.model.Patient;
 
 public interface IPatientService {
 
-	public Patient registerPatient(Patient patient);
+	public String registerPatient(Patient patient);
 	
 	public String getPatientDetail(int patientId);
 	
