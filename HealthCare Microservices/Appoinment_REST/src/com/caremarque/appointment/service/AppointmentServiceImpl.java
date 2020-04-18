@@ -344,6 +344,7 @@ public class AppointmentServiceImpl implements IAppointmentService {
 		return output;
 	}
 
+	
 	@Override
 	public String updateAppointment(String appointmentId, Appointment appointment) {
 		
