@@ -32,8 +32,9 @@ public class PatientService {
 	/*@POST
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	@Produces(MediaType.TEXT_PLAIN)
-	public String registerPatient(
+	//@Produces(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Patient registerPatient(
 			@FormParam("firstName") String firstName,		
 			@FormParam("lastName") String lastName,
 			@FormParam("gender") String gender,
@@ -44,11 +45,11 @@ public class PatientService {
 			@FormParam("bloodGroup") String bloodGroup,
 			@FormParam("allergies") String allergies,
 			@FormParam("password") String password,
-			@FormParam("cPassword") String cPassword){
+			@FormParam("cPassword") String cPassword){*/
 
-		String output = null;
+		//String output = null;
 		
-		String alphaPattern = "/^[a-zA-Z]+$/";
+		/*String alphaPattern = "/^[a-zA-Z]+$/";
 		String nicPattern = "/^[0-9]{9}[vVxX]$/";
 		String emailPattern = "/^[\\w\\-\\.\\+]+\\@[a-zA-Z0-9\\.\\-]+\\.[a-zA-z0-9]{2,4}$/";
 		String dobPattern = "(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20)\\d\\d)";
@@ -56,42 +57,42 @@ public class PatientService {
 		String pwdPattern = "/(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/";
 		String phonePattern = "/^\\d{10}$/";
 		
-		if(firstName.trim().length() < 0 && !firstName.matches(alphaPattern)) {
+		if(firstName == null || !firstName.matches(alphaPattern)) {
 			System.out.println("1");
 			output = "Please use alphabets only for first name..!";
 		}
-		else if(lastName.trim().length() < 0 && !lastName.matches(alphaPattern)) {
+		else if(lastName.trim().length() < 0 || !lastName.matches(alphaPattern)) {
 			output = "Please use alphabets only for last name..!";
 		}
-		else if(gender.trim().length() < 0 && !gender.matches(alphaPattern)) {
+		else if(gender.trim().length() < 0 || !gender.matches(alphaPattern)) {
 			output = "Please use alphabets only for gender..!";
 		}
-		else if(NIC.trim().length() < 0 && !firstName.matches(nicPattern)) {
+		else if(NIC.trim().length() < 0 || !firstName.matches(nicPattern)) {
 			output = "Please enter a correct NIC number...!";
 		}
-		else if(DOB.trim().length() < 0 && !firstName.matches(dobPattern)) {
+		else if(DOB.trim().length() < 0 || !firstName.matches(dobPattern)) {
 			output = "Please use dd/mm/yyyy format...!";
 		}
-		else if(email.trim().length() < 0 && !firstName.matches(emailPattern)) {
+		else if(email.trim().length() < 0 || !firstName.matches(emailPattern)) {
 			output = "Please enter a valid email...!";
 		}
-		else if(phone.trim().length() < 0 && !firstName.matches(phonePattern)) {
+		else if(phone.trim().length() < 0 || !firstName.matches(phonePattern)) {
 			output = "Please enter a valid phone number...!";
 		}
-		else if(bloodGroup.trim().length() < 0 && !firstName.matches(bloodTypePattern)) {
+		else if(bloodGroup.trim().length() < 0 || !firstName.matches(bloodTypePattern)) {
 			output = "Please enter correct blood group...!";
 		}
-		else if(allergies.trim().length() < 0 && !firstName.matches(alphaPattern)) {
+		else if(allergies.trim().length() < 0 || !firstName.matches(alphaPattern)) {
 			output = "Please use alphabets only for allergies..!";
 		}
-		else if(password.trim().length() < 0 && !firstName.matches(pwdPattern)) {
+		else if(password.trim().length() < 0 || !firstName.matches(pwdPattern)) {
 			output = "Please enter a password with at least six characters containing one number, one lowercase and one uppercase letter..!";
 		}
-		else if(cPassword.trim().length() < 0 && !cPassword.equals(password)) {
+		else if(cPassword.trim().length() < 0 || !cPassword.equals(password)) {
 			output = "Passwords are not match..!";
 		}
-		else {
-			patient.setFirstName(firstName);
+		else {*/
+			/*patient.setFirstName(firstName);
 			patient.setLastName(lastName);
 			patient.setGender(gender);
 			patient.setNIC(NIC);
@@ -103,8 +104,11 @@ public class PatientService {
 			patient.setPassword(password);
 			patient.setConfirmPassword(cPassword);
 
-			output = patientServiceImpl.registerPatient(patient);
-		}*/
+			//output = patientServiceImpl.registerPatient(patient);
+			return patientServiceImpl.registerPatient(patient);
+		//}
+		//return output;
+	}*/
 		
 		/*patient.setFirstName(firstName);
 		patient.setLastName(lastName);
@@ -127,19 +131,19 @@ public class PatientService {
 	@POST
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	@Produces(MediaType.TEXT_PLAIN)
-	public String registerPatient(
-			@NotEmpty @Pattern(regexp = "/^[a-zA-Z]+$/", message="use alphabets only") @FormParam("firstName") String firstName,			
-			@NotEmpty @Pattern(regexp = "/^[a-zA-Z]+$/") @FormParam("lastName") String lastName,
-			@NotEmpty @Pattern(regexp = "/^[a-zA-Z]+$/") @FormParam("gender") String gender,
-			@NotEmpty @Pattern(regexp = "/^[0-9]{9}[vVxX]$/") @FormParam("NIC") String NIC,
-			@NotEmpty @Pattern(regexp = "(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20)\\d\\d)") @FormParam("DOB") String DOB,
-			@NotEmpty @Pattern(regexp = "/^[\\w\\-\\.\\+]+\\@[a-zA-Z0-9\\.\\-]+\\.[a-zA-z0-9]{2,4}$/") @FormParam("email") String email,
-			@NotEmpty @Pattern(regexp = "/^\\d{10}$/") @FormParam("phone") String phone,
-			@NotEmpty @Pattern(regexp = "^(A|B|AB|O)[+-]$") @FormParam("bloodGroup") String bloodGroup,
-			@NotEmpty @FormParam("allergies") String allergies,
-			@NotEmpty @Pattern(regexp = "/(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/") @FormParam("password") String password,
-			@NotEmpty @FormParam("cPassword") String cPassword) throws ValidationException{
+	@Produces(MediaType.APPLICATION_JSON)
+	public Patient registerPatient(
+			 @Pattern(regexp = "/^[a-zA-Z]+$/", message="use alphabets only") @FormParam("firstName") String firstName,			
+			 @Pattern(regexp = "/^[a-zA-Z]+$/") @FormParam("lastName") String lastName,
+			 @Pattern(regexp = "/^[a-zA-Z]+$/") @FormParam("gender") String gender,
+			 @Pattern(regexp = "/^[0-9]{9}[vVxX]$/") @FormParam("NIC") String NIC,
+			 @Pattern(regexp = "(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20)\\d\\d)") @FormParam("DOB") String DOB,
+			 @Pattern(regexp = "/^[\\w\\-\\.\\+]+\\@[a-zA-Z0-9\\.\\-]+\\.[a-zA-z0-9]{2,4}$/") @FormParam("email") String email,
+			 @Pattern(regexp = "/^\\d{10}$/") @FormParam("phone") String phone,
+			 @Pattern(regexp = "^(A|B|AB|O)[+-]$") @FormParam("bloodGroup") String bloodGroup,
+			 @FormParam("allergies") String allergies,
+			@NotNull @Pattern(regexp = "/(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/") @FormParam("password") String password,
+			@FormParam("cPassword") String cPassword){
 
 		patient.setFirstName(firstName);
 		patient.setLastName(lastName);
@@ -153,9 +157,9 @@ public class PatientService {
 		patient.setPassword(password);
 		patient.setConfirmPassword(cPassword);
 
-		String output = patientServiceImpl.registerPatient(patient);
-		//patientService.registerPatient(patient);
-		return output;
+		//String output = patientServiceImpl.registerPatient(patient);
+		return patientServiceImpl.registerPatient(patient);
+		//return output;
 	}
 
 	@GET
