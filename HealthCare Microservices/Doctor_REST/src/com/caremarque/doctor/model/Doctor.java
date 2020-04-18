@@ -98,7 +98,7 @@ public class Doctor
 	
 	
 	public Doctor(String doctorId, String firstName, String lastName, String regNo, String gender,
-			String specialization, String phone, String email, String password, String confirmPassword) {
+			String specialization, String phone, String email,int doctorCharges, String password, String confirmPassword) {
 		super();
 		this.doctorId = doctorId;
 		this.firstName = firstName;
@@ -108,6 +108,7 @@ public class Doctor
 		this.specialization = specialization;
 		this.phone = phone;
 		this.email = email;
+		this.doctorCharges = doctorCharges;
 		this.password = password;
 		this.confirmPassword = confirmPassword;
 	}
