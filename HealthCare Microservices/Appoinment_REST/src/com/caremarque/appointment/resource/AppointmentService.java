@@ -151,6 +151,7 @@ public class AppointmentService {
 	}
 	
 	//To Connect with payment resource
+	//Related to Payment Function
 	@POST
 	@Path("/createPayment/{appointmentId}")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)

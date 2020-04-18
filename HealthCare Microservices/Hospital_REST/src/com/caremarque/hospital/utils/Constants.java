@@ -11,6 +11,8 @@ public class Constants {
 	public static final int COLUMN_INDEX_FIVE = 5;
 	public static final int COLUMN_INDEX_SIX = 6;
 	public static final int COLUMN_INDEX_SEVEN = 7; 
+	public static final int COLUMN_INDEX_EIGHT = 8; 
+	public static final int COLUMN_INDEX_NINE = 9; 
 
 
 	// ID Prefixes

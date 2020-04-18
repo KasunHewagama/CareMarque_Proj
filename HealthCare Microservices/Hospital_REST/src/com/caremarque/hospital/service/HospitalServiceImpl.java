@@ -13,7 +13,6 @@ import com.caremarque.hospital.model.Hospital;
 import com.caremarque.hospital.utils.CommonUtils;
 import com.caremarque.hospital.utils.Constants;
 import com.caremarque.hospital.utils.DBConnection;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
@@ -368,6 +367,53 @@ public class HospitalServiceImpl implements IHospitalService {
 		ClientResponse response = webResource.type("application/json").post(ClientResponse.class, jsonInput);
 		return response.getEntity(String.class);
 		
+	}
+	
+	public ArrayList<Hospital> getHospitalById(String hospitalId) {
+		String output = null;
+		
+		ArrayList<Hospital> arrayList = new ArrayList<Hospital>();
+
+		try {
+			con = DBConnection.getDBConnection();
+
+			String query = "SELECT * FROM hospital " + "WHERE hospitalId = '" + hospitalId + "'";
+
+			PreparedStatement pStatement = con.prepareStatement(query);
+			ResultSet rs = pStatement.executeQuery();
+
+			while (rs.next()) {
+				Hospital hospital = new Hospital();
+				hospital.setHospitalId(hospitalId);
+				hospital.setHospitalName(rs.getString(Constants.COLUMN_INDEX_TWO));
+				hospital.setAddress(rs.getString(Constants.COLUMN_INDEX_THREE));
+				hospital.setPhone(rs.getString(Constants.COLUMN_INDEX_FOUR));
+				hospital.setRegNo(rs.getString(Constants.COLUMN_INDEX_FIVE));
+				hospital.setOpen_Hours(rs.getString(Constants.COLUMN_INDEX_SIX));
+				hospital.setClose_Hours(rs.getString(Constants.COLUMN_INDEX_SEVEN));
+				hospital.setChanneling_fee(rs.getDouble(Constants.COLUMN_INDEX_NINE));
+				arrayList.add(hospital);
+
+				System.out.println("Data Retrieved from DB...!");
+			}
+
+		} catch (Exception e) {
+			Log.log(Level.SEVERE, e.getMessage());
+
+		} finally {
+			try {
+				if (st != null) {
+					st.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				Log.log(Level.SEVERE, e.getMessage());
+			}
+		}
+
+		return arrayList;
 	}
 
 }

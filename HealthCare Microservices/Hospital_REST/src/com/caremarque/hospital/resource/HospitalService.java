@@ -1,5 +1,12 @@
 package com.caremarque.hospital.resource;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
@@ -127,6 +134,14 @@ public class HospitalService {
 	public void createAppointment(@PathParam("hospitalId") String hospitalId) {
 		as2.createAppointment(hospitalId);
 		System.out.println("TRIGGERED");
+	}
+	
+	@GET
+	@Path("/{hospitalId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Hospital> getHospitalById(@PathParam("hospitalId") String hospitalId) {
+		return as2.getHospitalById(hospitalId);
+		
 	}
 
 }

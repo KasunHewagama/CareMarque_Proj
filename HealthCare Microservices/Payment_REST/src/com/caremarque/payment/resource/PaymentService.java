@@ -74,8 +74,9 @@ public class PaymentService {
 	@Path("/fromAppointment")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public String createPaymentFromAppointment(Payment payment) {
-		System.out.println("Hello");
-		String result = "Record Taken: " + payment;
+		
+		//FOR TEMPORERY THE HOSPITAL CHARGES AND DOCTOR CHARGES HAS BEEN TAKEN AS HARD CODED VALUES
+		//THOSE VALUES SHOULD BE TAKEN FROM RELEVANT APIS
 		System.out.println(payment);
 		payment.setHospitalCharges(2000.00);
 		payment.setDoctorCharges(1500.00);
