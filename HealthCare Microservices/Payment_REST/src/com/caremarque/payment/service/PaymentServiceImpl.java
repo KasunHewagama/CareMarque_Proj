@@ -65,8 +65,8 @@ public class PaymentServiceImpl implements IPaymentService {
 				
 				String query = "INSERT INTO PAYMENTS ("
 						+ "paymentId, patientId, patientName, appointmentId, doctorId, hospitalId, paymentDate, paymentTime,"
-						+ " doctorCharges, hospitalCharges, totalAmount, paymentStatus)"
-						+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+						+ " doctorCharges, hospitalCharges, totalAmount, telPhone, email, paymentStatus)"
+						+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 				
 				preparedstatement = connecton.prepareStatement(query);
 				
@@ -101,7 +101,9 @@ public class PaymentServiceImpl implements IPaymentService {
 					preparedstatement.setDouble(Constants.COLUMN_INDEX_NINE, p.getDoctorCharges());
 					preparedstatement.setDouble(Constants.COLUMN_INDEX_TEN, p.getHospitalCharges());
 					preparedstatement.setDouble(Constants.COLUMN_INDEX_ELEVEN, p.getDoctorCharges() +  p.getHospitalCharges());
-					preparedstatement.setString(Constants.COLUMN_INDEX_TWELVE, p.getPaymentStatus());
+					preparedstatement.setString(Constants.COLUMN_INDEX_TWELVE, p.getTelPhone());
+					preparedstatement.setString(Constants.COLUMN_INDEX_THIRTEEN, p.getEmail());
+					preparedstatement.setString(Constants.COLUMN_INDEX_FOURTEEN, p.getPaymentStatus());
 					preparedstatement.execute();
 					
 					output = "Data inserted successfully!";
@@ -149,19 +151,21 @@ public class PaymentServiceImpl implements IPaymentService {
 			
 			output = "<table border=\"1\"> "
 					+ "<tr>"
-					+ "<th>paymentId</th> "
-					+ "<th>patientId</th> "
-					+ "<th>patientName</th> "
-					+ "<th>appointmentId</th> "
-					+ "<th>doctorId</th> "
-					+ "<th>hospitalId</th> "
-					+ "<th>paymentDate</th> "
-					+ "<th>paymentTime</th> "
-					+ "<th>doctorCharges</th> "
-					+ "<th>hospitalCharges</th> "
-					+ "<th>totalAmount</th> "
-					+ "<th>paymentStatus</th>"
-					+ "</tr>"; 
+					+ "<th>PaymentId</th> "
+					+ "<th>PatientId</th> "
+					+ "<th>PatientName</th> "
+					+ "<th>AppointmentId</th> "
+					+ "<th>DoctorId</th> "
+					+ "<th>HospitalId</th> "
+					+ "<th>PaymentDate</th> "
+					+ "<th>PaymentDate</th> "
+					+ "<th>DoctorCharges</th> "
+					+ "<th>HospitalCharges</th> "
+					+ "<th>TotalAmount</th> "
+					+ "<th>Telephone No</th> "
+					+ "<th>Email</th> "
+					+ "<th>PaymentStatus</th>"
+					+ "</tr>";  
 			
 			while(resultset.next()) {
 				Payment payment = new Payment();
@@ -176,7 +180,9 @@ public class PaymentServiceImpl implements IPaymentService {
 				payment.setDoctorCharges(resultset.getDouble(Constants.COLUMN_INDEX_NINE));
 				payment.setHospitalCharges(resultset.getDouble(Constants.COLUMN_INDEX_TEN));
 				payment.setTotalAmount(resultset.getDouble(Constants.COLUMN_INDEX_ELEVEN));
-				payment.setPaymentStatus(resultset.getString(Constants.COLUMN_INDEX_TWELVE));
+				payment.setTelPhone(resultset.getString(Constants.COLUMN_INDEX_TWELVE));
+				payment.setEmail(resultset.getString(Constants.COLUMN_INDEX_THIRTEEN));
+				payment.setPaymentStatus(resultset.getString(Constants.COLUMN_INDEX_FOURTEEN));
 				arrayList.add(payment);
 				
 				
@@ -191,7 +197,9 @@ public class PaymentServiceImpl implements IPaymentService {
 				 output += "<td>" + resultset.getDouble(Constants.COLUMN_INDEX_NINE) + "</td>"; 
 				 output += "<td>" + resultset.getDouble(Constants.COLUMN_INDEX_TEN) + "</td>"; 
 				 output += "<td>" + resultset.getDouble(Constants.COLUMN_INDEX_ELEVEN) + "</td>"; 
-				 output += "<td>" + resultset.getString(Constants.COLUMN_INDEX_TWELVE) + "</td></tr>"; 
+				 output += "<td>" + resultset.getString(Constants.COLUMN_INDEX_TWELVE) + "</td>"; 
+				 output += "<td>" + resultset.getString(Constants.COLUMN_INDEX_THIRTEEN) + "</td>"; 
+				 output += "<td>" + resultset.getString(Constants.COLUMN_INDEX_FOURTEEN) + "</td></tr>"; 
 				
 				
 				System.out.println("Data Retreived From DB");
@@ -247,9 +255,9 @@ public class PaymentServiceImpl implements IPaymentService {
 					+ "<th>DoctorCharges</th> "
 					+ "<th>HospitalCharges</th> "
 					+ "<th>TotalAmount</th> "
+					+ "<th>Telephone No</th> "
+					+ "<th>Email</th> "
 					+ "<th>PaymentStatus</th>"
-					+ "<th>Update</th>"
-					+ "<th>Cancel</th>"
 					+ "</tr>"; 
 			
 			while(resultset.next()) {
@@ -265,7 +273,9 @@ public class PaymentServiceImpl implements IPaymentService {
 				payment.setDoctorCharges(resultset.getDouble(Constants.COLUMN_INDEX_NINE));
 				payment.setHospitalCharges(resultset.getDouble(Constants.COLUMN_INDEX_TEN));
 				payment.setTotalAmount(resultset.getDouble(Constants.COLUMN_INDEX_ELEVEN));
-				payment.setPaymentStatus(resultset.getString(Constants.COLUMN_INDEX_TWELVE));
+				payment.setTelPhone(resultset.getString(Constants.COLUMN_INDEX_TWELVE));
+				payment.setEmail(resultset.getString(Constants.COLUMN_INDEX_THIRTEEN));
+				payment.setPaymentStatus(resultset.getString(Constants.COLUMN_INDEX_FOURTEEN));
 				arrayList.add(payment);
 				
 				
@@ -280,14 +290,11 @@ public class PaymentServiceImpl implements IPaymentService {
 				 output += "<td>" + resultset.getDouble(Constants.COLUMN_INDEX_NINE) + "</td>"; 
 				 output += "<td>" + resultset.getDouble(Constants.COLUMN_INDEX_TEN) + "</td>"; 
 				 output += "<td>" + resultset.getDouble(Constants.COLUMN_INDEX_ELEVEN) + "</td>"; 
-				 output += "<td>" + resultset.getString(Constants.COLUMN_INDEX_TWELVE) + "</td></tr>"; 
+				 output += "<td>" + resultset.getString(Constants.COLUMN_INDEX_TWELVE) + "</td>"; 
+				 output += "<td>" + resultset.getString(Constants.COLUMN_INDEX_THIRTEEN) + "</td>"; 
+				 output += "<td>" + resultset.getString(Constants.COLUMN_INDEX_FOURTEEN) + "</td></tr>"; 
 				
-				 output +=  "<td><input name=\"btnUpdate\" type=\"button\" value=\"Update\" class=\"btn btn-secondary\"></td>"
-								 + "<td><form method=\"post\" action=\"items.jsp\">"
-								 + "<input name=\"btnRemove\" type=\"submit\" value=\"Remove\" class=\"btn btn-danger\">"
-								 + "<input name=\"itemID\" type=\"hidden\" value=\"" + resultset.getString(Constants.COLUMN_INDEX_ONE)
-								 + "\">" + "</form></td></tr>";
-				
+			
 				System.err.println("Data Retreived From DB");
 			}
 			
@@ -313,8 +320,47 @@ public class PaymentServiceImpl implements IPaymentService {
 	}
 
 	@Override
-	public Payment updatePayment(String paymentid, Payment p) {
-		return null;
+	public String updatePayment(String paymentid, String telPhone, String email) {
+		
+		String output = "";
+		
+		try {
+			connecton = DBConnection.getDBConnection();
+			
+			if(connecton == null) {
+				return "Error while connecting to the database for deleteing";
+			}
+			
+			String query = "UPDATE payments "
+					+ "SET telPhone = ?, email = ? "
+					+ "WHERE paymentId = ?";
+			
+			preparedstatement = connecton.prepareStatement(query);
+			preparedstatement.setString(Constants.COLUMN_INDEX_ONE, telPhone);
+			preparedstatement.setString(Constants.COLUMN_INDEX_TWO, email);
+			preparedstatement.setString(Constants.COLUMN_INDEX_THREE, paymentid);
+			preparedstatement.execute();
+			
+			output = "Payment ID: " + paymentid + " was updated";
+
+		} catch (Exception e) {
+			log.log(Level.SEVERE, e.getMessage());
+			output = "Error occured while updating";
+		
+		} finally {
+			try {
+				if(preparedstatement != null) {
+					preparedstatement.close();
+				}
+				if(connecton != null) {
+					connecton.close();
+				}
+			} catch (SQLException e) {
+				log.log(Level.SEVERE, e.getMessage());
+			}
+		}
+		
+		return output;
 	}
 
 	@Override
@@ -406,8 +452,13 @@ public class PaymentServiceImpl implements IPaymentService {
 
 			Client client = Client.create();
 
+			//for the current moment all the services has been configured in a one server, but it is also works for separate services
 			WebResource webResource = client
-			   .resource("http://localhost:8088/PaymentAuth_REST/myService/PaymentAuthentication/getAuthDetails");
+			   .resource("http://localhost:8088/PaymentAuth_REST/paymentAuthService/PaymentAuthentication/getAuthDetails");
+			
+			//this one is for if we run this service in a separate servier which has port number: 8090
+//			WebResource webResource = client
+//					   .resource("http://localhost:8088/PaymentAuth_REST/myService/PaymentAuthentication/getAuthDetails");
 
 			ClientResponse response = webResource.accept("application/json")
 	                   .get(ClientResponse.class);

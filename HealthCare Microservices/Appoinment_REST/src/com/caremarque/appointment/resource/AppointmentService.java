@@ -20,11 +20,13 @@ import com.caremarque.appointment.service.AppointmentServiceImpl;
 import com.caremarque.appointment.service.IAppointmentService;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.sun.jersey.api.client.Client;
 
 @Path("/Appointment")
 public class AppointmentService {
 	
 	IAppointmentService as = new AppointmentServiceImpl();
+	AppointmentServiceImpl as2 = new AppointmentServiceImpl();
 	Appointment appointment = new Appointment();
 	
 	@POST
@@ -91,8 +93,8 @@ public class AppointmentService {
 	@PUT
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.TEXT_HTML)
-	public String putAppointment(String appointmentData) {
+	@Produces(MediaType.TEXT_PLAIN)
+	public String updateAppointment(String appointmentData) {
 		
 		JsonObject appointmentObject = new JsonParser().parse(appointmentData).getAsJsonObject();
 		
@@ -106,9 +108,9 @@ public class AppointmentService {
 		String hospitalName = appointmentObject.get("hospitalName").getAsString();
 		String appointmentDate = appointmentObject.get("appointmentDate").getAsString();
 		String appointmentTime = appointmentObject.get("appointmentTime").getAsString();
-		String lastUpdateDate = appointmentObject.get("lastUpdateDate").getAsString();
-		String lastUpdateTime = appointmentObject.get("lastUpdateTime").getAsString();
-		String appointmentStatus = appointmentObject.get("appointmentStatus").getAsString();
+//		String lastUpdateDate = appointmentObject.get("lastUpdateDate").getAsString();
+//		String lastUpdateTime = appointmentObject.get("lastUpdateTime").getAsString();
+//		String appointmentStatus = appointmentObject.get("appointmentStatus").getAsString();
 		
 		appointment.setAppointmentId(appointmentId);
 		appointment.setPatientId(patientId);
@@ -120,9 +122,9 @@ public class AppointmentService {
 		appointment.setHospitalName(hospitalName);
 		appointment.setAppointmentDate(appointmentDate);
 		appointment.setAppointmentTime(appointmentTime);
-		appointment.setLastUpdateDate(lastUpdateDate);
-		appointment.setLastUpdateTime(lastUpdateTime);
-		appointment.setAppointmentStatus(appointmentStatus);
+//		appointment.setLastUpdateDate(lastUpdateDate);
+//		appointment.setLastUpdateTime(lastUpdateTime);
+//		appointment.setAppointmentStatus(appointmentStatus);
 		
 		String output = as.updateAppointment(appointmentId,appointment);
 		
@@ -135,11 +137,11 @@ public class AppointmentService {
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_XML)
 	@Produces(MediaType.TEXT_PLAIN)
-	public String deleteAppointment(String appointmentId) {
+	public String deleteAppointment(String appointmentData) {
 		
-		Document document = Jsoup.parse(appointmentId, "", Parser.xmlParser());
+		Document document = Jsoup.parse(appointmentData, "", Parser.xmlParser());
 		
-		String appointmentData = document.select("appointmentId").text();
+		String appointmentId= document.select("appointmentId").text();
 		
 		String output = as.cancelAppointment(appointmentId);
 		
@@ -148,25 +150,13 @@ public class AppointmentService {
 	}
 	
 	//To Connect with payment resource
-//	@GET
-//	@Path("/createPayment")
-//	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-//	@Produces(MediaType.TEXT_PLAIN)
-//	public String createPayment(@FormParam ("patientId") String patientId,
-//							@FormParam("patientName") String patientName,
-//							@FormParam("appointmentId") String appointmentId,
-//							@FormParam("doctorId") String doctorId,
-//							@FormParam("hospitalId") String hospitalId,
-//							@FormParam("doctorCharges") double doctorCharges,
-//							@FormParam("hospitalCharges") double hospitalCharges,
-//							@FormParam("paymentStatus") String paymentStatus) {
-//		
-//		PaymentResource pr = new PaymentResource(); 
-//		
-//		String output = pr.createPayment(patientId,patientName, appointmentId, doctorId,hospitalId, doctorCharges, hospitalCharges, paymentStatus);
-//		
-//		return output;
-//		
-//	}
+	@GET
+	@Path("/createPayment/{appointmentId}")
+	@Produces(MediaType.TEXT_PLAIN)
+	public void createPayment(@PathParam("appointmentId") String appointmentId) {
+		as2.createPayment(appointmentId);
+		System.out.println("TRIGGERED");
+		
+	}
 
 }

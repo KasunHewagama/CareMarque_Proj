@@ -3,12 +3,20 @@ package com.caremarque.patient.service;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
+
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.UriInfo;
+
 import com.caremarque.patient.model.Patient;
 import com.caremarque.patient.model.PatientAuthentication;
+import com.caremarque.patient.utils.CommonUtils;
 import com.caremarque.patient.utils.DBConnection;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -18,8 +26,15 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
-public class PatientService implements IPatientService {
+public class PatientServiceImpl implements IPatientService {
 	
+	public static final Logger log = Logger.getLogger(PatientServiceImpl.class.getName());
+
+	public static Connection con;
+	
+	public static PreparedStatement preparedStmt;
+	
+	public static Statement st;
 	
 	public List<PatientAuthentication> getAuthDetails() {
 
@@ -28,7 +43,7 @@ public class PatientService implements IPatientService {
 		try {
 
 			Client client = Client.create();
-
+			
 			WebResource webResource = client
 					.resource("http://localhost:9090/UserAuth_REST/myService/UserAuthentication/getPatientAuth");
 
@@ -62,7 +77,7 @@ public class PatientService implements IPatientService {
 			System.out.println(listObj.get(0).getPassword());
 
 		} catch (Exception e) {
-			e.getMessage();
+			log.log(Level.SEVERE, e.getMessage());
 		}
 		return patientAuthList;
 	}
@@ -71,14 +86,23 @@ public class PatientService implements IPatientService {
 
 	//to insert patient details to the db
 	@Override
-	public String registerPatient(Patient patient) {
+	//public String registerPatient(Patient patient) {
+	public Patient registerPatient(Patient patient) {
 		
 		String output = "";
-		Connection con = null;
-		PreparedStatement preparedStmt = null;
 		boolean validate = false;
 		
 		List<PatientAuthentication> patientAuthList = getAuthDetails();
+		
+		//String patientId = CommonUtils.generatePatientIDs(getPatientIDs());
+		
+		Pattern alphaPattern = Pattern.compile("/^[a-zA-Z]+$/");
+		Pattern nicPattern = Pattern.compile("/^[0-9]{9}[vVxX]$/");
+		Pattern emailPattern = Pattern.compile("/^[\\w\\-\\.\\+]+\\@[a-zA-Z0-9\\.\\-]+\\.[a-zA-z0-9]{2,4}$/");
+		Pattern dobPattern = Pattern.compile("(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20)\\d\\d)");
+		Pattern bloodTypePattern = Pattern.compile("^(A|B|AB|O)[+-]$");
+		Pattern pwdPattern = Pattern.compile("/(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/");
+		Pattern phonePattern = Pattern.compile("/^\\d{10}$/");
 		
 
 		try {
@@ -91,7 +115,80 @@ public class PatientService implements IPatientService {
 			
 			System.out.println("before for loop");
 			
-			for(PatientAuthentication patientAuthentication : patientAuthList) {
+			//String pId = patient.getPatientId();
+			String fName = patient.getFirstName();
+			System.out.println("fname"+fName);
+			String lName = patient.getLastName();
+			String gender = patient.getGender();
+			String NIC = patient.getNIC();
+			String dob = patient.getDOB();
+			String email = patient.getEmail();
+			String phone = patient.getPhone();
+			String bloodGroup = patient.getBloodGroup();
+			String allergy = patient.getAllergy();
+			String pwd = patient.getPassword();
+			String cPwd = patient.getConfirmPassword();
+			
+			System.out.println(fName.trim().length());
+			
+			/*if(fName == null || !alphaPattern.matcher(fName).matches()) {
+				output = "Please use alphabets only for first name..!";
+			}
+			else if(lName == null || !alphaPattern.matcher(lName).matches()) {
+				output = "Please use alphabets only for last name..!";
+			}
+			else if(gender.trim().length() < 0 || !alphaPattern.matcher(gender).matches()) {
+				output = "Please use alphabets only for gender..!";
+			}
+			else if(NIC.trim().length() < 0 || !nicPattern.matcher(NIC).matches()) {
+				output = "Please enter a correct NIC number...!";
+			}
+			else if(dob.trim().length() < 0 || !dobPattern.matcher(dob).matches()) {
+				output = "Please use dd/mm/yyyy format...!";
+			}
+			else if(email.trim().length() < 0 || !emailPattern.matcher(email).matches()) {
+				output = "Please enter a valid email...!";
+			}
+			else if(phone.trim().length() < 0 || !phonePattern.matcher(phone).matches()) {
+				output = "Please enter a valid phone number...!";
+			}
+			else if(bloodGroup.trim().length() < 0 || !bloodTypePattern.matcher(bloodGroup).matches()) {
+				output = "Please enter correct blood group...!";
+			}
+			else if(allergy.trim().length() < 0 || !alphaPattern.matcher(allergy).matches()) {
+				output = "Please use alphabets only for allergies..!";
+			}
+			else if(pwd.trim().length() < 0 || !pwdPattern.matcher(pwd).matches()) {
+				output = "Please enter a password with at least six characters containing one number, one lowercase and one uppercase letter..!";
+			}
+			else if(cPwd.trim().length() < 0 || !cPwd.equals(pwd)) {
+				output = "Passwords are not match..!";
+			}
+			else {*/
+				preparedStmt.setString(1, fName);
+				preparedStmt.setString(2, lName);
+				preparedStmt.setString(3, gender);
+				preparedStmt.setString(4, NIC);
+				preparedStmt.setString(5, dob);
+				preparedStmt.setString(6, email);
+				preparedStmt.setString(7, phone);
+				preparedStmt.setString(8, bloodGroup);
+				preparedStmt.setString(9, allergy);
+				preparedStmt.setString(10, pwd);
+				preparedStmt.setString(11, cPwd);
+				
+				int result = 0;
+				   
+				   result = preparedStmt.executeUpdate();			
+				  
+				   if(result > 0) {
+					output = "Inserted successfully";	
+				   }
+			//}
+			
+				
+			
+		/*	for(PatientAuthentication patientAuthentication : patientAuthList) {
 				System.out.println("PAUTH 1 : " + patientAuthentication.getUserName());
 				System.out.println("PAUTH 2 : " + patient.getEmail());
 				System.out.println("PAUTH 3 : " + patientAuthentication.getPassword());
@@ -135,12 +232,12 @@ public class PatientService implements IPatientService {
 				
 				preparedStmt.execute();
 				output = "Inserted successfully";
-			}
+			}*/
 
 		} catch (Exception e) {
 
 			output = "Error while inserting the item..!";
-			System.err.println(e.getMessage());
+			log.log(Level.SEVERE, e.getMessage());
 
 		} finally {
 
@@ -153,11 +250,12 @@ public class PatientService implements IPatientService {
 					con.close();
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+				log.log(Level.SEVERE, e.getMessage());
 			}
 		}
 
-		return output;
+		//return output;
+		return patient;
 
 	}
 
@@ -166,9 +264,9 @@ public class PatientService implements IPatientService {
 	public String getPatientDetail(int patientId) {
 		
 		String output = "";
-		Statement st = null;
+//		Statement st = null;
 		ResultSet rs = null;
-		Connection con = null;
+	//	Connection con = null;
 
 		try {
 			con = DBConnection.getDBConnection();
@@ -215,7 +313,7 @@ public class PatientService implements IPatientService {
 		} catch (Exception e) {
 
 			output = "Error while reading the patient details...!";
-			System.err.println(e.getMessage());
+			log.log(Level.SEVERE, e.getMessage());
 
 		} finally {
 
@@ -233,7 +331,7 @@ public class PatientService implements IPatientService {
 				}
 
 			} catch (Exception e) {
-				e.printStackTrace();
+				log.log(Level.SEVERE, e.getMessage());
 			}
 		}
 		return output;
@@ -245,9 +343,9 @@ public class PatientService implements IPatientService {
 	public String getAllPatients() {
 
 		String output = "";
-		Statement st = null;
+		//Statement st = null;
 		ResultSet rs = null;
-		Connection con = null;
+		//Connection con = null;
 
 		try {
 			con = DBConnection.getDBConnection();
@@ -294,7 +392,7 @@ public class PatientService implements IPatientService {
 		} catch (Exception e) {
 
 			output = "Error while reading the patient details...!";
-			System.err.println(e.getMessage());
+			log.log(Level.SEVERE, e.getMessage());
 
 		} finally {
 
@@ -312,7 +410,7 @@ public class PatientService implements IPatientService {
 				}
 
 			} catch (Exception e) {
-				e.printStackTrace();
+				log.log(Level.SEVERE, e.getMessage());
 			}
 		}
 		return output;
@@ -324,8 +422,8 @@ public class PatientService implements IPatientService {
 	public String updatePatientDetails(Patient patient) {
 
 		String output = "";
-		Connection con = null;
-		PreparedStatement preparedStmt = null;
+		//Connection con = null;
+		//PreparedStatement preparedStmt = null;
 
 		try {
 
@@ -336,7 +434,7 @@ public class PatientService implements IPatientService {
 
 			preparedStmt = con.prepareStatement(query);
 
-			/*preparedStmt.setString(1, patient.getFirstName());
+			preparedStmt.setString(1, patient.getFirstName());
 			preparedStmt.setString(2, patient.getLastName());
 			preparedStmt.setString(3, patient.getGender());
 			preparedStmt.setString(4, patient.getNIC());
@@ -347,134 +445,9 @@ public class PatientService implements IPatientService {
 			preparedStmt.setString(9, patient.getAllergy());
 			preparedStmt.setString(10, patient.getPassword());
 			preparedStmt.setString(11, patient.getConfirmPassword());
-			preparedStmt.setInt(12, patient.getPatientId());*/
+			preparedStmt.setInt(12, patient.getPatientId());
 			
-//			int columnIndex = 0;
-//			Pattern pattern;
-//			
-//			switch (columnIndex) {
-//			case 1:
-//				
-//				pattern = Pattern.compile("/^[a-zA-Z]+$/");
-//
-//				if(patient.getFirstName() != null && pattern.matcher(patient.getFirstName()).matches()) {
-//					preparedStmt.setString(1, patient.getFirstName());
-//				}
-//				else if(patient.getFirstName() == null && patient.getFirstName().isEmpty()){
-//					output="Please enter first name..!";
-//				}
-//				else {
-//					output="Please use only alphabets for the first name..!";
-//
-//				}
-//				
-//				break;
-//				
-//			case 2:
-//				
-//				pattern = Pattern.compile("/^[a-zA-Z]+$/");
-//
-//				if(patient.getLastName() != null && pattern.matcher(patient.getLastName()).matches()) {
-//					preparedStmt.setString(2, patient.getLastName());
-//				}
-//				else if(patient.getLastName() == null && patient.getLastName().isEmpty()){
-//					output="Please enter last name..!";
-//				}
-//				else {
-//					output="Please use only alphabets for the last name..!";
-//
-//				}
-//				
-//				break;
-//				
-//	       case 3:
-//				
-//				pattern = Pattern.compile("/^[a-zA-Z]+$/");
-//
-//				if(patient.getGender() != null && pattern.matcher(patient.getGender()).matches()) {
-//					preparedStmt.setString(3, patient.getGender());
-//				}
-//				else if(patient.getGender() == null && patient.getGender().isEmpty()){
-//					output="Please enter gender..!";
-//				}
-//				else {
-//					output="Please use only alphabets for the gender..!";
-//
-//				}
-//				
-//				break;
-//				
-//	       case 4:
-//				
-//				pattern = Pattern.compile("/^[0-9]{9}[vVxX]$/");
-//
-//				if(patient.getNIC() != null && pattern.matcher(patient.getNIC()).matches()) {
-//					preparedStmt.setString(4, patient.getNIC());
-//				}
-//				else if(patient.getNIC() == null && patient.getNIC().isEmpty()){
-//					output="Please enter NIC..!";
-//				}
-//				else {
-//					output="Please enter a correct NIC number...!";
-//
-//				}
-//				
-//				break;
-//				
-//	       case 5:
-//				
-//				pattern = Pattern.compile("(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20)\\d\\d)");
-//				
-//				if(patient.getDOB() != null && pattern.matcher(patient.getDOB()).matches()) {
-//					preparedStmt.setString(5, patient.getDOB());
-//				}
-//				else if(patient.getDOB() == null && patient.getDOB().isEmpty()){
-//					output="Please enter DOB..!";
-//				}
-//				else {
-//					output="Please enter dob in format dd/mm/yyyy..!";
-//
-//				}
-//				
-//				break;
-//				
-//	       case 6:
-//				
-//				pattern = Pattern.compile("/^[\\w\\-\\.\\+]+\\@[a-zA-Z0-9\\.\\-]+\\.[a-zA-z0-9]{2,4}$/");
-//				
-//				if(patient.getEmail() != null && pattern.matcher(patient.getEmail()).matches()) {
-//					preparedStmt.setString(6, patient.getEmail());
-//				}
-//				else if(patient.getEmail() == null && patient.getEmail().isEmpty()){
-//					output="Please enter email..!";
-//				}
-//				else {
-//					output="Please enter a valid email...!";
-//
-//				}
-//				
-//				break;
-//				
-//	       case 7:
-//				
-//				pattern = Pattern.compile("/^\\d{10}$/");
-//				
-//				if(patient.getPhone() != null && pattern.matcher(patient.getPhone()).matches()) {
-//					preparedStmt.setString(7, patient.getPhone());
-//				}
-//				else if(patient.getPhone() == null && patient.getPhone().isEmpty()){
-//					output="Please enter phone..!";
-//				}
-//				else {
-//					output="Please enter a valid phone...!";
-//
-//				}
-//				
-//				break;
-//
-//			default:
-//				break;
-//			}
+
 
 			preparedStmt.execute();
 
@@ -483,7 +456,7 @@ public class PatientService implements IPatientService {
 		} catch (Exception e) {
 
 			output = "Error while updating the item..!";
-			System.err.println(e.getMessage());
+			log.log(Level.SEVERE, e.getMessage());
 
 		} finally {
 
@@ -497,7 +470,7 @@ public class PatientService implements IPatientService {
 				}
 
 			} catch (Exception e) {
-				e.printStackTrace();
+				log.log(Level.SEVERE, e.getMessage());
 			}
 		}
 
@@ -509,8 +482,8 @@ public class PatientService implements IPatientService {
 	public String deletePatient(String patientId) {
 
 		String output = "";
-		PreparedStatement preparedStmt = null;
-		Connection con = null;
+		//PreparedStatement preparedStmt = null;
+		//Connection con = null;
 
 		try {
 
@@ -529,7 +502,7 @@ public class PatientService implements IPatientService {
 		} catch (Exception e) {
 
 			output = "Error while deleting the item..!";
-			System.err.println(e.getMessage());
+			log.log(Level.SEVERE, e.getMessage());
 
 		} finally {
 
@@ -543,7 +516,7 @@ public class PatientService implements IPatientService {
 				}
 
 			} catch (Exception e) {
-				e.printStackTrace();
+				log.log(Level.SEVERE, e.getMessage());
 			}
 		}
 
@@ -557,7 +530,7 @@ public class PatientService implements IPatientService {
 	
 
 	// to get all the registerd patients to a arraylist
-	/*@Override
+	@Override
 	public ArrayList<String> getPatientIDs() {
 
 		ArrayList<String> patientList = new ArrayList<String>();
@@ -583,7 +556,7 @@ public class PatientService implements IPatientService {
 
 		} catch (Exception e) {
 
-			System.err.println(e.getMessage());
+			log.log(Level.SEVERE, e.getMessage());
 
 		} finally {
 			try {
@@ -594,10 +567,10 @@ public class PatientService implements IPatientService {
 					con.close();
 				}
 			} catch (SQLException e) {
-				System.err.println(e.getMessage());
+				log.log(Level.SEVERE, e.getMessage());
 			}
 		}
 		return patientList;
-	}*/
+	}
 
 }
