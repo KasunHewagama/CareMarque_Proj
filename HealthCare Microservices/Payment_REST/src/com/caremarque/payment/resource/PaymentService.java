@@ -74,10 +74,11 @@ public class PaymentService {
 	@Path("/fromAppointment")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response createPaymentFromAppointment(Appointment appointment) {
-		
+		System.out.println("Hello");
 		String result = "Record Taken: " + appointment;
+		System.out.println(appointment);
 		return Response.status(201).entity(result).build();
-		//TODO: IMPLENTATION OF OTHER CREATION WITH APPOINTMENT
+		
 	}
 	
 	@GET

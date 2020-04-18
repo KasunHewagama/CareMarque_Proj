@@ -153,9 +153,9 @@ public class AppointmentService {
 	@GET
 	@Path("/createPayment/{appointmentId}")
 	@Produces(MediaType.TEXT_PLAIN)
-	public void createPayment(@PathParam("appointmentId") String appointmentId) {
+	public String createPayment(@PathParam("appointmentId") String appointmentId) {
 		as2.createPayment(appointmentId);
-		System.out.println("TRIGGERED");
+		return ("Payment has been done for: " + appointmentId);
 		
 	}
 	
