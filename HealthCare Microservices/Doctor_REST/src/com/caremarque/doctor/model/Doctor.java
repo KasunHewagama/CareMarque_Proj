@@ -11,6 +11,7 @@ public class Doctor
 	private String specialization;
 	private String phone;
 	private String email;
+	private int doctorCharges;
 	private String password;
 	private String confirmPassword;
 	
@@ -70,6 +71,18 @@ public class Doctor
 		this.email = email;
 	}
 	
+	
+	
+	public int getDoctorCharges() {
+		return doctorCharges;
+	}
+
+
+	public void setDoctorCharges(int doctorCharges) {
+		this.doctorCharges = doctorCharges;
+	}
+
+
 	public String getPassword() {
 		return password;
 	}
