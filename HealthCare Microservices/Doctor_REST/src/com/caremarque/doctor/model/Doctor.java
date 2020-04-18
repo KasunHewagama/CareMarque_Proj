@@ -11,7 +11,7 @@ public class Doctor
 	private String specialization;
 	private String phone;
 	private String email;
-	private int doctorCharges;
+	private double doctorCharges;
 	private String password;
 	private String confirmPassword;
 	
@@ -73,12 +73,12 @@ public class Doctor
 	
 	
 	
-	public int getDoctorCharges() {
+	public double getDoctorCharges() {
 		return doctorCharges;
 	}
 
 
-	public void setDoctorCharges(int doctorCharges) {
+	public void setDoctorCharges(double doctorCharges) {
 		this.doctorCharges = doctorCharges;
 	}
 
