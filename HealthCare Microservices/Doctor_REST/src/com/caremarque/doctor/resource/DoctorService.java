@@ -41,6 +41,7 @@ public class DoctorService {
 			@FormParam("specialization") String specialization,
 			@FormParam("phone") String phone,
 			@FormParam("email") String email,
+			@FormParam("doctorCharges") double doctorCharges,
 			@FormParam("password") String password,
 			@FormParam("confirmPassword") String confirmPassword)
 	
@@ -57,6 +58,7 @@ public class DoctorService {
 		doctor.setSpecialization(specialization);
 		doctor.setPhone(phone);
 		doctor.setEmail(email);
+		doctor.setDoctorCharges(doctorCharges);
 		doctor.setPassword(password);
 		doctor.setConfirmPassword(confirmPassword);
 		
@@ -89,6 +91,7 @@ public class DoctorService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
 	
+
 	public String updateDoctor(String doctorData) {
 		
 		//com.google.gson.JsonParser parser = new com.google.gson.JsonParser();
@@ -103,6 +106,7 @@ public class DoctorService {
 		String specialization = dObject.get("specialization").getAsString();
 		String phone = dObject.get("phone").getAsString();
 		String email = dObject.get("email").getAsString();
+		double doctorCharges = dObject.get("doctorCharges").getAsDouble();
 		String password = dObject.get("password").getAsString();
 		String confirmPassword = dObject.get("confirmPassword").getAsString();
 		
@@ -115,6 +119,7 @@ public class DoctorService {
 		doctor.setSpecialization(specialization);
 		doctor.setPhone(phone);
 		doctor.setEmail(email);
+		doctor.setDoctorCharges(doctorCharges);
 		doctor.setPassword(password);
 		doctor.setConfirmPassword(confirmPassword);
 		
@@ -138,6 +143,22 @@ public class DoctorService {
 		return output;
 		
 	}
+	
+
+	
+	@GET
+	@Path("/appoint")
+	@Consumes(MediaType.APPLICATION_XML)
+	@Produces(MediaType.TEXT_HTML)
+	public String getAllAppointments(String doctorData) {
+		Document doc = Jsoup.parse(doctorData,"",Parser.xmlParser());
+		
+		String doctorId = doc.select("doctorId").text();
+		
+		String output = ab.getAllAppointments(doctorId);
+		return output;
+		
+	} 
 	
 	
 }
