@@ -1,5 +1,6 @@
 package com.caremarque.patient.resource;
 
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.ws.rs.Consumes;
@@ -12,6 +13,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.parser.Parser;
@@ -24,6 +27,7 @@ import com.google.gson.JsonParser;
 public class PatientService {
 
 	PatientServiceImpl patientServiceImpl = new PatientServiceImpl();
+	
 	Patient patient = new Patient();
 
 	/*
@@ -120,7 +124,7 @@ public class PatientService {
 	@POST
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	@Produces(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
 	public String registerPatient(
 			@NotNull(message = "First Name cannot be empty..!") @Pattern(regexp = "/^[a-zA-Z]+$/", message = "First Name should have alphabets only") 
 			@FormParam("firstName") String firstName,
@@ -155,6 +159,7 @@ public class PatientService {
 			@NotNull(message = "confirm Password cannot be empty..!") 
 			@FormParam("cPassword") String cPassword) {
 
+		
 				patient.setFirstName(firstName);
 				patient.setLastName(lastName);
 				patient.setGender(gender);
@@ -167,8 +172,8 @@ public class PatientService {
 				patient.setPassword(password);
 				patient.setConfirmPassword(cPassword);
 		
-				String output = patientServiceImpl.registerPatient(patient);
-				return output;
+				return patientServiceImpl.registerPatient(patient);		    		
+				
 	}
 
 	// getAllPatientDetails
