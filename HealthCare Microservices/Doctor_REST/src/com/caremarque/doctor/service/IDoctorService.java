@@ -19,4 +19,8 @@ public interface IDoctorService {
 	public String cancelDoctor(String doctorId);
 
 	public String updateDoctor(String doctorId, Doctor doctor);
+
+	
+	//to get number of appointments
+	public String getAllAppointments(String doctorId); 
 }
