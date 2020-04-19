@@ -1,5 +1,11 @@
 package com.caremarque.appointment.model;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+import com.fasterxml.jackson.annotation.JsonRootName;
+
+
+@XmlRootElement
 public class Hospital {
 
 	private String hospitalId;
