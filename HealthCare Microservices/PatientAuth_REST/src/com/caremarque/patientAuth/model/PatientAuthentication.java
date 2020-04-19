@@ -64,6 +64,4 @@ public class PatientAuthentication {
 		this.userName = userName;
 	}
 
-
-	
 }

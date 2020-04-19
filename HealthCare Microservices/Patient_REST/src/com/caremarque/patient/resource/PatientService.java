@@ -25,9 +25,8 @@ import com.google.gson.JsonParser;
 public class PatientService {
 
 	PatientServiceImpl patientServiceImpl = new PatientServiceImpl();
-	
-	Patient patient = new Patient();
 
+	Patient patient = new Patient();
 
 	// register a patient to the system
 	@POST
@@ -35,40 +34,28 @@ public class PatientService {
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.TEXT_PLAIN)
 	public String registerPatient(
-			@NotNull(message = "First Name cannot be empty..!") @Pattern(regexp = "/^[a-zA-Z]+$/", message = "First Name should have alphabets only") 
-			@FormParam("firstName") String firstName,
+			@NotNull(message = "First Name cannot be empty..!") @Pattern(regexp = "/^[a-zA-Z]+$/", message = "First Name should have alphabets only") @FormParam("firstName") String firstName,
 
-			@NotNull(message = "Last Name cannot be empty..!") @Pattern(regexp = "/^[a-zA-Z]+$/", message = "Last Name should have alphabets only")
-			@FormParam("lastName") String lastName,
+			@NotNull(message = "Last Name cannot be empty..!") @Pattern(regexp = "/^[a-zA-Z]+$/", message = "Last Name should have alphabets only") @FormParam("lastName") String lastName,
 
-			@NotNull(message = "Gender cannot be empty..!") @Pattern(regexp = "/^[a-zA-Z]+$/", message = "Gender should have alphabets only") 
-			@FormParam("gender") String gender,
+			@NotNull(message = "Gender cannot be empty..!") @Pattern(regexp = "/^[a-zA-Z]+$/", message = "Gender should have alphabets only") @FormParam("gender") String gender,
 
-			@NotNull(message = "NIC cannot be empty..!") @Pattern(regexp = "/^[0-9]{9}[vVxX]$/", message = "Enter valid NIC") 
-			@FormParam("NIC") String nic,
+			@NotNull(message = "NIC cannot be empty..!") @Pattern(regexp = "/^[0-9]{9}[vVxX]$/", message = "Enter valid NIC") @FormParam("NIC") String nic,
 
-			@NotNull(message = "DOB cannot be empty..!") @Pattern(regexp = "(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20)\\d\\d)", message = "Use dd/mm/yyyy format") 
-			@FormParam("DOB") String dob,
+			@NotNull(message = "DOB cannot be empty..!") @Pattern(regexp = "(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20)\\d\\d)", message = "Use dd/mm/yyyy format") @FormParam("DOB") String dob,
 
-			@NotNull(message = "email cannot be empty..!") @Pattern(regexp = "/^[\\w\\-\\.\\+]+\\@[a-zA-Z0-9\\.\\-]+\\.[a-zA-z0-9]{2,4}$/", message = "Enter valid email") 
-			@FormParam("email") String email,
+			@NotNull(message = "email cannot be empty..!") @Pattern(regexp = "/^[\\w\\-\\.\\+]+\\@[a-zA-Z0-9\\.\\-]+\\.[a-zA-z0-9]{2,4}$/", message = "Enter valid email") @FormParam("email") String email,
 
-			@NotNull(message = "phone cannot be empty..!") @Pattern(regexp = "/^\\d{10}$/", message = "Enter valid phone number") 
-			@FormParam("phone") String phone,
+			@NotNull(message = "phone cannot be empty..!") @Pattern(regexp = "/^\\d{10}$/", message = "Enter valid phone number") @FormParam("phone") String phone,
 
-			@NotNull(message = "bloodGroup cannot be empty..!") @Pattern(regexp = "^(A|B|AB|O)[+-]$", message = "Enter valid blood group") 
-			@FormParam("bloodGroup") String bloodGroup,
+			@NotNull(message = "bloodGroup cannot be empty..!") @Pattern(regexp = "^(A|B|AB|O)[+-]$", message = "Enter valid blood group") @FormParam("bloodGroup") String bloodGroup,
 
-			@NotNull(message = "allergies cannot be empty..!") 
-			@FormParam("allergies") String allergies,
+			@NotNull(message = "allergies cannot be empty..!") @FormParam("allergies") String allergies,
 
-			@NotNull(message = "password cannot be empty..!") @Pattern(regexp = "/(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/", message = "password should consist with at least six characters containing one number, one lowercase and one uppercase letter...!") 
-			@FormParam("password") String password,
+			@NotNull(message = "password cannot be empty..!") @Pattern(regexp = "/(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/", message = "password should consist with at least six characters containing one number, one lowercase and one uppercase letter...!") @FormParam("password") String password,
 
-			@NotNull(message = "confirm Password cannot be empty..!") 
-			@FormParam("cPassword") String cPassword) {
+			@NotNull(message = "confirm Password cannot be empty..!") @FormParam("cPassword") String cPassword) {
 
-		
 				patient.setFirstName(firstName);
 				patient.setLastName(lastName);
 				patient.setGender(gender);
@@ -81,10 +68,10 @@ public class PatientService {
 				patient.setPassword(password);
 				patient.setConfirmPassword(cPassword);
 		
-				return patientServiceImpl.registerPatient(patient);		    		
-				
+				return patientServiceImpl.registerPatient(patient);
+
 	}
-	
+
 	// getAllPatientDetails
 	@GET
 	@Path("/")
@@ -119,7 +106,7 @@ public class PatientService {
 		return patientServiceImpl.deletePatient(patientId);
 
 	}
-	
+
 	@PUT
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -139,7 +126,7 @@ public class PatientService {
 		String allergies = patientObj.get("allergies").getAsString();
 		String password = patientObj.get("password").getAsString();
 		String cPassword = patientObj.get("cPassword").getAsString();
-		
+
 		patient.setPatientId(patientId);
 		patient.setFirstName(firstName);
 		patient.setLastName(lastName);
@@ -155,7 +142,7 @@ public class PatientService {
 		return patientServiceImpl.updatePatientDetails(patient);
 
 	}
-	
+
 	// update patient email
 	@PUT
 	@Path("/updateEmail")
@@ -174,12 +161,12 @@ public class PatientService {
 		return patientServiceImpl.updatePatientEmail(patient);
 
 	}
-	
+
 	@GET
 	@Path("/fromPatient")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Patient> getAllLoggingCredentials(){
-		
+	public List<Patient> getAllLoggingCredentials() {
+
 		return patientServiceImpl.getAllLoggingCredentials();
 	}
 }

@@ -14,23 +14,22 @@ import com.caremarque.patientAuth.service.PatientAuthServiceImpl;
 public class PatientAuthService {
 
 	PatientAuthServiceImpl patientAuth = new PatientAuthServiceImpl();
-	
+
 	@GET
 	@Path("/getPatientAuth")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<PatientAuthentication> checkPatientAuthDetails(){
-		
+	public List<PatientAuthentication> checkPatientAuthDetails() {
+
 		System.out.println("resource : " + patientAuth.checkPatientDetails().toString());
 		return patientAuth.checkPatientDetails();
-		
-		
+
 	}
-	
+
 	@GET
 	@Path("/getPatientForAppointment")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<PatientAuthentication> checkPatientDetailsForAppointment(){
-		
+	public List<PatientAuthentication> checkPatientDetailsForAppointment() {
+
 		return patientAuth.checkPatientDetailsForAppointment();
 	}
 

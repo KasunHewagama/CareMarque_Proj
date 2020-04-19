@@ -4,12 +4,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class loginAuthentication {
-	
+
 	private int loginId;
 	private String userName;
 	private String password;
 	private String type;
-	
+
 	public loginAuthentication() {
 		super();
 	}
@@ -53,8 +53,5 @@ public class loginAuthentication {
 	public void setType(String type) {
 		this.type = type;
 	}
-	
-	
-	
 
 }

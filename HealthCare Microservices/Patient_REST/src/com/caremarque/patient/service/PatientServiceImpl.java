@@ -22,7 +22,6 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
-
 public class PatientServiceImpl implements IPatientService {
 
 	public static final Logger log = Logger.getLogger(PatientServiceImpl.class.getName());
@@ -32,8 +31,6 @@ public class PatientServiceImpl implements IPatientService {
 	private static PreparedStatement preparedStmt;
 
 	private static Statement st;
-
-
 
 	// to insert patient details to the db
 	@Override
@@ -86,17 +83,16 @@ public class PatientServiceImpl implements IPatientService {
 				preparedStmt.setString(Constants.COLUMN_INDEX_NINE, patient.getBloodGroup());
 				preparedStmt.setString(Constants.COLUMN_INDEX_TEN, patient.getAllergy());
 				preparedStmt.setString(Constants.COLUMN_INDEX_ELEVEN, patient.getPassword());
-				//preparedStmt.setString(Constants.COLUMN_INDEX_TWELVE, patient.getConfirmPassword());
 
-				int result = 0;		
+				int result = 0;
 				result = preparedStmt.executeUpdate();
-				
+
 				if (result > 0) {
 
 					output = patient.getFirstName() + " " + patient.getLastName()
 							+ ", You are successfully registered to the system..!";
 				}
-				
+
 			}
 
 		} catch (Exception e) {
@@ -287,10 +283,9 @@ public class PatientServiceImpl implements IPatientService {
 
 			String query = "UPDATE patient SET firstName=?, lastName=?, gender=?, NIC=?, DOB=?, phone=?, bloodGroup=?, allergies=?, password=?, cPassword=?"
 					+ " WHERE patientId=? ";
-			
 
 			preparedStmt = con.prepareStatement(query);
-			
+
 			preparedStmt.setString(Constants.COLUMN_INDEX_ONE, patient.getFirstName());
 			preparedStmt.setString(Constants.COLUMN_INDEX_TWO, patient.getLastName());
 			preparedStmt.setString(Constants.COLUMN_INDEX_THREE, patient.getGender());
@@ -302,11 +297,11 @@ public class PatientServiceImpl implements IPatientService {
 			preparedStmt.setString(Constants.COLUMN_INDEX_NINE, patient.getPassword());
 			preparedStmt.setString(Constants.COLUMN_INDEX_TEN, patient.getConfirmPassword());
 			preparedStmt.setString(Constants.COLUMN_INDEX_ELEVEN, patient.getPatientId());
-			
+
 			preparedStmt.execute();
 
 			output = "Patient details updated successfully..!";
-			
+
 		} catch (Exception e) {
 
 			output = "Error while updating the patient details..!";
@@ -330,7 +325,7 @@ public class PatientServiceImpl implements IPatientService {
 
 		return output;
 	}
-	
+
 	// to update patient email
 	@Override
 	public String updatePatientEmail(Patient patient) {
@@ -345,18 +340,14 @@ public class PatientServiceImpl implements IPatientService {
 			con = DBConnection.getDBConnection();
 
 			String query = "UPDATE patient SET email=? WHERE patientId=? ";
-			
 
 			preparedStmt = con.prepareStatement(query);
 
 			for (PatientAuthentication patientAuthentication : patientAuthList) {
-				System.out.println("PAUTH 1 : " + patientAuthentication.getUserName());
-				System.out.println("PAUTH 2 : " + patient.getEmail());
 
 				if (patient.getEmail().equals(patientAuthentication.getUserName())) {
 
 					validate = true;
-					System.out.println("VALIDATE : " + validate);
 					break;
 				}
 			}
@@ -366,15 +357,15 @@ public class PatientServiceImpl implements IPatientService {
 				output = "You already have an account from email " + patient.getEmail() + " ..!!!";
 
 			} else {
+
 				preparedStmt.setString(Constants.COLUMN_INDEX_ONE, patient.getEmail());
 				preparedStmt.setString(Constants.COLUMN_INDEX_TWO, patient.getPatientId());
-				
+
 				preparedStmt.execute();
 
 				output = "Email updated successfully..!";
 			}
 
-			
 		} catch (Exception e) {
 
 			output = "Error while updating the email..!";
@@ -484,7 +475,7 @@ public class PatientServiceImpl implements IPatientService {
 		}
 		return patientList;
 	}
-	
+
 	public List<PatientAuthentication> getAuthDetails() {
 
 		List<PatientAuthentication> patientAuthList = new ArrayList<PatientAuthentication>();
@@ -493,8 +484,8 @@ public class PatientServiceImpl implements IPatientService {
 
 			Client client = Client.create();
 
-			WebResource webResource = client
-					.resource("http://localhost:9090/PatientAuth_REST/patientAuthService/PatientAuthentication/getPatientAuth");
+			WebResource webResource = client.resource(
+					"http://localhost:9090/PatientAuth_REST/patientAuthService/PatientAuthentication/getPatientAuth");
 
 			ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);
 
@@ -503,94 +494,86 @@ public class PatientServiceImpl implements IPatientService {
 
 			}
 			String output = response.getEntity(String.class);
-			System.out.println("Result: " + output);
 
 			Gson gson = new Gson();
 			JsonElement list = new JsonParser().parse(output).getAsJsonObject().get("patientAuthentication");
 			List<PatientAuthentication> listObj = gson.fromJson(list, new TypeToken<List<PatientAuthentication>>() {
 			}.getType());
-			System.out.println(listObj.size());
 
 			for (PatientAuthentication patientAuthentication : listObj) {
-				System.out.println(patientAuthentication);
 				patientAuthList.add(patientAuthentication);
 
 			}
 
 			for (PatientAuthentication patientAuthentication : patientAuthList) {
-				System.out.println("ID : " + patientAuthentication.getPatientAuthId());
 				System.out.println("email : " + patientAuthentication.getUserName());
 
 			}
 
 			System.out.println(listObj.get(0).getPatientAuthId());
 			System.out.println(listObj.get(0).getUserName());
-			
 
 		} catch (Exception e) {
 			log.log(Level.SEVERE, e.getMessage());
 		}
 		return patientAuthList;
 	}
-	
-	// to get details of all registered patients login credentials
-		@Override
-		public List<Patient> getAllLoggingCredentials() {
-			
-			List<Patient> credentialList = new ArrayList<Patient>();
-			
-			Patient patient = new Patient();
 
-			ResultSet rs = null;
+	// to get details of all registered patients login credentials
+	@Override
+	public List<Patient> getAllLoggingCredentials() {
+
+		List<Patient> credentialList = new ArrayList<Patient>();
+
+		Patient patient = new Patient();
+
+		ResultSet rs = null;
+
+		try {
+			con = DBConnection.getDBConnection();
+
+			String query = "SELECT patientId, email, password FROM patient";
+
+			st = con.createStatement();
+			rs = st.executeQuery(query);
+
+			while (rs.next()) {
+
+				patient.setPatientId(rs.getString("patientId"));
+				patient.setEmail(rs.getString("email"));
+				patient.setPassword(rs.getString("password"));
+
+				credentialList.add(patient);
+				System.out.println(credentialList);
+			}
+
+			System.out.println("Data retrived from DB");
+
+		} catch (Exception e) {
+
+			log.log(Level.SEVERE, e.getMessage());
+
+		} finally {
 
 			try {
-				con = DBConnection.getDBConnection();
-
-				String query = "SELECT patientId, email, password FROM patient";
-
-				st = con.createStatement();
-				rs = st.executeQuery(query);
-
-				while (rs.next()) {
-					
-					patient.setPatientId(rs.getString("patientId"));
-					patient.setEmail(rs.getString("email"));
-					patient.setPassword(rs.getString("password"));
-
-					credentialList.add(patient);
-					System.out.println(credentialList);
+				if (st != null) {
+					st.close();
 				}
-				
-				System.out.println("Data retrived from DB");
-				
+
+				if (con != null) {
+					con.close();
+				}
+
+				if (rs != null) {
+					rs.close();
+				}
 
 			} catch (Exception e) {
-
 				log.log(Level.SEVERE, e.getMessage());
-
-			} finally {
-
-				try {
-					if (st != null) {
-						st.close();
-					}
-
-					if (con != null) {
-						con.close();
-					}
-
-					if (rs != null) {
-						rs.close();
-					}
-
-				} catch (Exception e) {
-					log.log(Level.SEVERE, e.getMessage());
-				}
 			}
-			return credentialList;
-
 		}
+		return credentialList;
 
-
+	}
 
 }

@@ -7,8 +7,8 @@ public class PatientAuthentication {
 
 	private int patientAuthId;
 	private String userName;
+	private String patientId;
 
-	
 	public PatientAuthentication() {
 		super();
 	}
@@ -29,6 +29,12 @@ public class PatientAuthentication {
 		this.userName = userName;
 	}
 
-	
-	
+	public String getPatientId() {
+		return patientId;
+	}
+
+	public void setPatientId(String patientId) {
+		this.patientId = patientId;
+	}
+
 }
