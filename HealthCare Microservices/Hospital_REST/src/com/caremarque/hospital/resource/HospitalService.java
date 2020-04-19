@@ -41,12 +41,11 @@ public class HospitalService {
 			@NotEmpty	@Pattern(regexp = "/^[a-zA-Z][0-9]+$/") 	@FormParam("regNo") String regNo,
 			@NotEmpty	@Pattern(regexp = "(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20)\\d\\d)") @FormParam("Open_Hours") String Open_Hours, 
 			@NotEmpty	@Pattern(regexp = "/^\\d{1,2}:\\d{2}([ap]m)?$/ss") @FormParam("Close_Hours") String Close_Hours,
-			@NotNull 	@Pattern(regexp = "/^[\\w\\-\\.\\+]+\\@[a-zA-Z0-9\\.\\-]+\\.[a-zA-z0-9]{2,4}$/") @FormParam("email") String email,
-			@NotNull 	@Pattern(regexp = "/^\\d{10}$/", message = "Numbers only") @FormParam("channelingFee") String channelingFee) {
+			@NotEmpty 	@Pattern(regexp = "/^[\\w\\-\\.\\+]+\\@[a-zA-Z0-9\\.\\-]+\\.[a-zA-z0-9]{2,4}$/") @FormParam("email") String email,
+			@NotEmpty 	@Pattern(regexp = "/^\\d{10}$/", message = "Numbers only") @FormParam("channelingFee") String channelingFee) {
 
 		System.out.println("Create Hospital...........!");
 
-		//Hospital hospital = new Hospital();
 
 		
 		hospital.setHospitalName(hospitalName);
@@ -72,7 +71,6 @@ public class HospitalService {
 
 	
 	  @GET
-	 
 	  @Path("/{hospitalId}")
 	  @Produces(MediaType.TEXT_HTML)
 	  public String getHospital(@PathParam("hospitalId") String hospitalId) {
@@ -98,7 +96,7 @@ public class HospitalService {
 		String email = hosJsonObject.get("email").getAsString();
 		String channelingFee= hosJsonObject.get("channelingFee").getAsString();
 		
-		hospital.setHospitalId(hospitalId);
+		//hospital.setHospitalId(hospitalId);
 		hospital.setHospitalName(hospitalName);
 		hospital.setAddress(address);
 		hospital.setPhone(phone);
