@@ -451,15 +451,7 @@ try {
 	
 	
 	
-	
-	
-	
-	
-
-	
-	
-	
-	
+	//This method is to take the number of appointments of the relevant doctor
 	
 	@Override
 	public String getAllAppointments(String doctorId) {
