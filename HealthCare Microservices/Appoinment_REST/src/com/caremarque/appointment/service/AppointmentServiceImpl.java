@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+
+
 //import org.apache.tomcat.util.security.Escape;
 
 import com.caremarque.appointment.model.Appointment;
@@ -27,30 +29,31 @@ import com.sun.jersey.api.client.WebResource;
 
 public class AppointmentServiceImpl implements IAppointmentService {
 
-	// this object is for logging
+	//this object is for logging
 	public static final Logger log = Logger.getLogger(IAppointmentService.class.getName());
 
 	public static Connection con;
-
+	
 	public static Statement st;
-
+	
 	@Override
 	public String createAppointment(Appointment appointment) {
 		// return "Appointment created successfully...!";
 
 		String output = null;
 		PreparedStatement preparedStatement = null;
-
-		// Here we call the generateAppointmentIDs method to auto generate a
-		// appointmentID
-		// To do that we pass the existing appointmentid set as an arraylist
+		
+		//Here we call the generateAppointmentIDs method to auto generate a appointmentID
+		//To do that we pass the existing appointmentid set as an arraylist
 		String appointmentId = CommonUtils.generateAppointmentIDs(getAppointmentIDs());
-		System.out.println("AppointmentID: " + appointmentId);
+		System.out.println("AppointmentID: " +  appointmentId);
+
 
 		try {
 			con = DBConnection.getDBConnection();
 
-			String query = "INSERT INTO appointment(" + "appointmentId,patientId,patientName,phone,doctorName,"
+			String query = "INSERT INTO appointment(" 
+					+ "appointmentId,patientId,patientName,phone,doctorName,"
 					+ "specialization,hospitalId,hospitalName,appointmentDate,appointmentTime,"
 					+ "lastUpdateDate,lastUpdateTime,appointmentStatus)"
 					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -103,25 +106,34 @@ public class AppointmentServiceImpl implements IAppointmentService {
 
 	@Override
 	public String getAppointment(String appointmentId) {
-
+		
 		String output = null;
 		ArrayList<Appointment> arrayList = new ArrayList<Appointment>();
-
+		
 		try {
 			con = DBConnection.getDBConnection();
-
-			String query = "SELECT * FROM appointment " + "WHERE appointmentId = '" + appointmentId + "'";
-
+			
+			String query = "SELECT * FROM appointment "
+					+ "WHERE appointmentId = '"+ appointmentId + "'";
+			
 			PreparedStatement pStatement = con.prepareStatement(query);
 			ResultSet rs = pStatement.executeQuery();
-
-			output = "<table border=\"1\"> <tr><th>appointmentId</th> " + "<th>patientId</th> "
-					+ "<th>patientName</th> " + "<th>phone</th> " + "<th>doctorName</th> " + "<th>specialization</th> "
-					+ "<th>hospitalId</th> " + "<th>hospitalName</th> " + "<th>appointmentDate</th> "
-					+ "<th>appointmentTime</th> " + "<th>lastUpdateDate</th> " + "<th>lastUpdateTime</th> "
+			
+			output = "<table border=\"1\"> <tr><th>appointmentId</th> " 
+					+ "<th>patientId</th> " 
+					+ "<th>patientName</th> " 
+					+ "<th>phone</th> "
+					+ "<th>doctorName</th> " 
+					+ "<th>specialization</th> " 
+					+ "<th>hospitalId</th> "
+					+ "<th>hospitalName</th> " 
+					+ "<th>appointmentDate</th> " 
+					+ "<th>appointmentTime</th> "
+					+ "<th>lastUpdateDate</th> " 
+					+ "<th>lastUpdateTime</th> " 
 					+ "<th>appointmentStatus</th></tr>";
-
-			while (rs.next()) {
+			
+			while(rs.next()) {
 				Appointment appointment = new Appointment();
 				appointment.setPatientId(rs.getString(Constants.COLUMN_INDEX_ONE));
 				appointment.setPatientName(rs.getString(Constants.COLUMN_INDEX_TWO));
@@ -136,7 +148,7 @@ public class AppointmentServiceImpl implements IAppointmentService {
 				appointment.setLastUpdateTime(rs.getString(Constants.COLUMN_INDEX_ELEVEN));
 				appointment.setAppointmentStatus(rs.getString(Constants.COLUMN_INDEX_TWELVE));
 				arrayList.add(appointment);
-
+				
 				output += "<tr><td>" + rs.getString(Constants.COLUMN_INDEX_ONE) + "</td>";
 				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_TWO) + "</td>";
 				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_THREE) + "</td>";
@@ -150,82 +162,87 @@ public class AppointmentServiceImpl implements IAppointmentService {
 				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_ELEVEN) + "</td>";
 				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_TWELVE) + "</td>";
 				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_THIRTEEN) + "</td></tr>";
-
+				
 				System.out.println("Data Retrieved from DB...!");
 			}
-
+			
 			output += "</table>";
-
+		
 		} catch (Exception e) {
 			log.log(Level.SEVERE, e.getMessage());
-
+		
 		} finally {
 			try {
-				if (st != null) {
+				if(st != null) {
 					st.close();
 				}
-				if (con != null) {
+				if(con != null) {
 					con.close();
 				}
 			} catch (SQLException e) {
 				log.log(Level.SEVERE, e.getMessage());
 			}
 		}
-
+		
 		return output;
 	}
-
-	// TO RETURN A APPOINTMENT LIST
+	
+	//TO RETURN A APPOINTMENT LIST
 
 	public ArrayList<Appointment> getAppointmentByID(String appointmentId) {
-
+		
 		String output = null;
 		ArrayList<Appointment> arrayList = new ArrayList<Appointment>();
-
+		
 		try {
 			con = DBConnection.getDBConnection();
-
-			String query = "SELECT * FROM appointment " + "WHERE appointmentId = '" + appointmentId + "'";
-
+			
+			String query = "SELECT * FROM appointment "
+					+ "WHERE appointmentId = '"+ appointmentId + "'";
+			
 			PreparedStatement pStatement = con.prepareStatement(query);
 			ResultSet rs = pStatement.executeQuery();
-
-			while (rs.next()) {
+			
+			
+			while(rs.next()) {
 				Appointment appointment = new Appointment();
 				appointment.setAppointmentId(appointmentId);
-				appointment.setPatientId(rs.getString(Constants.COLUMN_INDEX_TWO));
-				appointment.setPatientName(rs.getString(Constants.COLUMN_INDEX_THREE));
-				appointment.setPhone(rs.getString(Constants.COLUMN_INDEX_FOUR));
-				appointment.setDoctorName(rs.getString(Constants.COLUMN_INDEX_FIVE));
-				appointment.setSpecialization(rs.getString(Constants.COLUMN_INDEX_SIX));
-				appointment.setHospitalId(rs.getString(Constants.COLUMN_INDEX_SEVEN));
-				appointment.setHospitalName(rs.getString(Constants.COLUMN_INDEX_EIGHT));
-				appointment.setAppointmentDate(rs.getString(Constants.COLUMN_INDEX_NINE));
-				appointment.setAppointmentTime(rs.getString(Constants.COLUMN_INDEX_TEN));
-				appointment.setLastUpdateDate(rs.getString(Constants.COLUMN_INDEX_ELEVEN));
-				appointment.setLastUpdateTime(rs.getString(Constants.COLUMN_INDEX_TWELVE));
-				appointment.setAppointmentStatus(rs.getString(Constants.COLUMN_INDEX_THIRTEEN));
+				appointment.setPatientId(rs.getString(Constants.COLUMN_INDEX_ONE));
+				appointment.setPatientName(rs.getString(Constants.COLUMN_INDEX_TWO));
+				appointment.setPhone(rs.getString(Constants.COLUMN_INDEX_THREE));
+				appointment.setDoctorName(rs.getString(Constants.COLUMN_INDEX_FOUR));
+				appointment.setSpecialization(rs.getString(Constants.COLUMN_INDEX_FIVE));
+				appointment.setHospitalId(rs.getString(Constants.COLUMN_INDEX_SIX));
+				appointment.setHospitalName(rs.getString(Constants.COLUMN_INDEX_SEVEN));
+				appointment.setAppointmentDate(rs.getString(Constants.COLUMN_INDEX_EIGHT));
+				appointment.setAppointmentTime(rs.getString(Constants.COLUMN_INDEX_NINE));
+				appointment.setLastUpdateDate(rs.getString(Constants.COLUMN_INDEX_TEN));
+				appointment.setLastUpdateTime(rs.getString(Constants.COLUMN_INDEX_ELEVEN));
+				appointment.setAppointmentStatus(rs.getString(Constants.COLUMN_INDEX_TWELVE));
 				arrayList.add(appointment);
 
+				
 				System.out.println("Data Retrieved from DB...!");
 			}
-
+			
+			
+		
 		} catch (Exception e) {
 			log.log(Level.SEVERE, e.getMessage());
-
+		
 		} finally {
 			try {
-				if (st != null) {
+				if(st != null) {
 					st.close();
 				}
-				if (con != null) {
+				if(con != null) {
 					con.close();
 				}
 			} catch (SQLException e) {
 				log.log(Level.SEVERE, e.getMessage());
 			}
 		}
-
+		
 		return arrayList;
 	}
 
@@ -234,7 +251,7 @@ public class AppointmentServiceImpl implements IAppointmentService {
 
 		String output = null;
 		ResultSet rs = null;
-
+		
 		ArrayList<Appointment> arrayList = new ArrayList<Appointment>();
 
 		try {
@@ -244,13 +261,22 @@ public class AppointmentServiceImpl implements IAppointmentService {
 
 			st = con.createStatement();
 			rs = st.executeQuery(query);
-
+			
 			DateFormat inputFormat = new SimpleDateFormat("dd/MM/yyyy");
+			
 
-			output = "<table border=\"1\"> <tr><th>appointmentId</th> " + "<th>patientId</th> "
-					+ "<th>patientName</th> " + "<th>phone</th> " + "<th>doctorName</th> " + "<th>specialization</th> "
-					+ "<th>hospitalId</th> " + "<th>hospitalName</th> " + "<th>appointmentDate</th> "
-					+ "<th>appointmentTime</th> " + "<th>lastUpdateDate</th> " + "<th>lastUpdateTime</th> "
+			output = "<table border=\"1\"> <tr><th>appointmentId</th> " 
+					+ "<th>patientId</th> " 
+					+ "<th>patientName</th> " 
+					+ "<th>phone</th> "
+					+ "<th>doctorName</th> " 
+					+ "<th>specialization</th> " 
+					+ "<th>hospitalId</th> "
+					+ "<th>hospitalName</th> " 
+					+ "<th>appointmentDate</th> " 
+					+ "<th>appointmentTime</th> "
+					+ "<th>lastUpdateDate</th> " 
+					+ "<th>lastUpdateTime</th> " 
 					+ "<th>appointmentStatus</th></tr>";
 
 			while (rs.next()) {
@@ -268,6 +294,7 @@ public class AppointmentServiceImpl implements IAppointmentService {
 				appointment.setLastUpdateTime(rs.getString(Constants.COLUMN_INDEX_ELEVEN));
 				appointment.setAppointmentStatus(rs.getString(Constants.COLUMN_INDEX_TWELVE));
 				arrayList.add(appointment);
+				
 
 				output += "<tr><td>" + rs.getString(Constants.COLUMN_INDEX_ONE) + "</td>";
 				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_TWO) + "</td>";
@@ -282,7 +309,8 @@ public class AppointmentServiceImpl implements IAppointmentService {
 				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_ELEVEN) + "</td>";
 				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_TWELVE) + "</td>";
 				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_THIRTEEN) + "</td></tr>";
-
+				
+				
 				System.out.println("Data Retrieved from database...!");
 			}
 
@@ -318,17 +346,17 @@ public class AppointmentServiceImpl implements IAppointmentService {
 
 	@Override
 	public String updateAppointment(String appointmentId, Appointment appointment) {
-
+		
 		String output = "";
 		PreparedStatement pStatement = null;
-
+		
 		try {
 			con = DBConnection.getDBConnection();
-
+			
 			String query = "UPDATE appointment SET appointmentId = ?, patientId = ?, patientName = ?, phone = ?, doctorName = ?, specialization = ?, hospitalId = ?, hospitalName = ?, appointmentDate = ?, appointmentTime = ?, lastUpdateDate = ?, lastUpdateTime = ?, appointmentStatus = ? WHERE appointmentId = ?";
-
+			
 			pStatement = con.prepareStatement(query);
-
+			
 			pStatement.setString(1, appointment.getAppointmentId());
 			pStatement.setString(2, appointment.getPatientId());
 			pStatement.setString(3, appointment.getPatientName());
@@ -343,17 +371,18 @@ public class AppointmentServiceImpl implements IAppointmentService {
 			pStatement.setString(12, LocalTime.now().toString());
 			pStatement.setString(13, "Pending");
 			pStatement.setString(14, appointment.getAppointmentId());
-
+			
 			pStatement.execute();
-
+			
 			output = "Successfully Updated...!";
 
-		} catch (Exception e) {
 
+		} catch (Exception e) {
+			
 			output = "Error while updating the Appointment...!";
 			System.err.println(e.getMessage());
 			log.log(Level.SEVERE, e.getMessage());
-
+					
 		} finally {
 
 			try {
@@ -370,37 +399,39 @@ public class AppointmentServiceImpl implements IAppointmentService {
 				log.log(Level.SEVERE, e.getMessage());
 			}
 		}
-
+		
 		return output;
 	}
 
 	@Override
 	public String cancelAppointment(String appointmnetId) {
-
+		
 		String output = "";
 		String state = "Cancel";
 		PreparedStatement pStatement = null;
-
+		
 		try {
 			con = DBConnection.getDBConnection();
-
-			String query = "UPDATE appointment" + "SET appointmentStatus = ?" + "WHERE appointmentId = ?";
-
+			
+			String query = "UPDATE appointment"
+					+ "SET appointmentStatus = ?"
+					+ "WHERE appointmentId = ?";
+			
 			pStatement = con.prepareStatement(query);
-
+			
 			pStatement.setString(Constants.COLUMN_INDEX_ONE, state);
 			pStatement.setString(Constants.COLUMN_INDEX_TWO, appointmnetId);
-
+			
 			pStatement.execute();
-
+			
 			output = "Cancelled " + appointmnetId + "Changed status to Cancel";
-
+			
 		} catch (Exception e) {
 
 			output = "Error while deleting the appointment";
 			System.err.println(e.getMessage());
 			log.log(Level.SEVERE, e.getMessage());
-
+		
 		} finally {
 
 			try {
@@ -420,27 +451,27 @@ public class AppointmentServiceImpl implements IAppointmentService {
 		return output;
 	}
 
-	// This method get all the existing appointmentids and put them into a arraylist
+	//This method get all the existing appointmentids and put them into a arraylist
 	@Override
 	public ArrayList<String> getAppointmentIDs() {
-
+		
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
-
+		
 		ArrayList<String> arrayList = new ArrayList<String>();
-
+		
 		try {
 			con = DBConnection.getDBConnection();
-
+			
 			String query = "SELECT appointment.appointmentId FROM appointment";
-
+			
 			preparedStatement = con.prepareStatement(query);
 			rs = preparedStatement.executeQuery();
-
-			while (rs.next()) {
-
+			
+			while(rs.next()) {
+				
 				arrayList.add(rs.getString(1));
-
+				
 			}
 		} catch (Exception e) {
 			log.log(Level.SEVERE, e.getMessage());
@@ -453,49 +484,36 @@ public class AppointmentServiceImpl implements IAppointmentService {
 					con.close();
 				}
 			} catch (SQLException e) {
-				log.log(Level.SEVERE, e.getMessage());
+			log.log(Level.SEVERE, e.getMessage());
 			}
 
 		}
 		System.out.println(arrayList.size());
 		return arrayList;
 	}
-
+	
+	
 	public String createPayment(String appointmentId) {
-
+		
 		Client client = Client.create();
-		String result = "";
 		ArrayList<Appointment> appList = new ArrayList<Appointment>();
 		appList = getAppointmentByID(appointmentId);
-
-		WebResource webResource = client
-				.resource("http://localhost:8088/Payment_REST/paymentService/Payment/fromAppointment");
+		
+		WebResource webResource = client.resource("http://localhost:8088/Payment_REST/myService/Payment/fromAppointment");
 		ObjectMapper mapper = new ObjectMapper();
-		String jsonInput = "";
-
+		String jsonInput ="";
 		try {
 			jsonInput = mapper.writeValueAsString(appList.get(0));
 			System.out.println("JSON: " + jsonInput);
 		} catch (Exception e) {
 			log.log(Level.SEVERE, e.getMessage());
 		}
-
-		try {
-			ClientResponse response = webResource.accept("application/json").type("application/json")
-					.post(ClientResponse.class, jsonInput);
-			if (response.getStatus() != 201) {
-				throw new RuntimeException("HTTP Error: " + response.getStatus());
-			}
-			result = response.getEntity(String.class);
-		} catch (Exception e) {
-			System.out.println("CAUTHE HERE");
-			log.log(Level.SEVERE, e.getMessage());
-		}
 		
-		System.out.println("Response from the Server: ");
-		System.out.println(result);
-
-		return result;
+		ClientResponse response = webResource.type("application/json").post(ClientResponse.class, jsonInput);
+		return response.getEntity(String.class);
 	}
+	
+	
+	
 
 }

@@ -13,14 +13,12 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.parser.Parser;
 
 import com.caremarque.appointment.model.Appointment;
-import com.caremarque.appointment.model.Hospital;
 import com.caremarque.appointment.service.AppointmentServiceImpl;
 import com.caremarque.appointment.service.IAppointmentService;
 import com.google.gson.JsonObject;
@@ -153,19 +151,9 @@ public class AppointmentService {
 	@GET
 	@Path("/createPayment/{appointmentId}")
 	@Produces(MediaType.TEXT_PLAIN)
-	public String createPayment(@PathParam("appointmentId") String appointmentId) {
+	public void createPayment(@PathParam("appointmentId") String appointmentId) {
 		as2.createPayment(appointmentId);
-		return ("Payment has been done for: " + appointmentId);
-		
-	}
-	
-	@POST
-	@Path("/fromHospital")
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Response createAppointmentFromHospital(Hospital hospital) {
-		
-		String result = "Record Taken : " + hospital;
-		return Response.status(201).entity(result).build();
+		System.out.println("TRIGGERED");
 		
 	}
 
