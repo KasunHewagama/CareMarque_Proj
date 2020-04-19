@@ -90,7 +90,7 @@ import com.google.gson.JsonParser;
 					
 				}
 				
-				
+				//getdoctors method
 				@GET
 				@Path("/")
 				@Produces(MediaType.TEXT_HTML)
@@ -113,7 +113,6 @@ import com.google.gson.JsonParser;
 				@Consumes(MediaType.APPLICATION_JSON)
 				@Produces(MediaType.TEXT_PLAIN)
 				
-			
 				public String updateDoctor(String doctorData) {
 					
 					//com.google.gson.JsonParser parser = new com.google.gson.JsonParser();
