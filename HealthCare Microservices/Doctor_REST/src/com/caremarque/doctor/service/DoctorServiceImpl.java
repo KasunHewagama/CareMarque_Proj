@@ -135,6 +135,7 @@ public class DoctorServiceImpl implements IDoctorService {
 			
 			String output = "";
 			Statement st = null;
+			PreparedStatement preparedStatement = null;
 			ResultSet rs = null;
 			Connection con = null;
 			
@@ -142,13 +143,18 @@ public class DoctorServiceImpl implements IDoctorService {
 				
 				con = DBConnection.getDBConnection();
 				
-				String query = "SELECT * FROM doctor doctorId = '"+ doctorId + "'";
 				
-				st = con.createStatement();
-				rs = st.executeQuery(query);
+				String query = "SELECT * FROM doctor WHERE doctorId = ?";
+				
+				
+				
+				preparedStatement = con.prepareStatement(query);
+				preparedStatement.setString(1, doctorId);
+				rs = preparedStatement.executeQuery();
 				
 				output = "<table border=\"1\">"						
-						+"<tr>"+"<th>firstName</th>"
+						+"<tr>"+"<th>doctorId</th>"
+						+"<th>firstName</th>"
 						+"<th>lastName</th>"
 						+"<th>regNo</th>"
 						+"<th>gender</th>"
@@ -160,8 +166,8 @@ public class DoctorServiceImpl implements IDoctorService {
 				
 				while(rs.next()) {
 					
-					//String doctorId = Integer.toString(rs.getInt("doctorId"));
-					//String doctorId = rs.getString("doctorId");
+					
+					String docId = rs.getString("doctorId");
 					String firstName = rs.getString("firstName");
 					String lastName = rs.getString("lastName");
 					String regNo =  rs.getString("regNo");
@@ -172,8 +178,8 @@ public class DoctorServiceImpl implements IDoctorService {
 					String password = rs.getString("password");
 					String confirmPassword = rs.getString("confirmPassword");
 					
-					output += "<tr><td>" + doctorId + "</td>";
-					output += "<tr><td>" + firstName + "</td>";
+					output += "<tr><td>" + docId + "</td>";
+					output += "<td>" + firstName + "</td>";
 					output += "<td>" + lastName + "</td>";
 					output += "<td>" + regNo + "</td>";
 					output += "<td>" + gender + "</td>";
@@ -181,7 +187,7 @@ public class DoctorServiceImpl implements IDoctorService {
 					output += "<td>" + phone + "</td>";
 					output += "<td>" + email + "</td>";
 					output += "<td>" + password + "</td>";
-					output += "<td>" + confirmPassword + "</td>";
+					output += "<td>" + confirmPassword + "</td></tr>";
 				}
 				
 				output += "</table>";
