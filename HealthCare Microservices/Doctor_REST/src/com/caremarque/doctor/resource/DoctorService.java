@@ -1,5 +1,7 @@
 package com.caremarque.doctor.resource;
 
+//import javax.validation.constraints.NotNull;
+//import javax.validation.constraints.Pattern;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
@@ -37,7 +39,10 @@ public class DoctorService {
 			@FormParam("firstName") String firstName,
 			@FormParam("lastName") String lastName,
 			@FormParam("regNo") String regNo,
+			
+			//@NotNull(message = "Gender cannot be empty..!") @Pattern(regexp = "/^[a-zA-Z]+$/", message = "Gender should have alphabets only") 
 			@FormParam("gender") String gender,
+			
 			@FormParam("specialization") String specialization,
 			@FormParam("phone") String phone,
 			@FormParam("email") String email,
@@ -160,5 +165,24 @@ public class DoctorService {
 		
 	} 
 	
+
+	@POST
+	@Path("/login")
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@Produces(MediaType.TEXT_PLAIN)
+	
+	public String login(
+			@FormParam("userName") String email,
+			@FormParam("password") String password,
+			@FormParam("type") String type) {
+		
+		doctor.setEmail(email);
+		doctor.setPassword(password);
+		doctor.setType(type);
+		
+		String output = ab.login(doctor);
+		
+		return output;
+	}
 	
 }
