@@ -385,12 +385,12 @@ public class DoctorServiceImpl implements IDoctorService {
 			return output;
 		}
 
+		
+		
 		//implementation of cancelDoctor method
 
 		@Override
 		public String cancelDoctor(String doctorId) {
-			/* TODO Auto-generated method stub
-			return null; */
 			
 			String output = "";
 			PreparedStatement preparedStatmnt = null;
@@ -404,7 +404,6 @@ public class DoctorServiceImpl implements IDoctorService {
 				
 				preparedStatmnt = con.prepareStatement(query);
 				
-				//preparedStatmnt.setInt(1, Integer.parseInt(doctorId));
 				preparedStatmnt.setString(1, doctorId);
 				
 				preparedStatmnt.execute();
@@ -413,30 +412,35 @@ public class DoctorServiceImpl implements IDoctorService {
 				
 
 			}catch(Exception e) {
+				
 				output = "Error while deleting item..!";
 				System.out.println(e.getMessage());
 			
 			}finally {
 				
-				try {
-					if(preparedStatmnt != null) {
-						preparedStatmnt.close();
-					}
-					
-					if(con != null) {
-						con.close();
-					}
-					
-					}catch(Exception e) {
-						e.printStackTrace();
+						try {
+							
+						if(preparedStatmnt != null) {
+							preparedStatmnt.close();
 						}
-					}
+						
+						if(con != null) {
+							con.close();
+						}
+						
+						}catch(Exception e) {
+							e.printStackTrace();
+							}
+						
+						}
 			
 			return output;
 		}
 	
 		
-		// This method get all the existing doctorids and put them into a arraylist
+		
+			//This method get all the existing doctorids and put them into a arraylist
+		
 			@Override
 			public ArrayList<String> getDoctorIDs() {
 		
@@ -447,186 +451,190 @@ public class DoctorServiceImpl implements IDoctorService {
 		
 						ArrayList<String> arrayList = new ArrayList<String>();
 		
-						try {
-							
-							con = DBConnection.getDBConnection();
-			
-							String query = "SELECT doctor.doctorId FROM doctor";
-			
-							preparedStatement = con.prepareStatement(query);
-							rs = preparedStatement.executeQuery();
-			
-							while(rs.next()) {
-				
-								arrayList.add(rs.getString(1));
-				
-								}
-							
-						} catch (Exception e) {
-							
-								log.log(Level.SEVERE, e.getMessage());
-			
-						} finally {
-							
 							try {
-								if (preparedStatement != null) {
-									preparedStatement.close();
-									}
 								
-								if (con != null) {
-									con.close();
-									}
-								
-							} catch (SQLException e) {
-								
-								log.log(Level.SEVERE, e.getMessage());
-								}
-
-						}
+									con = DBConnection.getDBConnection();
+					
+									String query = "SELECT doctor.doctorId FROM doctor";
+					
+									preparedStatement = con.prepareStatement(query);
+									rs = preparedStatement.executeQuery();
+					
+									while(rs.next()) {
 						
-						System.out.println(arrayList.size());
-						return arrayList;
-	}
-	
-	
-	
-	//This method is to take the number of appointments of the relevant doctor
-	
-	@Override
-	public String getAllAppointments(String doctorId) {
-		// TODO Auto-generated method stub
-
-		String output = "";
-		//Statement st = null;
-		PreparedStatement preparedStatement = null;
-		ResultSet rs = null;
-		Connection con = null;
-		
-		try {
-			
-			con = DBConnection.getDBConnection();
-			
-			//String query = "SELECT a.hospitalName,a.COUNT(appointmentId) FROM appointment a,doctor d WHERE d.doctorId=?";
-			String query = "SELECT a.hospitalName , COUNT(a.appointmentId) AS num FROM appointment a ,doctor d WHERE (a.doctorId=d.doctorId) and a.doctorId= ? group by a.hospitalName";
-
-			/*st = con.createStatement();
-			st.setString(1, doctorId);
-			rs = st.executeQuery(query);*/
-			
-			preparedStatement = con.prepareStatement(query);
-			preparedStatement.setString(1, doctorId);
-			rs = preparedStatement.executeQuery();
-			
-			output = "<table border=\"1\">"						
-					+"<tr>"+"<th>hospitalName</th>"
-					+"<th>NumberOfAppointments</th>"
-					+"<th>Status</th></tr>";
-			
-			while(rs.next()) {
-			
-				String hospitalName = rs.getString("hospitalName");
-				int noOfAppointments = rs.getInt("num");
-				//String Status = rs.getString("");
-				String Status="Decline";
-				if(noOfAppointments>=4) {
-					Status="Accept";
-				}
+										arrayList.add(rs.getString(1));
+						
+									}
+								
+							} catch (Exception e) {
+								
+									log.log(Level.SEVERE, e.getMessage());
 				
-				output += "<tr><td>" + hospitalName + "</td>";
-				output += "<td>" + noOfAppointments + "</td>";
-				output += "<td>" + Status + "</td></tr>";
+							} finally {
+								
+								try {
+									
+									if (preparedStatement != null) {
+										preparedStatement.close();
+										}
+									
+									if (con != null) {
+										con.close();
+										}
+									
+								 } catch (SQLException e) {
+									
+									log.log(Level.SEVERE, e.getMessage());
+									}
+	
+							}
+							
+							System.out.println(arrayList.size());
+							return arrayList;
 			}
-			
-			output += "</table>";
-		} catch(Exception e) {
-			
-			output = "Error while taking appointments details...!";
-			System.err.println(e.getMessage());
+	
+	
+	
+		//This method is to take the number of appointments of the relevant doctor
 		
-		}finally {
+		@Override
+		public String getAllAppointments(String doctorId) {
+			// TODO Auto-generated method stub
+	
+			String output = "";
+			PreparedStatement preparedStatement = null;
+			ResultSet rs = null;
+			Connection con = null;
 			
 			try {
 				
-				if (preparedStatement != null) {
-					preparedStatement.close();
+				con = DBConnection.getDBConnection();
+				
+				String query = "SELECT a.hospitalName , COUNT(a.appointmentId) AS num FROM appointment a ,doctor d WHERE (a.doctorId=d.doctorId) and a.doctorId= ? group by a.hospitalName";
+	
+				
+				preparedStatement = con.prepareStatement(query);
+				preparedStatement.setString(1, doctorId);
+				rs = preparedStatement.executeQuery();
+				
+				output = "<table border=\"1\">"						
+						+"<tr>"+"<th>hospitalName</th>"
+						+"<th>NumberOfAppointments</th>"
+						+"<th>Status</th></tr>";
+				
+				while(rs.next()) {
+				
+					String hospitalName = rs.getString("hospitalName");
+					int noOfAppointments = rs.getInt("num");
+					String Status="Decline";
+					
+					if(noOfAppointments>=4) {
+						
+						Status="Accept";
+					}
+					
+					output += "<tr><td>" + hospitalName + "</td>";
+					output += "<td>" + noOfAppointments + "</td>";
+					output += "<td>" + Status + "</td></tr>";
 				}
 				
-				if (con != null) {
-					con.close();
-				}
+				output += "</table>";
 				
-				if(rs != null) {
-					rs.close();
+			} catch(Exception e) {
+				
+				output = "Error while taking appointments details...!";
+				System.err.println(e.getMessage());
+			
+			}finally {
+				
+				try {
+					
+					if (preparedStatement != null) {
+						preparedStatement.close();
+					}
+					
+					if (con != null) {
+						con.close();
+					}
+					
+					if(rs != null) {
+						rs.close();
+					}
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+					
+					}
+				
 				}
-			} catch (Exception e) {
-				e.printStackTrace();
+			return output;
+	
+		}
+	
+		
+	
+		//to validate login
+	
+		@Override
+		public String login(Doctor doctor) {
+			
+			String responseLine = null;
+			
+			try {
+					URL myurl = new URL("http://localhost:9070/UserAuth_REST/login");
+			        HttpURLConnection con12 = (HttpURLConnection)myurl.openConnection();
+					con12.setRequestMethod("POST");
+			
+					con12.setRequestProperty("Content-Type","application/x-www-form-urlencoded; utf-8");
+					con12.setRequestProperty("Accept", "application/json");
+				
+					con12.setDoOutput(true);
+	        
+	        //String passingData=data.toString();
+	       // String passingData = "{\"location\": \"pk\", \"activity\": \"active\"}";
+	       String passingData = "userName="+doctor.getEmail()+"&password="+doctor.getPassword()+"&type="+doctor.getType();
+	       
+	        try(OutputStream os = con12.getOutputStream()) {
+	        	
+	        byte[] input = passingData.getBytes("utf-8");
+	        os.write(input, 0, input.length);           
+	        
+	        }
+	        
+	        int code = con12.getResponseCode();
+	        System.out.println(code);
+		
+			try(BufferedReader br = new BufferedReader(new InputStreamReader(con12.getInputStream(), "utf-8"))){
+			StringBuilder response = new StringBuilder();
+			
+			while ((responseLine = br.readLine()) != null) {
+				response.append(responseLine.trim());
 			}
 			
-		}
-		return output;
-
+			System.out.println(response.toString());
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-
-	
-
-	//to validate login
-
-	@Override
-	public String login(Doctor doctor) {
+			} catch (ProtocolException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		
-		String responseLine = null;
-		try {
-			URL myurl = new URL("http://localhost:9070/UserAuth_REST/login");
-	        HttpURLConnection con12 = (HttpURLConnection)myurl.openConnection();
-			con12.setRequestMethod("POST");
+			
+				return responseLine;
+	    }
 		
-		con12.setRequestProperty("Content-Type","application/x-www-form-urlencoded; utf-8");
-		con12.setRequestProperty("Accept", "application/json");
 	
-		con12.setDoOutput(true);
-        
-        //String passingData=data.toString();
-       // String passingData = "{\"location\": \"pk\", \"activity\": \"active\"}";
-       String passingData = "userName="+doctor.getEmail()+"&password="+doctor.getPassword()+"&type="+doctor.getType();
-       
-        try(OutputStream os = con12.getOutputStream()) {
-        byte[] input = passingData.getBytes("utf-8");
-        os.write(input, 0, input.length);           
-        }
-        
-        int code = con12.getResponseCode();
-        System.out.println(code);
-	
-		try(BufferedReader br = new BufferedReader(new InputStreamReader(con12.getInputStream(), "utf-8"))){
-		StringBuilder response = new StringBuilder();
-		
-		while ((responseLine = br.readLine()) != null) {
-			response.append(responseLine.trim());
-		}
-		System.out.println(response.toString());
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		} catch (ProtocolException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-	
-		
-			return responseLine;
-        }
-	
-
 
 	
 }
