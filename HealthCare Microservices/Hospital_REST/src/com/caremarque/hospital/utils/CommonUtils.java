@@ -7,12 +7,12 @@
 	  public static String generateHospitalIDs(ArrayList<String> arrayList) {
  
 		  String HOSID; 
-		  int next = arrayList.size();
-		  next++; 
-		  HOSID = Constants.HOSPITAL_ID_PREFIX + next;
+		  int num = arrayList.size();
+		  num++; 
+		  HOSID = Constants.HOSPITAL_ID_PREFIX + num;
 		  if(arrayList.contains(HOSID)) { 
-			  next++;
-			  HOSID = Constants.HOSPITAL_ID_PREFIX + next; 
+			  num++;
+			  HOSID = Constants.HOSPITAL_ID_PREFIX + num; 
 			}
  
 		  return HOSID;
