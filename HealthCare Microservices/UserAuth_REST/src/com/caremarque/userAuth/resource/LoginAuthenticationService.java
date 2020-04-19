@@ -34,4 +34,15 @@ public class LoginAuthenticationService {
 			return Response.status(Response.Status.FORBIDDEN).build();
 		}
 	}
+	
+	@POST
+	@Consumes
+	@Produces(MediaType.TEXT_PLAIN)
+	public String loginValidation(@FormParam("userName") String userName,
+			 @FormParam("password") String password,
+			 @FormParam("type") String type) {
+		
+		
+	return loginAuthServiceImpl.loginValidation(userName, password, type);
+	}
 }
