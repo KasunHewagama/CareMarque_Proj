@@ -30,11 +30,4 @@ public class DBConnection {
 		return connection;
 	}
 
-//	public static Connection connect() {
-//
-//		Connection con = null;
-//
-//		try {
-//
-
 }
