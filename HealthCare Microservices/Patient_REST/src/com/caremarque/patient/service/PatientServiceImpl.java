@@ -535,44 +535,35 @@ public class PatientServiceImpl implements IPatientService {
 		return patientAuthList;
 	}
 	
-	// to get details of all the registered patients
-	/*	@Override
-		public List<Patient> getAllPatients() {
+	// to get details of all registered patients login credentials
+		@Override
+		public List<Patient> getAllLoggingCredentials() {
 			
+			List<Patient> credentialList = new ArrayList<Patient>();
 			
+			Patient patient = new Patient();
 
-			String output = "";
 			ResultSet rs = null;
 
 			try {
 				con = DBConnection.getDBConnection();
 
-				String query = "SELECT patientId, firstName, lastName, gender, NIC, DOB, email, phone, bloodGroup, allergies FROM patient";
+				String query = "SELECT patientId, email, password FROM patient";
 
 				st = con.createStatement();
 				rs = st.executeQuery(query);
 
 				while (rs.next()) {
+					
+					patient.setPatientId(rs.getString("patientId"));
+					patient.setEmail(rs.getString("email"));
+					patient.setPassword(rs.getString("password"));
 
-					String patientId = rs.getString("patientId");
-					String firstName = rs.getString("firstName");
-					String lastName = rs.getString("lastName");
-					String gender = rs.getString("gender");
-					String NIC = rs.getString("NIC");
-					String DOB = rs.getString("DOB");
-					String email = rs.getString("email");
-					String phone = rs.getString("phone");
-					String bloodGroup = rs.getString("bloodGroup");
-					String allergies = rs.getString("allergies");
-
-
+					credentialList.add(patient);
 				}
-				// Complete the html table
-				output += "</table>";
 
 			} catch (Exception e) {
 
-				output = "Error while reading the patient details...!";
 				log.log(Level.SEVERE, e.getMessage());
 
 			} finally {
@@ -594,9 +585,9 @@ public class PatientServiceImpl implements IPatientService {
 					log.log(Level.SEVERE, e.getMessage());
 				}
 			}
-			return output;
+			return credentialList;
 
-		}*/
+		}
 
 
 

@@ -114,7 +114,7 @@ public class LoginAuthenticationServiceImpl {
 			Client client = Client.create();
 
 			WebResource webResource = client
-			   .resource("http://localhost:9090/Patient_REST/patientService/Patient/fromJson");
+			   .resource("http://localhost:9090/Patient_REST/patientService/Patient/fromPatient");
 
 			ClientResponse response = webResource.accept("application/json")
 	                   .get(ClientResponse.class);

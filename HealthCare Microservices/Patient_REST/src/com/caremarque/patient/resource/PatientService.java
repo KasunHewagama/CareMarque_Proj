@@ -1,6 +1,9 @@
 package com.caremarque.patient.resource;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -249,12 +252,11 @@ public class PatientService {
 
 	}
 	
-	@POST
-	@Path("/fromJson")
+	@GET
+	@Path("/fromPatient")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String validateLoginFromUserAuth(Patient patient) {
-		return null;
+	public List<Patient> getAllLoggingCredentials(){
 		
-		//patient.set
+		return patientServiceImpl.getAllLoggingCredentials();
 	}
 }

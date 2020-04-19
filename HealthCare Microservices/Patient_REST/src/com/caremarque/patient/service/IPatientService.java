@@ -19,5 +19,7 @@ public interface IPatientService {
 	public List<String> getPatientIDs();
 
  	public String updatePatientEmail(Patient patient);
+
+	public List<Patient> getAllLoggingCredentials();
 	
 }
