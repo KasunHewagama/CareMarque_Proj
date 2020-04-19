@@ -1,8 +1,7 @@
 package com.caremarque.hospital.resource;
 
-import javax.validation.ValidationException;
+
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -57,8 +56,8 @@ public class HospitalService {
 		hospital.setEmail(email);
 		hospital.setChannelingFee(channelingFee);
 
-		String output = as.createHospital(hospital);
-		return output;
+		String result = as.createHospital(hospital);
+		return result;
 
 	}
 
@@ -96,7 +95,7 @@ public class HospitalService {
 		String email = hosJsonObject.get("email").getAsString();
 		String channelingFee= hosJsonObject.get("channelingFee").getAsString();
 		
-		//hospital.setHospitalId(hospitalId);
+		hospital.setHospitalId(hospitalId);
 		hospital.setHospitalName(hospitalName);
 		hospital.setAddress(address);
 		hospital.setPhone(phone);
@@ -106,8 +105,8 @@ public class HospitalService {
 		hospital.setEmail(email);
 		hospital.setChannelingFee(channelingFee);
 
-		String output = as.updateHospital(hospitalId, hospital);
-		return output;
+		String result = as.updateHospital(hospitalId, hospital);
+		return result;
 
 	}
 
@@ -121,9 +120,9 @@ public class HospitalService {
 
 		String hospitalId = document.select("hospitalId").text();
 
-		String output = as.DeleteHospital(hospitalId);
+		String result = as.DeleteHospital(hospitalId);
 
-		return output;
+		return result;
 
 	}
 
