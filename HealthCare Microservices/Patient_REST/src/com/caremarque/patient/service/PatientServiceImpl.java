@@ -532,5 +532,8 @@ public class PatientServiceImpl implements IPatientService {
 		}
 		return patientList;
 	}
+	
+	
+
 
 }

@@ -18,6 +18,6 @@ public interface IPatientService {
 	
 	public List<String> getPatientIDs();
 
-	String updatePatientEmail(Patient patient);
+ 	public String updatePatientEmail(Patient patient);
 	
 }
