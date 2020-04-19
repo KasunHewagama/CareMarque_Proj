@@ -107,21 +107,6 @@ import com.google.gson.JsonParser;
 				
 				
 				
-				/*
-				@GET
-				@Path("/{doctorId}")
-				@Consumes(MediaType.APPLICATION_XML)
-				@Produces(MediaType.TEXT_HTML)
-				public String getDoctor(String doctorData) {
-					Document doc = Jsoup.parse(doctorData,"",Parser.xmlParser());
-					
-					String doctorId = doc.select("doctorId").text();
-					
-					String output = ab.getAllAppointments(doctorId);
-					return output;
-				}*/
-				
-				
 				
 				@PUT
 				@Path("/update")
