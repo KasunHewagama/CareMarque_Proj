@@ -17,5 +17,7 @@ public interface IPatientService {
 	public String deletePatient(String patientId);
 	
 	public List<String> getPatientIDs();
+
+	String updatePatientEmail(Patient patient);
 	
 }

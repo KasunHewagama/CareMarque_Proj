@@ -42,7 +42,7 @@ public class PatientServiceImpl implements IPatientService {
 			Client client = Client.create();
 
 			WebResource webResource = client
-					.resource("http://localhost:9090/PatientAuth_REST/myService/PatientAuthentication/getPatientAuth");
+					.resource("http://localhost:9090/PatientAuth_REST/patientAuthService/PatientAuthentication/getPatientAuth");
 
 			ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);
 
@@ -333,31 +333,99 @@ public class PatientServiceImpl implements IPatientService {
 
 			con = DBConnection.getDBConnection();
 
-			String query = "UPDATE patient SET firstName=?, lastName=?, gender=?, NIC=?, DOB=?, email=?, phone=?, bloodGroup=?, allergies=?, password=?, cPassword=?"
+			String query = "UPDATE patient SET firstName=?, lastName=?, gender=?, NIC=?, DOB=?, phone=?, bloodGroup=?, allergies=?, password=?, cPassword=?"
 					+ " WHERE patientId=? ";
+			
 
 			preparedStmt = con.prepareStatement(query);
-
+			
 			preparedStmt.setString(Constants.COLUMN_INDEX_ONE, patient.getFirstName());
 			preparedStmt.setString(Constants.COLUMN_INDEX_TWO, patient.getLastName());
 			preparedStmt.setString(Constants.COLUMN_INDEX_THREE, patient.getGender());
 			preparedStmt.setString(Constants.COLUMN_INDEX_FOUR, patient.getNIC());
 			preparedStmt.setString(Constants.COLUMN_INDEX_FIVE, patient.getDOB());
-			preparedStmt.setString(Constants.COLUMN_INDEX_SIX, patient.getEmail());
-			preparedStmt.setString(Constants.COLUMN_INDEX_SEVEN, patient.getPhone());
-			preparedStmt.setString(Constants.COLUMN_INDEX_EIGHT, patient.getBloodGroup());
-			preparedStmt.setString(Constants.COLUMN_INDEX_NINE, patient.getAllergy());
-			preparedStmt.setString(Constants.COLUMN_INDEX_TEN, patient.getPassword());
-			preparedStmt.setString(Constants.COLUMN_INDEX_ELEVEN, patient.getConfirmPassword());
-			preparedStmt.setString(Constants.COLUMN_INDEX_TWELVE, patient.getPatientId());
-
+			preparedStmt.setString(Constants.COLUMN_INDEX_SIX, patient.getPhone());
+			preparedStmt.setString(Constants.COLUMN_INDEX_SEVEN, patient.getBloodGroup());
+			preparedStmt.setString(Constants.COLUMN_INDEX_EIGHT, patient.getAllergy());
+			preparedStmt.setString(Constants.COLUMN_INDEX_NINE, patient.getPassword());
+			preparedStmt.setString(Constants.COLUMN_INDEX_TEN, patient.getConfirmPassword());
+			preparedStmt.setString(Constants.COLUMN_INDEX_ELEVEN, patient.getPatientId());
+			
 			preparedStmt.execute();
 
 			output = "Patient details updated successfully..!";
-
+			
 		} catch (Exception e) {
 
 			output = "Error while updating the patient details..!";
+			log.log(Level.SEVERE, e.getMessage());
+
+		} finally {
+
+			try {
+				if (preparedStmt != null) {
+					preparedStmt.close();
+				}
+
+				if (con != null) {
+					con.close();
+				}
+
+			} catch (Exception e) {
+				log.log(Level.SEVERE, e.getMessage());
+			}
+		}
+
+		return output;
+	}
+	
+	// to update patient email
+	@Override
+	public String updatePatientEmail(Patient patient) {
+
+		String output = "";
+		boolean validate = false;
+
+		List<PatientAuthentication> patientAuthList = getAuthDetails();
+
+		try {
+
+			con = DBConnection.getDBConnection();
+
+			String query = "UPDATE patient SET email=? WHERE patientId=? ";
+			
+
+			preparedStmt = con.prepareStatement(query);
+
+			for (PatientAuthentication patientAuthentication : patientAuthList) {
+				System.out.println("PAUTH 1 : " + patientAuthentication.getUserName());
+				System.out.println("PAUTH 2 : " + patient.getEmail());
+
+				if (patient.getEmail().equals(patientAuthentication.getUserName())) {
+
+					validate = true;
+					System.out.println("VALIDATE : " + validate);
+					break;
+				}
+			}
+
+			if (validate == true) {
+
+				output = "You already have an account from email " + patient.getEmail() + " ..!!!";
+
+			} else {
+				preparedStmt.setString(Constants.COLUMN_INDEX_ONE, patient.getEmail());
+				preparedStmt.setString(Constants.COLUMN_INDEX_TWO, patient.getPatientId());
+				
+				preparedStmt.execute();
+
+				output = "Email updated successfully..!";
+			}
+
+			
+		} catch (Exception e) {
+
+			output = "Error while updating the email..!";
 			log.log(Level.SEVERE, e.getMessage());
 
 		} finally {
