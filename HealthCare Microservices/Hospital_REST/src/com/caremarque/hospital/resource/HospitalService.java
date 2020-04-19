@@ -43,21 +43,19 @@ public class HospitalService {
 			@NotEmpty 	@Pattern(regexp = "/^[\\w\\-\\.\\+]+\\@[a-zA-Z0-9\\.\\-]+\\.[a-zA-z0-9]{2,4}$/") @FormParam("email") String email,
 			@NotEmpty 	@Pattern(regexp = "/^\\d{10}$/", message = "Numbers only") @FormParam("channelingFee") String channelingFee) {
 
-		System.out.println("Create Hospital...........!");
-
-
+			System.out.println("Create Hospital...........!");
 		
-		hospital.setHospitalName(hospitalName);
-		hospital.setAddress(address);
-		hospital.setPhone(phone);
-		hospital.setRegNo(regNo);
-		hospital.setOpen_Hours(Open_Hours);
-		hospital.setClose_Hours(Close_Hours);
-		hospital.setEmail(email);
-		hospital.setChannelingFee(channelingFee);
+		    hospital.setHospitalName(hospitalName);
+			hospital.setAddress(address);
+		    hospital.setPhone(phone);
+		    hospital.setRegNo(regNo);
+		    hospital.setOpen_Hours(Open_Hours);
+		    hospital.setClose_Hours(Close_Hours);
+		    hospital.setEmail(email);
+		    hospital.setChannelingFee(channelingFee);
 
-		String result = as.createHospital(hospital);
-		return result;
+		    String result = as.createHospital(hospital);
+		    return result;
 
 	}
 
