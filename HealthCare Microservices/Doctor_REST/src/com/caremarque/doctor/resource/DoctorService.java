@@ -169,7 +169,7 @@ import com.google.gson.JsonParser;
 				}
 				
 			
-				
+				//getAllAppointments method
 				@GET
 				@Path("/appoint")
 				@Consumes(MediaType.APPLICATION_XML)
@@ -184,7 +184,8 @@ import com.google.gson.JsonParser;
 					
 				} 
 				
-			
+				
+				//login method
 				@POST
 				@Path("/login")
 				@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
