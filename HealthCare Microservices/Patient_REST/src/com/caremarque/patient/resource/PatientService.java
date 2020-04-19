@@ -1,10 +1,6 @@
 package com.caremarque.patient.resource;
 
-
-import java.util.ArrayList;
 import java.util.List;
-
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.ws.rs.Consumes;
@@ -34,7 +30,7 @@ public class PatientService {
 
 
 	// register a patient to the system
-	/*@POST
+	@POST
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.TEXT_PLAIN)
@@ -87,42 +83,8 @@ public class PatientService {
 		
 				return patientServiceImpl.registerPatient(patient);		    		
 				
-	}*/
-	
-	@POST
-	@Path("/")
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	@Produces(MediaType.TEXT_PLAIN)
-	public String registerPatient( 			
-			@FormParam("firstName") String firstName,
-			@FormParam("lastName") String lastName,
-			@FormParam("gender") String gender,
-			@FormParam("NIC") String nic,
-			@FormParam("DOB") String dob,
-			@FormParam("email") String email,
-			@FormParam("phone") String phone,
-			@FormParam("bloodGroup") String bloodGroup,
-			@FormParam("allergies") String allergies,
-			@FormParam("password") String password,
-			@FormParam("cPassword") String cPassword) {
-
-		
-				patient.setFirstName(firstName);
-				patient.setLastName(lastName);
-				patient.setGender(gender);
-				patient.setNIC(nic);
-				patient.setDOB(dob);
-				patient.setEmail(email);
-				patient.setPhone(phone);
-				patient.setBloodGroup(bloodGroup);
-				patient.setAllergy(allergies);
-				patient.setPassword(password);
-				patient.setConfirmPassword(cPassword);
-		
-				return patientServiceImpl.registerPatient(patient);		    		
-				
 	}
-
+	
 	// getAllPatientDetails
 	@GET
 	@Path("/")
@@ -137,7 +99,7 @@ public class PatientService {
 	@GET
 	@Path("/{patientId}")
 	@Produces(MediaType.TEXT_HTML)
-	public String getPatientDetail(@PathParam("patientId") int id) {
+	public String getPatientDetail(@PathParam("patientId") String id) {
 
 		return patientServiceImpl.getPatientDetailById(id);
 
@@ -157,45 +119,6 @@ public class PatientService {
 		return patientServiceImpl.deletePatient(patientId);
 
 	}
-
-	// update patient detail
-/*	@PUT
-	@Path("/")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.TEXT_PLAIN)
-	public String updatePatientDetails(String patientData) {
-
-		JsonObject patientObj = new JsonParser().parse(patientData).getAsJsonObject();
-
-		String patientId = patientObj.get("patientId").getAsString();
-		String firstName = patientObj.get("firstName").getAsString();
-		String lastName = patientObj.get("lastName").getAsString();
-		String gender = patientObj.get("gender").getAsString();
-		String nic = patientObj.get("NIC").getAsString();
-		String dob = patientObj.get("DOB").getAsString();
-		String email = patientObj.get("email").getAsString();
-		String phone = patientObj.get("phone").getAsString();
-		String bloodGroup = patientObj.get("bloodGroup").getAsString();
-		String allergies = patientObj.get("allergies").getAsString();
-		String password = patientObj.get("password").getAsString();
-		String cPassword = patientObj.get("cPassword").getAsString();
-
-		patient.setPatientId(patientId);
-		patient.setFirstName(firstName);
-		patient.setLastName(lastName);
-		patient.setGender(gender);
-		patient.setNIC(nic);
-		patient.setDOB(dob);
-		patient.setEmail(email);
-		patient.setPhone(phone);
-		patient.setBloodGroup(bloodGroup);
-		patient.setAllergy(allergies);
-		patient.setPassword(password);
-		patient.setConfirmPassword(cPassword);
-
-		return patientServiceImpl.updatePatientDetails(patient);
-
-	}*/
 	
 	@PUT
 	@Path("/")

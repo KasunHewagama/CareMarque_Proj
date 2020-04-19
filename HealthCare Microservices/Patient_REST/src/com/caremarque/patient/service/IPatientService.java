@@ -8,7 +8,7 @@ public interface IPatientService {
 
 	public String registerPatient(Patient patient);
 	
-	public String getPatientDetailById(int patientId);
+	public String getPatientDetailById(String patientId);
 	
 	public String getAllPatients();
 	

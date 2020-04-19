@@ -51,12 +51,10 @@ public class PatientServiceImpl implements IPatientService {
 
 			con = DBConnection.getDBConnection();
 
-			String query = "INSERT INTO patient(patientId, firstName, lastName, gender, NIC, DOB, email, phone, bloodGroup, allergies, password, cPassword) "
-					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			String query = "INSERT INTO patient(patientId, firstName, lastName, gender, NIC, DOB, email, phone, bloodGroup, allergies, password) "
+					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 			preparedStmt = con.prepareStatement(query);
-
-			System.out.println("before for loop");
 
 			for (PatientAuthentication patientAuthentication : patientAuthList) {
 				System.out.println("PAUTH 1 : " + patientAuthentication.getUserName());
@@ -88,17 +86,17 @@ public class PatientServiceImpl implements IPatientService {
 				preparedStmt.setString(Constants.COLUMN_INDEX_NINE, patient.getBloodGroup());
 				preparedStmt.setString(Constants.COLUMN_INDEX_TEN, patient.getAllergy());
 				preparedStmt.setString(Constants.COLUMN_INDEX_ELEVEN, patient.getPassword());
-				preparedStmt.setString(Constants.COLUMN_INDEX_TWELVE, patient.getConfirmPassword());
+				//preparedStmt.setString(Constants.COLUMN_INDEX_TWELVE, patient.getConfirmPassword());
 
-				int result = 0;
-
+				int result = 0;		
 				result = preparedStmt.executeUpdate();
-
+				
 				if (result > 0) {
 
 					output = patient.getFirstName() + " " + patient.getLastName()
 							+ ", You are successfully registered to the system..!";
 				}
+				
 			}
 
 		} catch (Exception e) {
@@ -126,7 +124,7 @@ public class PatientServiceImpl implements IPatientService {
 
 	// to get details of one patient
 	@Override
-	public String getPatientDetailById(int patientId) {
+	public String getPatientDetailById(String patientId) {
 
 		String output = "";
 		ResultSet rs = null;
@@ -227,8 +225,8 @@ public class PatientServiceImpl implements IPatientService {
 				String firstName = rs.getString("firstName");
 				String lastName = rs.getString("lastName");
 				String gender = rs.getString("gender");
-				String NIC = rs.getString("NIC");
-				String DOB = rs.getString("DOB");
+				String nic = rs.getString("NIC");
+				String dob = rs.getString("DOB");
 				String email = rs.getString("email");
 				String phone = rs.getString("phone");
 				String bloodGroup = rs.getString("bloodGroup");
@@ -238,8 +236,8 @@ public class PatientServiceImpl implements IPatientService {
 				output += "<td>" + firstName + "</td>";
 				output += "<td>" + lastName + "</td>";
 				output += "<td>" + gender + "</td>";
-				output += "<td>" + NIC + "</td>";
-				output += "<td>" + DOB + "</td>";
+				output += "<td>" + nic + "</td>";
+				output += "<td>" + dob + "</td>";
 				output += "<td>" + email + "</td>";
 				output += "<td>" + phone + "</td>";
 				output += "<td>" + bloodGroup + "</td>";
@@ -560,7 +558,11 @@ public class PatientServiceImpl implements IPatientService {
 					patient.setPassword(rs.getString("password"));
 
 					credentialList.add(patient);
+					System.out.println(credentialList);
 				}
+				
+				System.out.println("Data retrived from DB");
+				
 
 			} catch (Exception e) {
 
