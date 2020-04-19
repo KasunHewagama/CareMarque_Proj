@@ -126,7 +126,7 @@ import com.google.gson.JsonParser;
 					String password = dObject.get("password").getAsString();
 					String confirmPassword = dObject.get("confirmPassword").getAsString();
 					
-					//doctor.setDoctorId(Integer.parseInt(doctorId));
+					
 					doctor.setDoctorId(doctorId);
 					doctor.setFirstName(firstName);
 					doctor.setLastName(lastName);
