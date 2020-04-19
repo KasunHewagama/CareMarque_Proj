@@ -1,5 +1,15 @@
 package com.caremarque.doctor.service;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,6 +19,9 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.caremarque.doctor.model.Doctor;
 import com.caremarque.doctor.util.CommonUtils;
 import com.caremarque.doctor.util.DBConnection;
@@ -17,6 +30,7 @@ public class DoctorServiceImpl implements IDoctorService {
 
 	//This object is for logging
 public static final Logger log = Logger.getLogger(IDoctorService.class.getName());
+
 	
 	@Override
 	public String createDoctor(Doctor doctor) {
@@ -27,6 +41,7 @@ public static final Logger log = Logger.getLogger(IDoctorService.class.getName()
 		Connection con = null;
 		PreparedStatement preparedStatement = null;
 		
+		// Here we call the generatePatientIDs method to auto generate a patientId
 		String doctorId = CommonUtils.generateDoctorIDs(getDoctorIDs());
 		System.out.println("DoctorID: " +  doctorId);
 		
@@ -527,6 +542,66 @@ try {
 		return output;
 
 			}
+
+	
+
+	//to validate login
+
+	@Override
+	public String login(Doctor doctor) {
+		
+		String responseLine = null;
+		try {
+			URL myurl = new URL("http://localhost:9070/UserAuth_REST/login");
+	        HttpURLConnection con12 = (HttpURLConnection)myurl.openConnection();
+			con12.setRequestMethod("POST");
+		
+		con12.setRequestProperty("Content-Type","application/x-www-form-urlencoded; utf-8");
+		con12.setRequestProperty("Accept", "application/json");
+	
+		con12.setDoOutput(true);
+        
+        //String passingData=data.toString();
+       // String passingData = "{\"location\": \"pk\", \"activity\": \"active\"}";
+       String passingData = "userName="+doctor.getEmail()+"&password="+doctor.getPassword()+"&type="+doctor.getType();
+       
+        try(OutputStream os = con12.getOutputStream()) {
+        byte[] input = passingData.getBytes("utf-8");
+        os.write(input, 0, input.length);           
+        }
+        
+        int code = con12.getResponseCode();
+        System.out.println(code);
+	
+		try(BufferedReader br = new BufferedReader(new InputStreamReader(con12.getInputStream(), "utf-8"))){
+		StringBuilder response = new StringBuilder();
+		
+		while ((responseLine = br.readLine()) != null) {
+			response.append(responseLine.trim());
+		}
+		System.out.println(response.toString());
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		} catch (ProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	
+		
+			return responseLine;
+        }
+	
 
 
 	
