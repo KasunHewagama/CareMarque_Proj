@@ -14,6 +14,7 @@ public class Doctor
 	private double doctorCharges;
 	private String password;
 	private String confirmPassword;
+	private String type;
 	
 	
 	public Doctor() {
@@ -97,8 +98,22 @@ public class Doctor
 	}
 	
 	
+	
+	
+	
+	
+	public String getType() {
+		return type;
+	}
+
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+
 	public Doctor(String doctorId, String firstName, String lastName, String regNo, String gender,
-			String specialization, String phone, String email,int doctorCharges, String password, String confirmPassword) {
+			String specialization, String phone, String email,int doctorCharges, String password, String confirmPassword, String type) {
 		super();
 		this.doctorId = doctorId;
 		this.firstName = firstName;
@@ -111,6 +126,7 @@ public class Doctor
 		this.doctorCharges = doctorCharges;
 		this.password = password;
 		this.confirmPassword = confirmPassword;
+		this.type = type;
 	}
 	
 }
