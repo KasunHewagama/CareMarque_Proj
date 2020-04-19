@@ -36,6 +36,7 @@ public class LoginAuthenticationService {
 	}
 	
 	@POST
+	@Path("/userLogin")
 	@Consumes
 	@Produces(MediaType.TEXT_PLAIN)
 	public String loginValidation(@FormParam("userName") String userName,
