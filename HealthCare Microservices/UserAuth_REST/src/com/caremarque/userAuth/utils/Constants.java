@@ -7,5 +7,5 @@ public class Constants {
 	public static final String DB_DRIVER_NAME = "com.mysql.cj.jdbc.Driver";
 	public static final String DB_USERNAME = "root";
 	public static final String DB_PASSWORD = "root";
-	
+	//public static final String DB_PASSWORD = "1234";
 }
