@@ -42,7 +42,7 @@ public class PatientServiceImpl implements IPatientService {
 			Client client = Client.create();
 
 			WebResource webResource = client
-					.resource("http://localhost:9090/UserAuth_REST/myService/UserAuthentication/getPatientAuth");
+					.resource("http://localhost:9090/PatientAuth_REST/myService/PatientAuthentication/getPatientAuth");
 
 			ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);
 
@@ -73,7 +73,7 @@ public class PatientServiceImpl implements IPatientService {
 
 			System.out.println(listObj.get(0).getPatientAuthId());
 			System.out.println(listObj.get(0).getUserName());
-			System.out.println(listObj.get(0).getPassword());
+			
 
 		} catch (Exception e) {
 			log.log(Level.SEVERE, e.getMessage());

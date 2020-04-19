@@ -7,7 +7,7 @@ public class PatientAuthentication {
 
 	private int patientAuthId;
 	private String userName;
-	private String password;
+
 	
 	public PatientAuthentication() {
 		super();
@@ -29,12 +29,6 @@ public class PatientAuthentication {
 		this.userName = userName;
 	}
 
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
+	
 	
 }
