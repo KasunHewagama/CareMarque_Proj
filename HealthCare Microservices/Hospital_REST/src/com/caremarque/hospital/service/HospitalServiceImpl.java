@@ -79,7 +79,7 @@ public class HospitalServiceImpl implements IHospitalService {
 
 	@Override
 	public String getHospital(String hospitalId) {
-		String output = null;
+		String result = null;
 		ArrayList<Hospital> arrayList=new ArrayList<Hospital>();
 		
 		try {
@@ -91,7 +91,7 @@ public class HospitalServiceImpl implements IHospitalService {
 			PreparedStatement preparedStatement=con.prepareStatement(query);
 			ResultSet rSet=preparedStatement.executeQuery();
 			
-			output = "<table border=\"1\"> <tr>" + "<th>hospitalId</th> " + "<th>hospitalName</th> " + "<th>phone</th> "
+			result = "<table border=\"1\"> <tr>" + "<th>hospitalId</th> " + "<th>hospitalName</th> " + "<th>phone</th> "
 					+ "<th>regNo</th> " + "<th>address</th> " + "<th>Open_Hours</th> " + "<th>Close_Hours</th> "+ "<th>email</th> " + "<th>channelingFee</th></tr> ";
 
 
@@ -110,21 +110,21 @@ public class HospitalServiceImpl implements IHospitalService {
 				hospital.setChannelingFee(rSet.getString(Constants.COLUMN_INDEX_EIGHT));
 				arrayList.add(hospital);
 
-				output += "<tr><td>" + rSet.getString(Constants.COLUMN_INDEX_ONE) + "</td>";
-				output += "<td>" + rSet.getString(Constants.COLUMN_INDEX_TWO) + "</td>";
-				output += "<td>" + rSet.getString(Constants.COLUMN_INDEX_THREE) + "</td>";
-				output += "<td>" + rSet.getString(Constants.COLUMN_INDEX_FOUR) + "</td>";
-				output += "<td>" + rSet.getString(Constants.COLUMN_INDEX_FIVE) + "</td>";
-				output += "<td>" + rSet.getString(Constants.COLUMN_INDEX_SIX) + "</td>";
-				output += "<td>" + rSet.getString(Constants.COLUMN_INDEX_SEVEN) + "</td>";
-				output += "<td>" + rSet.getString(Constants.COLUMN_INDEX_EIGHT) + "</td>";
-				output += "<td>" + rSet.getString(Constants.COLUMN_INDEX_NINE) + "</td>";
+				result += "<tr><td>" + rSet.getString(Constants.COLUMN_INDEX_ONE) + "</td>";
+				result += "<td>" + rSet.getString(Constants.COLUMN_INDEX_TWO) + "</td>";
+				result += "<td>" + rSet.getString(Constants.COLUMN_INDEX_THREE) + "</td>";
+				result += "<td>" + rSet.getString(Constants.COLUMN_INDEX_FOUR) + "</td>";
+				result += "<td>" + rSet.getString(Constants.COLUMN_INDEX_FIVE) + "</td>";
+				result += "<td>" + rSet.getString(Constants.COLUMN_INDEX_SIX) + "</td>";
+				result += "<td>" + rSet.getString(Constants.COLUMN_INDEX_SEVEN) + "</td>";
+				result += "<td>" + rSet.getString(Constants.COLUMN_INDEX_EIGHT) + "</td>";
+				result += "<td>" + rSet.getString(Constants.COLUMN_INDEX_NINE) + "</td>";
 				
 				System.out.println("Data Retrived");
 
 			}
 
-			output += "</table>";
+			result += "</table>";
 
 			
 		} catch (Exception e) {
@@ -143,13 +143,13 @@ public class HospitalServiceImpl implements IHospitalService {
 			}
 		
 		}
-		return output;
+		return result;
 	}
 
 	@Override
 	public String getHospitals() {
 		
-		String output = null;
+		String result = null;
 		ResultSet rs = null;
 		
 
@@ -163,7 +163,7 @@ public class HospitalServiceImpl implements IHospitalService {
 			st = con.createStatement();
 			rs = st.executeQuery(query);
 
-			output = "<table border=\"1\"> <tr>" + "<th>hospitalId</th> " + "<th>hospitalName</th> " + "<th>address</th> "
+			result = "<table border=\"1\"> <tr>" + "<th>hospitalId</th> " + "<th>hospitalName</th> " + "<th>address</th> "
 					+ "<th>phone</th> " + "<th>regNo</th> " + "<th>Open_Hours</th> " + "<th>Close_Hours</th> " +  "<th>email</th> " + "<th>channelingFee</th></tr> ";
 
 			while (rs.next()) {
@@ -181,26 +181,26 @@ public class HospitalServiceImpl implements IHospitalService {
 				hospital.setChannelingFee(rs.getString(Constants.COLUMN_INDEX_EIGHT));
 				arrayList.add(hospital);
 
-				output += "<tr><td>" + rs.getString(Constants.COLUMN_INDEX_ONE) + "</td>";
-				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_TWO) + "</td>";
-				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_THREE) + "</td>";
-				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_FOUR) + "</td>";
-				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_FIVE) + "</td>";
-				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_SIX) + "</td>";
-				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_SEVEN) + "</td>";
-				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_EIGHT) + "</td>";
-				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_NINE) + "</td>";
+				result += "<tr><td>" + rs.getString(Constants.COLUMN_INDEX_ONE) + "</td>";
+				result += "<td>" + rs.getString(Constants.COLUMN_INDEX_TWO) + "</td>";
+				result += "<td>" + rs.getString(Constants.COLUMN_INDEX_THREE) + "</td>";
+				result += "<td>" + rs.getString(Constants.COLUMN_INDEX_FOUR) + "</td>";
+				result += "<td>" + rs.getString(Constants.COLUMN_INDEX_FIVE) + "</td>";
+				result += "<td>" + rs.getString(Constants.COLUMN_INDEX_SIX) + "</td>";
+				result += "<td>" + rs.getString(Constants.COLUMN_INDEX_SEVEN) + "</td>";
+				result += "<td>" + rs.getString(Constants.COLUMN_INDEX_EIGHT) + "</td>";
+				result += "<td>" + rs.getString(Constants.COLUMN_INDEX_NINE) + "</td>";
 
 				System.out.println("Data Retrived");
 
 			}
 
-			output += "</table>";
+			result += "</table>";
 
 		} catch (Exception e) {
 			
 
-			output = "Error Occured.Cant read Hospital details";
+			result = "Error Occured.Cant read Hospital details";
 			System.err.println(e.getMessage());
 			Log.log(Level.SEVERE, e.getMessage());
 		} finally {
@@ -220,13 +220,13 @@ public class HospitalServiceImpl implements IHospitalService {
 				Log.log(Level.SEVERE, e.getMessage());
 			}
 		}
-		return output;
+		return result;
 	}
 
 	@Override
 	public String updateHospital(String hospitalId, Hospital hospital) {
 		
-		String output = "";
+		String result = "";
 		PreparedStatement preparedStatement = null;
 
 		try {
@@ -248,12 +248,12 @@ public class HospitalServiceImpl implements IHospitalService {
 
 			preparedStatement.execute();
 
-			output = "Successfully Updated";
+			result = "Successfully Updated";
 
 		} catch (Exception e) {
 			
 
-			output = "Update Error has Occured";
+			result = "Update Error has Occured";
 			System.err.println(e.getMessage());
 			Log.log(Level.SEVERE, e.getMessage());
 		} finally {
@@ -270,14 +270,14 @@ public class HospitalServiceImpl implements IHospitalService {
 				Log.log(Level.SEVERE, e.getMessage());
 			}
 		}
-		return output;
+		return result;
 	}
 
 	@Override
 	public String DeleteHospital(String hospitalId) {
 		
 
-		String output = "";
+		String result = "";
 		PreparedStatement pStatement = null;
 		Connection con = null;
 
@@ -291,11 +291,11 @@ public class HospitalServiceImpl implements IHospitalService {
 			pStatement.setString(1, hospitalId);
 			pStatement.execute();
 
-			output = "Deleted " + hospitalId + " ";
+			result = "Deleted " + hospitalId + " ";
 
 		} catch (Exception e) {
 
-			output = "Error while deleting the appointment";
+			result = "Error while deleting the appointment";
 			System.err.println(e.getMessage());
 
 		} finally {
@@ -314,7 +314,7 @@ public class HospitalServiceImpl implements IHospitalService {
 			}
 		}
 
-		return output;
+		return result;
 
 	}
 
