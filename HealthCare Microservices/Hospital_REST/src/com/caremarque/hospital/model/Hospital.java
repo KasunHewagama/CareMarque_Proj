@@ -1,3 +1,4 @@
+
 package com.caremarque.hospital.model;
 
 public class Hospital {
@@ -104,5 +105,4 @@ public class Hospital {
 		this.email = email;
 		this.channelingFee = channelingFee;
 	}
-
 }

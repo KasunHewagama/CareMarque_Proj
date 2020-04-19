@@ -1,3 +1,5 @@
+
+
 package com.caremarque.hospital.service;
 
 import java.sql.Connection;
@@ -13,6 +15,11 @@ import com.caremarque.hospital.model.Hospital;
 import com.caremarque.hospital.utils.CommonUtils;
 import com.caremarque.hospital.utils.Constants;
 import com.caremarque.hospital.utils.DBConnection;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
 
 public class HospitalServiceImpl implements IHospitalService {
 
@@ -144,6 +151,57 @@ public class HospitalServiceImpl implements IHospitalService {
 		
 		}
 		return result;
+	}
+	
+	
+	//TO REURN A HOSPITAL LIST
+	public ArrayList<Hospital> getHospitalByID(String hospitalId){
+		
+		String output = null;
+		ArrayList<Hospital> arrayList = new ArrayList<Hospital>();
+		
+		try {
+			con = DBConnection.getDBConnection();
+			
+			String query = "SELECT * FROM hospital"
+					+ "WHERE hospitalId = '"+ hospitalId +"'";
+			
+			PreparedStatement pStatement = con.prepareStatement(query);
+			ResultSet rs = pStatement.executeQuery();
+			
+			while(rs.next()) {
+				Hospital hospital = new Hospital();
+				hospital.setHospitalId(hospitalId);
+				hospital.setHospitalName(rs.getString(Constants.COLUMN_INDEX_ONE));
+				hospital.setAddress(rs.getString(Constants.COLUMN_INDEX_TWO));
+				hospital.setPhone(rs.getString(Constants.COLUMN_INDEX_THREE));
+				hospital.setRegNo(rs.getString(Constants.COLUMN_INDEX_FOUR));
+				hospital.setOpen_Hours(rs.getString(Constants.COLUMN_INDEX_FIVE));
+				hospital.setClose_Hours(rs.getString(Constants.COLUMN_INDEX_SIX));
+				arrayList.add(hospital);
+				
+				System.out.println("Data Retrieved from DB...!");
+			}
+			
+			
+		
+		} catch (Exception e) {
+			Log.log(Level.SEVERE, e.getMessage());
+		
+		} finally {
+			try {
+				if(st != null) {
+					st.close();
+				}
+				if(con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				Log.log(Level.SEVERE, e.getMessage());
+			}
+		}
+		
+		return arrayList;
 	}
 
 	@Override
@@ -357,6 +415,41 @@ public class HospitalServiceImpl implements IHospitalService {
 		}
 		System.out.println(arrayList.size());
 		return arrayList;
+	}
+	
+	public String createAppointment(String hospitalId) {
+		
+		Client client = Client.create();
+		String result = "";
+		ArrayList<Hospital> hospList = new ArrayList<Hospital>();
+		hospList = getHospitalByID(hospitalId);
+		
+		WebResource webResource = client.resource("http://localhost:8088/Appointment_REST/myService/Payment/fromHospital");
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonInput = "";
+		
+		try {
+			jsonInput = mapper.writeValueAsString(hospList.get(0));
+			System.out.println("JSON : " +jsonInput);
+		} catch (Exception e) {
+			Log.log(Level.SEVERE, e.getMessage());
+		}
+		
+		try {
+			ClientResponse response = webResource.type("application/json").post(ClientResponse.class, jsonInput);
+			
+			if(response.getStatus() != 201) {
+				throw new RuntimeException("HTTP Error : " + response.getStatus());
+			}
+			result = response.getEntity(String.class);
+		} catch (Exception e) {
+			Log.log(Level.SEVERE, e.getMessage());
+		}
+			System.out.println("Response from the server...!");
+			System.out.println(result);
+			
+			return result;
+		
 	}
 
 }

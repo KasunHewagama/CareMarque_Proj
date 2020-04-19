@@ -1,3 +1,5 @@
+
+
 package com.caremarque.hospital.resource;
 
 
@@ -27,6 +29,7 @@ import com.google.gson.JsonParser;
 @Path("/Hospital")
 public class HospitalService {
 	IHospitalService as = new HospitalServiceImpl();
+	HospitalServiceImpl as2 = new HospitalServiceImpl();
 	Hospital hospital = new Hospital();
 
 	@POST
@@ -122,6 +125,15 @@ public class HospitalService {
 
 		return result;
 
+	}
+	
+	//To Connect with payment resource
+	@GET
+	@Path("/createAppointment/{hospitalId}")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String createAppointment(@PathParam("hospitalId") String hospitalId) {
+		as2.createAppointment(hospitalId);
+		return ("Payment has been done for: " + hospitalId);
 	}
 
 }
