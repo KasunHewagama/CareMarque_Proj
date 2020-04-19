@@ -51,9 +51,10 @@ public class PatientServiceImpl implements IPatientService {
 
 			}
 			String output = response.getEntity(String.class);
+			System.out.println("Result: " + output);
 
 			Gson gson = new Gson();
-			JsonElement list = new JsonParser().parse(output).getAsJsonObject().get("UserAuthentication");
+			JsonElement list = new JsonParser().parse(output).getAsJsonObject().get("patientAuthentication");
 			List<PatientAuthentication> listObj = gson.fromJson(list, new TypeToken<List<PatientAuthentication>>() {
 			}.getType());
 			System.out.println(listObj.size());
@@ -171,7 +172,7 @@ public class PatientServiceImpl implements IPatientService {
 
 	// to get details of one patient
 	@Override
-	public String getPatientDetail(int patientId) {
+	public String getPatientDetailById(int patientId) {
 
 		String output = "";
 		ResultSet rs = null;

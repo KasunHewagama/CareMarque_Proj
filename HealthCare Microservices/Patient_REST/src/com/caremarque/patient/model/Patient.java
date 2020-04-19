@@ -10,8 +10,8 @@ public class Patient {
 	private String firstName;
 	private String lastName;
 	private String gender;
-	private String NIC;
-	private String DOB;
+	private String nic;
+	private String dob;
 	private String email;
 	private String phone;
 	private String bloodGroup;
@@ -31,8 +31,8 @@ public class Patient {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.gender = gender;
-		NIC = nIC;
-		DOB = dOB;
+		nic = nIC;
+		dob = dOB;
 		this.email = email;
 		this.phone = phone;
 		this.bloodGroup = bloodGroup;
@@ -74,19 +74,19 @@ public class Patient {
 	}
 
 	public String getNIC() {
-		return NIC;
+		return nic;
 	}
 
 	public void setNIC(String nIC) {
-		NIC = nIC;
+		nic = nIC;
 	}
 
 	public String getDOB() {
-		return DOB;
+		return dob;
 	}
 
 	public void setDOB(String dOB) {
-		DOB = dOB;
+		dob = dOB;
 	}
 
 	public String getEmail() {

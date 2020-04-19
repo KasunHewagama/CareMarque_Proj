@@ -190,7 +190,7 @@ public class PatientService {
 	@Produces(MediaType.TEXT_HTML)
 	public String getPatientDetail(@PathParam("patientId") int id) {
 
-		return patientServiceImpl.getPatientDetail(id);
+		return patientServiceImpl.getPatientDetailById(id);
 
 	}
 
