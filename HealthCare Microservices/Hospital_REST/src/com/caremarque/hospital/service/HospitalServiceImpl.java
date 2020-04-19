@@ -55,7 +55,6 @@ public class HospitalServiceImpl implements IHospitalService {
 			output = "Hospital  profile created Successfully";
 
 		} catch (Exception e) {
-			// TODO: handle exception
 
 			output = "Hospital Profile Not created";
 			System.err.println(e.getMessage());
@@ -71,7 +70,6 @@ public class HospitalServiceImpl implements IHospitalService {
 					con.close();
 				}
 			} catch (Exception e) {
-				// TODO: handle exception
 				Log.log(Level.SEVERE, e.getMessage());
 			}
 		}
@@ -101,7 +99,7 @@ public class HospitalServiceImpl implements IHospitalService {
 
 				Hospital hospital = new Hospital();
 
-				// hospital.setHospitalId(rs.getString(Constants.COLUMN_INDEX_ONE));
+				
 				hospital.setHospitalName(rSet.getString(Constants.COLUMN_INDEX_ONE));
 				hospital.setAddress(rSet.getString(Constants.COLUMN_INDEX_TWO));
 				hospital.setPhone(rSet.getString(Constants.COLUMN_INDEX_THREE));
@@ -150,11 +148,10 @@ public class HospitalServiceImpl implements IHospitalService {
 
 	@Override
 	public String getHospitals() {
-		// TODO Auto-generated method stub
+		
 		String output = null;
-		// Statement st = null;
 		ResultSet rs = null;
-		// Connection con = null;
+		
 
 		ArrayList<Hospital> arrayList = new ArrayList<Hospital>();
 
@@ -173,7 +170,7 @@ public class HospitalServiceImpl implements IHospitalService {
 
 				Hospital hospital = new Hospital();
 
-				// hospital.setHospitalId(rs.getString(Constants.COLUMN_INDEX_ONE));
+				
 				hospital.setHospitalName(rs.getString(Constants.COLUMN_INDEX_ONE));
 				hospital.setAddress(rs.getString(Constants.COLUMN_INDEX_TWO));
 				hospital.setPhone(rs.getString(Constants.COLUMN_INDEX_THREE));
@@ -201,7 +198,7 @@ public class HospitalServiceImpl implements IHospitalService {
 			output += "</table>";
 
 		} catch (Exception e) {
-			// TODO: handle exception
+			
 
 			output = "Error Occured.Cant read Hospital details";
 			System.err.println(e.getMessage());
@@ -219,7 +216,7 @@ public class HospitalServiceImpl implements IHospitalService {
 					rs.close();
 				}
 			} catch (Exception e) {
-				// TODO: handle exception
+			
 				Log.log(Level.SEVERE, e.getMessage());
 			}
 		}
@@ -228,7 +225,7 @@ public class HospitalServiceImpl implements IHospitalService {
 
 	@Override
 	public String updateHospital(String hospitalId, Hospital hospital) {
-		// TODO Auto-generated method stub
+		
 		String output = "";
 		PreparedStatement preparedStatement = null;
 
@@ -254,7 +251,7 @@ public class HospitalServiceImpl implements IHospitalService {
 			output = "Successfully Updated";
 
 		} catch (Exception e) {
-			// TODO: handle exception
+			
 
 			output = "Update Error has Occured";
 			System.err.println(e.getMessage());
@@ -268,7 +265,7 @@ public class HospitalServiceImpl implements IHospitalService {
 					con.close();
 				}
 			} catch (Exception e) {
-				// TODO: handle exception
+				
 				e.printStackTrace();
 				Log.log(Level.SEVERE, e.getMessage());
 			}
@@ -278,7 +275,7 @@ public class HospitalServiceImpl implements IHospitalService {
 
 	@Override
 	public String DeleteHospital(String hospitalId) {
-		// TODO Auto-generated method stub
+		
 
 		String output = "";
 		PreparedStatement pStatement = null;
@@ -342,7 +339,7 @@ public class HospitalServiceImpl implements IHospitalService {
 
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
+			
 			Log.log(Level.SEVERE, e.getMessage());
 
 		} finally {
@@ -354,7 +351,7 @@ public class HospitalServiceImpl implements IHospitalService {
 					con.close();
 				}
 			} catch (SQLException e) {
-				// TODO: handle exception
+			
 				Log.log(Level.SEVERE, e.getMessage());
 			}
 		}
