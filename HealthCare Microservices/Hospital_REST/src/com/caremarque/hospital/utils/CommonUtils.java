@@ -6,16 +6,16 @@
   public class CommonUtils {
 	  public static String generateHospitalIDs(ArrayList<String> arrayList) {
  
-		  String id; 
+		  String HOSID; 
 		  int next = arrayList.size();
 		  next++; 
-		  id = Constants.HOSPITAL_ID_PREFIX + next;
-		  if(arrayList.contains(id)) { 
+		  HOSID = Constants.HOSPITAL_ID_PREFIX + next;
+		  if(arrayList.contains(HOSID)) { 
 			  next++;
-			  id = Constants.HOSPITAL_ID_PREFIX + next; 
+			  HOSID = Constants.HOSPITAL_ID_PREFIX + next; 
 			}
  
-		  return id;
+		  return HOSID;
  
  }
  
