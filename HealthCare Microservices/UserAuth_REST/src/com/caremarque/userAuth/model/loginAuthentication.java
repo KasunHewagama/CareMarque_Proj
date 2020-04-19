@@ -6,12 +6,11 @@ public class loginAuthentication {
 	private String userName;
 	private String password;
 	private String type;
-	
+
 	public loginAuthentication() {
 		super();
-		// TODO Auto-generated constructor stub
-	}	
-	
+	}
+
 	public loginAuthentication(int loginId, String userName, String password, String type) {
 		super();
 		this.loginId = loginId;
@@ -19,8 +18,6 @@ public class loginAuthentication {
 		this.password = password;
 		this.type = type;
 	}
-
-
 
 	public int getLoginId() {
 		return loginId;
@@ -53,8 +50,5 @@ public class loginAuthentication {
 	public void setType(String type) {
 		this.type = type;
 	}
-	
-	
-	
-	
+
 }
