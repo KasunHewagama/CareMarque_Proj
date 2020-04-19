@@ -9,4 +9,6 @@ import com.caremarque.patientAuth.model.PatientAuthentication;
 public interface IPatientAuthService {
 
 	public List<PatientAuthentication> checkPatientDetails();
+	
+	public List<PatientAuthentication> checkPatientDetailsForAppointment();
 }

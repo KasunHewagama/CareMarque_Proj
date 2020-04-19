@@ -105,7 +105,7 @@ public class LoginAuthenticationServiceImpl {
 	
 	public String loginValidation(String userName, String password, String type) {
 		
-		List<Patient> hospitalList = new ArrayList();
+//		List<Patient> hospitalList = new ArrayList();
 		 boolean validate = false;
 		String output = "";
 		
@@ -114,7 +114,7 @@ public class LoginAuthenticationServiceImpl {
 			Client client = Client.create();
 
 			WebResource webResource = client
-			   .resource("http://localhost:8088/Patient_REST/myService/Patient/fromJson");
+			   .resource("http://localhost:9090/Patient_REST/patientService/Patient/fromJson");
 
 			ClientResponse response = webResource.accept("application/json")
 	                   .get(ClientResponse.class);

@@ -248,4 +248,13 @@ public class PatientService {
 		return patientServiceImpl.updatePatientEmail(patient);
 
 	}
+	
+	@POST
+	@Path("/fromJson")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String validateLoginFromUserAuth(Patient patient) {
+		return null;
+		
+		//patient.set
+	}
 }

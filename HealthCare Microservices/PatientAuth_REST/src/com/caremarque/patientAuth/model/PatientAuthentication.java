@@ -6,15 +6,21 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class PatientAuthentication {
 
 	private int patientAuthId;
+	private String patientId;
+	private String firstName;
+	private String phone;
 	private String userName;
 
 	public PatientAuthentication() {
 		super();
 	}
 
-	public PatientAuthentication(int patientAuthId, String userName) {
+	public PatientAuthentication(int patientAuthId, String patientId, String firstName, String phone, String userName) {
 		super();
 		this.patientAuthId = patientAuthId;
+		this.patientId = patientId;
+		this.firstName = firstName;
+		this.phone = phone;
 		this.userName = userName;
 	}
 
@@ -26,6 +32,30 @@ public class PatientAuthentication {
 		this.patientAuthId = patientAuthId;
 	}
 
+	public String getPatientId() {
+		return patientId;
+	}
+
+	public void setPatientId(String patientId) {
+		this.patientId = patientId;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
 	public String getUserName() {
 		return userName;
 	}
@@ -34,4 +64,6 @@ public class PatientAuthentication {
 		this.userName = userName;
 	}
 
+
+	
 }

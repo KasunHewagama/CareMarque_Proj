@@ -33,53 +33,7 @@ public class PatientServiceImpl implements IPatientService {
 
 	private static Statement st;
 
-	public List<PatientAuthentication> getAuthDetails() {
 
-		List<PatientAuthentication> patientAuthList = new ArrayList<PatientAuthentication>();
-
-		try {
-
-			Client client = Client.create();
-
-			WebResource webResource = client
-					.resource("http://localhost:9090/PatientAuth_REST/patientAuthService/PatientAuthentication/getPatientAuth");
-
-			ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);
-
-			if (response.getStatus() != 200) {
-				throw new RuntimeException("Failed : HTTP error code : " + response.getStatus());
-
-			}
-			String output = response.getEntity(String.class);
-			System.out.println("Result: " + output);
-
-			Gson gson = new Gson();
-			JsonElement list = new JsonParser().parse(output).getAsJsonObject().get("patientAuthentication");
-			List<PatientAuthentication> listObj = gson.fromJson(list, new TypeToken<List<PatientAuthentication>>() {
-			}.getType());
-			System.out.println(listObj.size());
-
-			for (PatientAuthentication patientAuthentication : listObj) {
-				System.out.println(patientAuthentication);
-				patientAuthList.add(patientAuthentication);
-
-			}
-
-			for (PatientAuthentication patientAuthentication : patientAuthList) {
-				System.out.println("ID : " + patientAuthentication.getPatientAuthId());
-				System.out.println("email : " + patientAuthentication.getUserName());
-
-			}
-
-			System.out.println(listObj.get(0).getPatientAuthId());
-			System.out.println(listObj.get(0).getUserName());
-			
-
-		} catch (Exception e) {
-			log.log(Level.SEVERE, e.getMessage());
-		}
-		return patientAuthList;
-	}
 
 	// to insert patient details to the db
 	@Override
@@ -533,7 +487,117 @@ public class PatientServiceImpl implements IPatientService {
 		return patientList;
 	}
 	
+	public List<PatientAuthentication> getAuthDetails() {
+
+		List<PatientAuthentication> patientAuthList = new ArrayList<PatientAuthentication>();
+
+		try {
+
+			Client client = Client.create();
+
+			WebResource webResource = client
+					.resource("http://localhost:9090/PatientAuth_REST/patientAuthService/PatientAuthentication/getPatientAuth");
+
+			ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);
+
+			if (response.getStatus() != 200) {
+				throw new RuntimeException("Failed : HTTP error code : " + response.getStatus());
+
+			}
+			String output = response.getEntity(String.class);
+			System.out.println("Result: " + output);
+
+			Gson gson = new Gson();
+			JsonElement list = new JsonParser().parse(output).getAsJsonObject().get("patientAuthentication");
+			List<PatientAuthentication> listObj = gson.fromJson(list, new TypeToken<List<PatientAuthentication>>() {
+			}.getType());
+			System.out.println(listObj.size());
+
+			for (PatientAuthentication patientAuthentication : listObj) {
+				System.out.println(patientAuthentication);
+				patientAuthList.add(patientAuthentication);
+
+			}
+
+			for (PatientAuthentication patientAuthentication : patientAuthList) {
+				System.out.println("ID : " + patientAuthentication.getPatientAuthId());
+				System.out.println("email : " + patientAuthentication.getUserName());
+
+			}
+
+			System.out.println(listObj.get(0).getPatientAuthId());
+			System.out.println(listObj.get(0).getUserName());
+			
+
+		} catch (Exception e) {
+			log.log(Level.SEVERE, e.getMessage());
+		}
+		return patientAuthList;
+	}
 	
+	// to get details of all the registered patients
+	/*	@Override
+		public List<Patient> getAllPatients() {
+			
+			
+
+			String output = "";
+			ResultSet rs = null;
+
+			try {
+				con = DBConnection.getDBConnection();
+
+				String query = "SELECT patientId, firstName, lastName, gender, NIC, DOB, email, phone, bloodGroup, allergies FROM patient";
+
+				st = con.createStatement();
+				rs = st.executeQuery(query);
+
+				while (rs.next()) {
+
+					String patientId = rs.getString("patientId");
+					String firstName = rs.getString("firstName");
+					String lastName = rs.getString("lastName");
+					String gender = rs.getString("gender");
+					String NIC = rs.getString("NIC");
+					String DOB = rs.getString("DOB");
+					String email = rs.getString("email");
+					String phone = rs.getString("phone");
+					String bloodGroup = rs.getString("bloodGroup");
+					String allergies = rs.getString("allergies");
+
+
+				}
+				// Complete the html table
+				output += "</table>";
+
+			} catch (Exception e) {
+
+				output = "Error while reading the patient details...!";
+				log.log(Level.SEVERE, e.getMessage());
+
+			} finally {
+
+				try {
+					if (st != null) {
+						st.close();
+					}
+
+					if (con != null) {
+						con.close();
+					}
+
+					if (rs != null) {
+						rs.close();
+					}
+
+				} catch (Exception e) {
+					log.log(Level.SEVERE, e.getMessage());
+				}
+			}
+			return output;
+
+		}*/
+
 
 
 }

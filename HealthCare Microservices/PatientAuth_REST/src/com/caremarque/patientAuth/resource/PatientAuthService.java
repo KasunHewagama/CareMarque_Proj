@@ -25,5 +25,13 @@ public class PatientAuthService {
 		
 		
 	}
+	
+	@GET
+	@Path("/getPatientForAppointment")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<PatientAuthentication> checkPatientDetailsForAppointment(){
+		
+		return patientAuth.checkPatientDetailsForAppointment();
+	}
 
 }
