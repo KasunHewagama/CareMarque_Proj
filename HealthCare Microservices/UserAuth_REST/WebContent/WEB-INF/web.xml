@@ -11,7 +11,7 @@
 	
 	<servlet-mapping>
  		<servlet-name>Jersey Web Application</servlet-name>
- 		<url-pattern>/userAuthService/*</url-pattern>
+ 		<url-pattern>/myService/*</url-pattern>
 	</servlet-mapping>
 	
   <welcome-file-list>

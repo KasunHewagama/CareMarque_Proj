@@ -5,46 +5,51 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Patient {
 
-	private String patientId;
+	
+	private int patientId;
 	private String firstName;
 	private String lastName;
-	private String gender;
-	private String nic;
-	private String dob;
-	private String email;
+	private String NIC;
+	private String DOB;
 	private String phone;
-	private String bloodGroup;
-	private String allergy;
+	private String email;
+	private String gender;
 	private String password;
 	private String confirmPassword;
+	private String bloodGroup;
+	private String chronic;
+	private String allergy;
 
 	public Patient() {
 		super();
 
 	}
 
-	public Patient(String patientId, String firstName, String lastName, String gender, String nIC, String dOB,
-			String email, String phone, String bloodGroup, String allergy, String password, String confirmPassword) {
+	public Patient(int patientId, String firstName, String lastName, String nIC, String dOB, String phone,
+			String email, String gender, String password, String confirmPassword, String bloodGroup, String chronic,
+			String allergy) {
+		
 		super();
 		this.patientId = patientId;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.gender = gender;
-		nic = nIC;
-		dob = dOB;
-		this.email = email;
+		NIC = nIC;
+		DOB = dOB;
 		this.phone = phone;
-		this.bloodGroup = bloodGroup;
-		this.allergy = allergy;
+		this.email = email;
+		this.gender = gender;
 		this.password = password;
 		this.confirmPassword = confirmPassword;
+		this.bloodGroup = bloodGroup;
+		this.chronic = chronic;
+		this.allergy = allergy;
 	}
 
-	public String getPatientId() {
+	public int getPatientId() {
 		return patientId;
 	}
 
-	public void setPatientId(String patientId) {
+	public void setPatientId(int patientId) {
 		this.patientId = patientId;
 	}
 
@@ -64,36 +69,20 @@ public class Patient {
 		this.lastName = lastName;
 	}
 
-	public String getGender() {
-		return gender;
-	}
-
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
-
 	public String getNIC() {
-		return nic;
+		return NIC;
 	}
 
 	public void setNIC(String nIC) {
-		nic = nIC;
+		NIC = nIC;
 	}
 
 	public String getDOB() {
-		return dob;
+		return DOB;
 	}
 
 	public void setDOB(String dOB) {
-		dob = dOB;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
+		DOB = dOB;
 	}
 
 	public String getPhone() {
@@ -104,20 +93,20 @@ public class Patient {
 		this.phone = phone;
 	}
 
-	public String getBloodGroup() {
-		return bloodGroup;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setBloodGroup(String bloodGroup) {
-		this.bloodGroup = bloodGroup;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
-	public String getAllergy() {
-		return allergy;
+	public String getGender() {
+		return gender;
 	}
 
-	public void setAllergy(String allergy) {
-		this.allergy = allergy;
+	public void setGender(String gender) {
+		this.gender = gender;
 	}
 
 	public String getPassword() {
@@ -134,6 +123,30 @@ public class Patient {
 
 	public void setConfirmPassword(String confirmPassword) {
 		this.confirmPassword = confirmPassword;
+	}
+
+	public String getBloodGroup() {
+		return bloodGroup;
+	}
+
+	public void setBloodGroup(String bloodGroup) {
+		this.bloodGroup = bloodGroup;
+	}
+
+	public String getChronic() {
+		return chronic;
+	}
+
+	public void setChronic(String chronic) {
+		this.chronic = chronic;
+	}
+
+	public String getAllergy() {
+		return allergy;
+	}
+
+	public void setAllergy(String allergy) {
+		this.allergy = allergy;
 	}
 
 }

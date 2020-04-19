@@ -32,7 +32,7 @@ public class PaymentAuthServiceImpl {
 			
 			connecton = DBConnection.getDBConnection();
 			
-			String query = "SELECT * FROM PAYMENT_CARD";
+			String query = "SELECT * FROM PAYMENT_CREDIT_CARD";
 			
 			preparedstatement = connecton.prepareStatement(query);
 			ResultSet resultset = preparedstatement.executeQuery();

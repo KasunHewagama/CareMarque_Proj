@@ -2,9 +2,6 @@ package com.caremarque.payment.model;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.fasterxml.jackson.annotation.JsonRootName;
-
-@JsonRootName(value = "appointment")
 @XmlRootElement
 public class Appointment {
 
@@ -149,16 +146,5 @@ public class Appointment {
 		this.lastUpdateTime = lastUpdateTime;
 		this.appointmentStatus = appointmentStatus;
 	}
-
-	@Override
-	public String toString() {
-		return "Appointment [appointmentId=" + appointmentId + ", patientId=" + patientId + ", patientName="
-				+ patientName + ", phone=" + phone + ", doctorName=" + doctorName + ", specialization=" + specialization
-				+ ", hospitalId=" + hospitalId + ", hospitalName=" + hospitalName + ", appointmentDate="
-				+ appointmentDate + ", appointmentTime=" + appointmentTime + ", lastUpdateDate=" + lastUpdateDate
-				+ ", lastUpdateTime=" + lastUpdateTime + ", appointmentStatus=" + appointmentStatus + "]";
-	}
-	
-	
 
 }

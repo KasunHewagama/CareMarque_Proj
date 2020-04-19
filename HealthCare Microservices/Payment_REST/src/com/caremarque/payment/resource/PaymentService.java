@@ -73,19 +73,11 @@ public class PaymentService {
 	@POST
 	@Path("/fromAppointment")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public String createPaymentFromAppointment(Payment payment) {
+	public Response createPaymentFromAppointment(Appointment appointment) {
 		
-		//FOR TEMPORERY THE HOSPITAL CHARGES AND DOCTOR CHARGES HAS BEEN TAKEN AS HARD CODED VALUES
-		//THOSE VALUES SHOULD BE TAKEN FROM RELEVANT APIS
-		System.out.println(payment);
-		payment.setHospitalCharges(2000.00);
-		payment.setDoctorCharges(1500.00);
-		payment.setPaymentStatus("active");
-		System.out.println(payment);
-		
-		
-		return ps.createPayement(payment);
-		
+		String result = "Record Taken: " + appointment;
+		return Response.status(201).entity(result).build();
+		//TODO: IMPLENTATION OF OTHER CREATION WITH APPOINTMENT
 	}
 	
 	@GET

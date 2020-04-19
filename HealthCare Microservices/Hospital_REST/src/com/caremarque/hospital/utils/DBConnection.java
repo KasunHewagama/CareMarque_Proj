@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class DBConnection {
 
-	// If there is any issue you can change it accordingly
+
 	// Implemented with Singleton Pattern
 
 	private static Connection connection;
@@ -29,24 +29,5 @@ public class DBConnection {
 
 		return connection;
 	}
-
-//	public static Connection connect() {
-//
-//		Connection con = null;
-//
-//		try {
-//
-//			Class.forName("com.mysql.cj.jdbc.Driver");
-//
-//			con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/healthcare", "root", "root");
-//
-//		} catch (Exception e) {
-//
-//			e.printStackTrace();
-//		}
-//
-//		return con;
-//
-//	}
 
 }

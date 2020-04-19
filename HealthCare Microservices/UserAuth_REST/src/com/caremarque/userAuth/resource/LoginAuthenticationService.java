@@ -12,36 +12,26 @@ import com.caremarque.userAuth.service.LoginAuthenticationServiceImpl;
 
 @Path("/login")
 public class LoginAuthenticationService {
-
+	
 	LoginAuthenticationServiceImpl loginAuthServiceImpl;
 
 	@POST
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response authenticateUser(@FormParam("userName") String userName, 
-			@FormParam("password") String password,
-			@FormParam("type") String type) {
-
+	public Response authenticateUser(@FormParam("userName") String userName,
+									 @FormParam("password") String password,
+									 @FormParam("type") String type) {
+		
 		try {
 			loginAuthServiceImpl.authenticate(userName, password, type);
-
+			
 			String token = loginAuthServiceImpl.issueToken(userName);
-
+			
 			return Response.ok(token).build();
-
-		} catch (Exception e) {
+		
+		}catch (Exception e) {
 
 			return Response.status(Response.Status.FORBIDDEN).build();
 		}
-	}
-
-	@POST
-	@Path("/userLogin")
-	@Consumes
-	@Produces(MediaType.TEXT_PLAIN)
-	public String loginValidation(@FormParam("userName") String userName, @FormParam("password") String password,
-			@FormParam("type") String type) {
-
-		return loginAuthServiceImpl.loginValidation(userName, password, type);
 	}
 }

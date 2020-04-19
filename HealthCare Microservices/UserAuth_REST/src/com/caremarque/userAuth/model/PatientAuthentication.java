@@ -1,4 +1,4 @@
-package com.caremarque.patient.model;
+package com.caremarque.userAuth.model;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -36,5 +36,8 @@ public class PatientAuthentication {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
+	
+	
 	
 }

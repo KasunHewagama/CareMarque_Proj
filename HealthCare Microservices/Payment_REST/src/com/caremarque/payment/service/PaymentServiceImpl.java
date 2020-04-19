@@ -1,5 +1,6 @@
 package com.caremarque.payment.service;
 
+import java.util.List;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,7 +11,6 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,6 +19,8 @@ import com.caremarque.payment.model.PaymentAuthentication;
 import com.caremarque.payment.utils.CommonUtils;
 import com.caremarque.payment.utils.Constants;
 import com.caremarque.payment.utils.DBConnection;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
@@ -456,7 +458,7 @@ public class PaymentServiceImpl implements IPaymentService {
 			
 			//this one is for if we run this service in a separate servier which has port number: 8090
 //			WebResource webResource = client
-//					   .resource("http://localhost:8088/PaymentAuth_REST/paymentAuthService/PaymentAuthentication/getAuthDetails");
+//					   .resource("http://localhost:8088/PaymentAuth_REST/myService/PaymentAuthentication/getAuthDetails");
 
 			ClientResponse response = webResource.accept("application/json")
 	                   .get(ClientResponse.class);
@@ -467,6 +469,7 @@ public class PaymentServiceImpl implements IPaymentService {
 			}
 
 			String output = response.getEntity(String.class);
+			
 
 			Gson gson = new Gson();
 			JsonElement list = new JsonParser().parse(output).getAsJsonObject().get("paymentAuthentication");
@@ -503,43 +506,6 @@ public class PaymentServiceImpl implements IPaymentService {
 		  }
 			
 		return pAuthList;
-	}
-	
-	public double getHospitalCharges(String hospitalId) {
-		
-		List hospitalList = new ArrayList();
-		double hospitalCharges = 0;
-		
-		try {
-
-			Client client = Client.create();
-
-			WebResource webResource = client
-			   .resource("http://localhost:8088/Hospital_REST/myService/Hospital/" + hospitalId);
-
-			ClientResponse response = webResource.accept("application/json")
-	                   .get(ClientResponse.class);
-
-			if (response.getStatus() != 200) {
-			   throw new RuntimeException("Failed : HTTP error code : "
-				+ response.getStatus());
-			}
-
-			String output = response.getEntity(String.class);
-
-			Gson gson = new Gson();
-			JsonElement list = new JsonParser().parse(output).getAsJsonObject().get("hospital");
-			List listObj = gson.fromJson(list, new TypeToken<List>() {}.getType());
-		    System.out.println(listObj.size());
-		    
-		    //hospitalCharges = listObj.get(0).getC
-
-
-		  } catch (Exception e) {
-			log.log(Level.SEVERE, e.getMessage());
-
-		  }
-		return hospitalCharges;
 	}
 
 }
