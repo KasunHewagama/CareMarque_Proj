@@ -458,7 +458,7 @@ public class PaymentServiceImpl implements IPaymentService {
 			
 			//this one is for if we run this service in a separate servier which has port number: 8090
 //			WebResource webResource = client
-//					   .resource("http://localhost:8088/PaymentAuth_REST/paymentAuthService/PaymentAuthentication/getAuthDetails");
+//					   .resource("http://localhost:8088/PaymentAuth_REST/myService/PaymentAuthentication/getAuthDetails");
 
 			ClientResponse response = webResource.accept("application/json")
 	                   .get(ClientResponse.class);

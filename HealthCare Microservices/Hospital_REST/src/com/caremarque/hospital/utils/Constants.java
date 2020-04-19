@@ -1,7 +1,7 @@
 package com.caremarque.hospital.utils;
 
 public class Constants {
-	// TODO: Declare some constant values used in project
+
 
 	// Constant Values for column indexes
 	public static final int COLUMN_INDEX_ONE = 1;
@@ -11,6 +11,8 @@ public class Constants {
 	public static final int COLUMN_INDEX_FIVE = 5;
 	public static final int COLUMN_INDEX_SIX = 6;
 	public static final int COLUMN_INDEX_SEVEN = 7; 
+	public static final int COLUMN_INDEX_EIGHT = 8;
+	public static final int COLUMN_INDEX_NINE = 9;
 
 
 	// ID Prefixes
@@ -21,5 +23,6 @@ public class Constants {
 	public static final String DB_DRIVER_NAME = "com.mysql.cj.jdbc.Driver";
 	public static final String DB_USERNAME = "root";
 	public static final String DB_PASSWORD = "Avishka@98";
+
 
 }

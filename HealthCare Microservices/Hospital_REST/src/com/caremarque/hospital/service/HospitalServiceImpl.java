@@ -1,3 +1,5 @@
+
+
 package com.caremarque.hospital.service;
 
 import java.sql.Connection;
@@ -28,21 +30,19 @@ public class HospitalServiceImpl implements IHospitalService {
 
 	@Override
 	public String createHospital(Hospital hospital) {
-		// TODO Auto-generated method stub
+		
 
 		String output = null;
-		// Connection con = null;
 		PreparedStatement preparedStatement = null;
 
-		// String hospitalId = CommonUtils.generateHospitalIDs(getHospitalIDs());
 		String hospitalId = CommonUtils.generateHospitalIDs(getHospitalIDs());
 		System.out.println("hospitalId " + hospitalId);
 
 		try {
 			con = DBConnection.getDBConnection();
 
-			String query = "INSERT INTO hospital(hospitalId,hospitalName,address,phone,regNo,Open_Hours,Close_Hours)"
-					+ "VALUES (?, ?, ?, ?, ?, ?, ?)";
+			String query = "INSERT INTO hospital(hospitalId,hospitalName,address,phone,regNo,Open_Hours,Close_Hours,email,channelingFee)"
+					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 			preparedStatement = con.prepareStatement(query);
 
@@ -54,13 +54,14 @@ public class HospitalServiceImpl implements IHospitalService {
 			preparedStatement.setString(5, hospital.getRegNo());
 			preparedStatement.setString(6, hospital.getOpen_Hours());
 			preparedStatement.setString(7, hospital.getClose_Hours());
+			preparedStatement.setString(8, hospital.getEmail());
+			preparedStatement.setString(9, hospital.getChannelingFee());
 
 			preparedStatement.executeUpdate();
 
 			output = "Hospital  profile created Successfully";
 
 		} catch (Exception e) {
-			// TODO: handle exception
 
 			output = "Hospital Profile Not created";
 			System.err.println(e.getMessage());
@@ -76,7 +77,6 @@ public class HospitalServiceImpl implements IHospitalService {
 					con.close();
 				}
 			} catch (Exception e) {
-				// TODO: handle exception
 				Log.log(Level.SEVERE, e.getMessage());
 			}
 		}
@@ -86,8 +86,71 @@ public class HospitalServiceImpl implements IHospitalService {
 
 	@Override
 	public String getHospital(String hospitalId) {
-		// TODO Auto-generated method stub
-		return null;
+		String result = null;
+		ArrayList<Hospital> arrayList=new ArrayList<Hospital>();
+		
+		try {
+			con=DBConnection.getDBConnection();
+			
+			String query = "SELECT * FROM hospital "
+					+ "WHERE hospitalId = '"+ hospitalId + "'";
+			
+			PreparedStatement preparedStatement=con.prepareStatement(query);
+			ResultSet rSet=preparedStatement.executeQuery();
+			
+			result = "<table border=\"1\"> <tr>" + "<th>hospitalId</th> " + "<th>hospitalName</th> " + "<th>phone</th> "
+					+ "<th>regNo</th> " + "<th>address</th> " + "<th>Open_Hours</th> " + "<th>Close_Hours</th> "+ "<th>email</th> " + "<th>channelingFee</th></tr> ";
+
+
+			while (rSet.next()) {
+
+				Hospital hospital = new Hospital();
+
+				
+				hospital.setHospitalName(rSet.getString(Constants.COLUMN_INDEX_ONE));
+				hospital.setAddress(rSet.getString(Constants.COLUMN_INDEX_TWO));
+				hospital.setPhone(rSet.getString(Constants.COLUMN_INDEX_THREE));
+				hospital.setRegNo(rSet.getString(Constants.COLUMN_INDEX_FOUR));
+				hospital.setOpen_Hours(rSet.getString(Constants.COLUMN_INDEX_FIVE));
+				hospital.setClose_Hours(rSet.getString(Constants.COLUMN_INDEX_SIX));
+				hospital.setEmail(rSet.getString(Constants.COLUMN_INDEX_SEVEN));
+				hospital.setChannelingFee(rSet.getString(Constants.COLUMN_INDEX_EIGHT));
+				arrayList.add(hospital);
+
+				result += "<tr><td>" + rSet.getString(Constants.COLUMN_INDEX_ONE) + "</td>";
+				result += "<td>" + rSet.getString(Constants.COLUMN_INDEX_TWO) + "</td>";
+				result += "<td>" + rSet.getString(Constants.COLUMN_INDEX_THREE) + "</td>";
+				result += "<td>" + rSet.getString(Constants.COLUMN_INDEX_FOUR) + "</td>";
+				result += "<td>" + rSet.getString(Constants.COLUMN_INDEX_FIVE) + "</td>";
+				result += "<td>" + rSet.getString(Constants.COLUMN_INDEX_SIX) + "</td>";
+				result += "<td>" + rSet.getString(Constants.COLUMN_INDEX_SEVEN) + "</td>";
+				result += "<td>" + rSet.getString(Constants.COLUMN_INDEX_EIGHT) + "</td>";
+				result += "<td>" + rSet.getString(Constants.COLUMN_INDEX_NINE) + "</td>";
+				
+				System.out.println("Data Retrived");
+
+			}
+
+			result += "</table>";
+
+			
+		} catch (Exception e) {
+			Log.log(Level.SEVERE, e.getMessage());
+		}finally {
+
+			try {
+				if(st != null) {
+					st.close();
+				}
+				if(con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				Log.log(Level.SEVERE, e.getMessage());
+			}
+		
+		}
+		return result;
 	}
 	
 	
@@ -143,11 +206,10 @@ public class HospitalServiceImpl implements IHospitalService {
 
 	@Override
 	public String getHospitals() {
-		// TODO Auto-generated method stub
-		String output = null;
-		// Statement st = null;
+		
+		String result = null;
 		ResultSet rs = null;
-		// Connection con = null;
+		
 
 		ArrayList<Hospital> arrayList = new ArrayList<Hospital>();
 
@@ -159,40 +221,44 @@ public class HospitalServiceImpl implements IHospitalService {
 			st = con.createStatement();
 			rs = st.executeQuery(query);
 
-			output = "<table border=\"1\"> <tr>" + "<th>hospitalId</th> " + "<th>hospitalName</th> " + "<th>phone</th> "
-					+ "<th>regNo</th> " + "<th>address</th> " + "<th>Open_Hours</th> " + "<th>Close_Hours</th></tr> ";
+			result = "<table border=\"1\"> <tr>" + "<th>hospitalId</th> " + "<th>hospitalName</th> " + "<th>address</th> "
+					+ "<th>phone</th> " + "<th>regNo</th> " + "<th>Open_Hours</th> " + "<th>Close_Hours</th> " +  "<th>email</th> " + "<th>channelingFee</th></tr> ";
 
 			while (rs.next()) {
 
 				Hospital hospital = new Hospital();
 
-				// hospital.setHospitalId(rs.getString(Constants.COLUMN_INDEX_ONE));
+				
 				hospital.setHospitalName(rs.getString(Constants.COLUMN_INDEX_ONE));
 				hospital.setAddress(rs.getString(Constants.COLUMN_INDEX_TWO));
 				hospital.setPhone(rs.getString(Constants.COLUMN_INDEX_THREE));
 				hospital.setRegNo(rs.getString(Constants.COLUMN_INDEX_FOUR));
 				hospital.setOpen_Hours(rs.getString(Constants.COLUMN_INDEX_FIVE));
 				hospital.setClose_Hours(rs.getString(Constants.COLUMN_INDEX_SIX));
+				hospital.setEmail(rs.getString(Constants.COLUMN_INDEX_SEVEN));
+				hospital.setChannelingFee(rs.getString(Constants.COLUMN_INDEX_EIGHT));
 				arrayList.add(hospital);
 
-				output += "<tr><td>" + rs.getString(Constants.COLUMN_INDEX_ONE) + "</td>";
-				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_TWO) + "</td>";
-				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_THREE) + "</td>";
-				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_FOUR) + "</td>";
-				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_FIVE) + "</td>";
-				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_SIX) + "</td>";
-				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_SEVEN) + "</td>";
+				result += "<tr><td>" + rs.getString(Constants.COLUMN_INDEX_ONE) + "</td>";
+				result += "<td>" + rs.getString(Constants.COLUMN_INDEX_TWO) + "</td>";
+				result += "<td>" + rs.getString(Constants.COLUMN_INDEX_THREE) + "</td>";
+				result += "<td>" + rs.getString(Constants.COLUMN_INDEX_FOUR) + "</td>";
+				result += "<td>" + rs.getString(Constants.COLUMN_INDEX_FIVE) + "</td>";
+				result += "<td>" + rs.getString(Constants.COLUMN_INDEX_SIX) + "</td>";
+				result += "<td>" + rs.getString(Constants.COLUMN_INDEX_SEVEN) + "</td>";
+				result += "<td>" + rs.getString(Constants.COLUMN_INDEX_EIGHT) + "</td>";
+				result += "<td>" + rs.getString(Constants.COLUMN_INDEX_NINE) + "</td>";
 
 				System.out.println("Data Retrived");
 
 			}
 
-			output += "</table>";
+			result += "</table>";
 
 		} catch (Exception e) {
-			// TODO: handle exception
+			
 
-			output = "Error Occured.Cant read Hospital details";
+			result = "Error Occured.Cant read Hospital details";
 			System.err.println(e.getMessage());
 			Log.log(Level.SEVERE, e.getMessage());
 		} finally {
@@ -208,23 +274,23 @@ public class HospitalServiceImpl implements IHospitalService {
 					rs.close();
 				}
 			} catch (Exception e) {
-				// TODO: handle exception
+			
 				Log.log(Level.SEVERE, e.getMessage());
 			}
 		}
-		return output;
+		return result;
 	}
 
 	@Override
 	public String updateHospital(String hospitalId, Hospital hospital) {
-		// TODO Auto-generated method stub
-		String output = "";
+		
+		String result = "";
 		PreparedStatement preparedStatement = null;
 
 		try {
 			con = DBConnection.getDBConnection();
 
-			String query = "UPDATE hospital SET hospitalId =?, hospitalName = ?, address = ?, phone = ?, regNo = ?, Open_Hours = ?, Close_Hours = ? WHERE hospitalId = ?";
+			String query = "UPDATE hospital SET hospitalId =?, hospitalName = ?, address = ?, phone = ?, regNo = ?, Open_Hours = ?, Close_Hours = ?, email = ?, channelingFee = ? WHERE hospitalId = ?";
 			preparedStatement = con.prepareStatement(query);
 
 			preparedStatement.setString(1, hospital.getHospitalId());
@@ -234,16 +300,18 @@ public class HospitalServiceImpl implements IHospitalService {
 			preparedStatement.setString(5, hospital.getRegNo());
 			preparedStatement.setString(6, hospital.getOpen_Hours());
 			preparedStatement.setString(7, hospital.getClose_Hours());
-			preparedStatement.setString(8, hospital.getHospitalId());
+			preparedStatement.setString(8, hospital.getEmail());
+			preparedStatement.setString(9, hospital.getChannelingFee());
+			preparedStatement.setString(10, hospital.getHospitalId());
 
 			preparedStatement.execute();
 
-			output = "Successfully Updated";
+			result = "Successfully Updated";
 
 		} catch (Exception e) {
-			// TODO: handle exception
+			
 
-			output = "Update Error has Occured";
+			result = "Update Error has Occured";
 			System.err.println(e.getMessage());
 			Log.log(Level.SEVERE, e.getMessage());
 		} finally {
@@ -255,36 +323,37 @@ public class HospitalServiceImpl implements IHospitalService {
 					con.close();
 				}
 			} catch (Exception e) {
-				// TODO: handle exception
+				
 				e.printStackTrace();
 				Log.log(Level.SEVERE, e.getMessage());
 			}
 		}
-		return output;
+		return result;
 	}
 
 	@Override
 	public String DeleteHospital(String hospitalId) {
-		// TODO Auto-generated method stub
+		
 
-		String output = "";
+		String result = "";
 		PreparedStatement pStatement = null;
 		Connection con = null;
 
 		try {
 			con = DBConnection.getDBConnection();
 
-			String query = "DELETE FROM hospital WHERE (hospitalId = ?)";
+			String query = "DELETE FROM hospital WHERE hospitalId = ?";
 
 			pStatement = con.prepareStatement(query);
-
+			
+			pStatement.setString(1, hospitalId);
 			pStatement.execute();
 
-			output = "Deleted " + hospitalId + "Changed status to Cancel";
+			result = "Deleted " + hospitalId + " ";
 
 		} catch (Exception e) {
 
-			output = "Error while deleting the appointment";
+			result = "Error while deleting the appointment";
 			System.err.println(e.getMessage());
 
 		} finally {
@@ -303,7 +372,7 @@ public class HospitalServiceImpl implements IHospitalService {
 			}
 		}
 
-		return output;
+		return result;
 
 	}
 
@@ -328,7 +397,7 @@ public class HospitalServiceImpl implements IHospitalService {
 
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
+			
 			Log.log(Level.SEVERE, e.getMessage());
 
 		} finally {
@@ -340,7 +409,7 @@ public class HospitalServiceImpl implements IHospitalService {
 					con.close();
 				}
 			} catch (SQLException e) {
-				// TODO: handle exception
+			
 				Log.log(Level.SEVERE, e.getMessage());
 			}
 		}
@@ -351,6 +420,7 @@ public class HospitalServiceImpl implements IHospitalService {
 	public String createAppointment(String hospitalId) {
 		
 		Client client = Client.create();
+		String result = "";
 		ArrayList<Hospital> hospList = new ArrayList<Hospital>();
 		hospList = getHospitalByID(hospitalId);
 		
@@ -365,8 +435,20 @@ public class HospitalServiceImpl implements IHospitalService {
 			Log.log(Level.SEVERE, e.getMessage());
 		}
 		
-		ClientResponse response = webResource.type("application/json").post(ClientResponse.class, jsonInput);
-		return response.getEntity(String.class);
+		try {
+			ClientResponse response = webResource.type("application/json").post(ClientResponse.class, jsonInput);
+			
+			if(response.getStatus() != 201) {
+				throw new RuntimeException("HTTP Error : " + response.getStatus());
+			}
+			result = response.getEntity(String.class);
+		} catch (Exception e) {
+			Log.log(Level.SEVERE, e.getMessage());
+		}
+			System.out.println("Response from the server...!");
+			System.out.println(result);
+			
+			return result;
 		
 	}
 

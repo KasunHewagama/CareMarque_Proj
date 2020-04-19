@@ -1,5 +1,10 @@
+
+
 package com.caremarque.hospital.resource;
 
+
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
@@ -31,28 +36,29 @@ public class HospitalService {
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.TEXT_PLAIN)
-	public String createHospital(@FormParam("hospitalId") String hospitalId,
-								 @FormParam("hospitalName") String hospitalName,
-								 @FormParam("address") String address,
-								 @FormParam("phone") String phone, 
-								 @FormParam("regNo") String regNo,
-								 @FormParam("Open_Hours") String Open_Hours, 
-								 @FormParam("Close_Hours") String Close_Hours) {
+	public String createHospital(
+			@NotEmpty	@Pattern(regexp = "/^[a-zA-Z][0-9]+$/", message = "Use alphabets only")	@FormParam("hospitalName") String hospitalName,
+			@NotEmpty	@Pattern(regexp = "/^[a-zA-Z][0-9]+$/")		@FormParam("address") String address,
+			@NotEmpty	@Pattern(regexp = "/^\\d{10}$/", message = "numbers only") @FormParam("phone") String phone, 
+			@NotEmpty	@Pattern(regexp = "/^[a-zA-Z][0-9]+$/") 	@FormParam("regNo") String regNo,
+			@NotEmpty	@Pattern(regexp = "(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20)\\d\\d)") @FormParam("Open_Hours") String Open_Hours, 
+			@NotEmpty	@Pattern(regexp = "/^\\d{1,2}:\\d{2}([ap]m)?$/ss") @FormParam("Close_Hours") String Close_Hours,
+			@NotEmpty 	@Pattern(regexp = "/^[\\w\\-\\.\\+]+\\@[a-zA-Z0-9\\.\\-]+\\.[a-zA-z0-9]{2,4}$/") @FormParam("email") String email,
+			@NotEmpty 	@Pattern(regexp = "/^\\d{10}$/", message = "Numbers only") @FormParam("channelingFee") String channelingFee) {
 
-		System.out.println("Create Hospital...........!");
+			System.out.println("_____Create Hospital_____");
+		
+		    hospital.setHospitalName(hospitalName);
+			hospital.setAddress(address);
+		    hospital.setPhone(phone);
+		    hospital.setRegNo(regNo);
+		    hospital.setOpen_Hours(Open_Hours);
+		    hospital.setClose_Hours(Close_Hours);
+		    hospital.setEmail(email);
+		    hospital.setChannelingFee(channelingFee);
 
-		Hospital hospital = new Hospital();
-
-		hospital.setHospitalId(hospitalId);
-		hospital.setHospitalName(hospitalName);
-		hospital.setAddress(address);
-		hospital.setPhone(phone);
-		hospital.setRegNo(regNo);
-		hospital.setOpen_Hours(Open_Hours);
-		hospital.setClose_Hours(Close_Hours);
-
-		String output = as.createHospital(hospital);
-		return output;
+		    String result = as.createHospital(hospital);
+		    return result;
 
 	}
 
@@ -63,18 +69,15 @@ public class HospitalService {
 		return as.getHospitals();
 	}
 
-	/*
-	 * @GET
-	 * 
-	 * @Path("/{appointmentId}")
-	 * 
-	 * @Produces(MediaType.TEXT_HTML) public String
-	 * getAppointment(@PathParam("appointmentId") String appointmentId) {
-	 * 
-	 * return as.getAppointment(appointmentId);
-	 * 
-	 * }
-	 */
+	
+	  @GET
+	  @Path("/{hospitalId}")
+	  @Produces(MediaType.TEXT_HTML)
+	  public String getHospital(@PathParam("hospitalId") String hospitalId) {
+	  return as.getHospital(hospitalId);
+	  
+	  }
+	 
 	@PUT
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -90,7 +93,9 @@ public class HospitalService {
 		String regNo = hosJsonObject.get("regNo").getAsString();
 		String Open_Hours = hosJsonObject.get("Open_Hours").getAsString();
 		String Close_Hours = hosJsonObject.get("Close_Hours").getAsString();
-
+		String email = hosJsonObject.get("email").getAsString();
+		String channelingFee= hosJsonObject.get("channelingFee").getAsString();
+		
 		hospital.setHospitalId(hospitalId);
 		hospital.setHospitalName(hospitalName);
 		hospital.setAddress(address);
@@ -98,9 +103,11 @@ public class HospitalService {
 		hospital.setRegNo(regNo);
 		hospital.setOpen_Hours(Open_Hours);
 		hospital.setClose_Hours(Close_Hours);
+		hospital.setEmail(email);
+		hospital.setChannelingFee(channelingFee);
 
-		String output = as.updateHospital(hospitalId, hospital);
-		return output;
+		String result = as.updateHospital(hospitalId, hospital);
+		return result;
 
 	}
 
@@ -108,15 +115,15 @@ public class HospitalService {
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_XML)
 	@Produces(MediaType.TEXT_PLAIN)
-	public String deleteHospital(String appointmentData) {
+	public String deleteHospital(String hospitalData) {
 
-		Document document = Jsoup.parse(appointmentData, "", Parser.xmlParser());
+		Document document = Jsoup.parse(hospitalData, "", Parser.xmlParser());
 
 		String hospitalId = document.select("hospitalId").text();
 
-		String output = as.DeleteHospital(hospitalId);
+		String result = as.DeleteHospital(hospitalId);
 
-		return output;
+		return result;
 
 	}
 	
@@ -124,9 +131,9 @@ public class HospitalService {
 	@GET
 	@Path("/createAppointment/{hospitalId}")
 	@Produces(MediaType.TEXT_PLAIN)
-	public void createAppointment(@PathParam("hospitalId") String hospitalId) {
+	public String createAppointment(@PathParam("hospitalId") String hospitalId) {
 		as2.createAppointment(hospitalId);
-		System.out.println("TRIGGERED");
+		return ("Payment has been done for: " + hospitalId);
 	}
 
 }
