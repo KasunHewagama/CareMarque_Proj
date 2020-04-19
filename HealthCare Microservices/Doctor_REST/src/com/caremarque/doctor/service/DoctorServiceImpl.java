@@ -67,7 +67,7 @@ public static final Logger log = Logger.getLogger(IDoctorService.class.getName()
 				output="Password Mismatching";
 			}else {
 				if(doctor.getFirstName().equals("") || doctor.getLastName().equals("") || doctor.getSpecialization().equals("")) {
-					output="Enter firstnam";
+					output="Please fill empty fields";
 				}else {
 					preparedStatement.executeUpdate();
 					output = "Inserted Successfully...!";
@@ -309,33 +309,42 @@ try {
 				
 				//output = "Updated Successfully....!";
 				if(!doctor.getPassword().equals(doctor.getConfirmPassword())) {
-					output="Password Mismatching";
-				}else {
-					if(doctor.getFirstName().equals("") || doctor.getLastName().equals("") || doctor.getSpecialization().equals("")) {
-						output="Enter firstnam";
-					}else {
-						preparedStatement.executeUpdate();
-						output = "Updated Successfully....!";
 					
-					}
+					output="Password Mismatching";
+				
+				}else {
+					
+						if(doctor.getFirstName().equals("") || doctor.getLastName().equals("") || doctor.getSpecialization().equals("")) {
+								output="Please fill empty fields";
+						
+						}else {
+								preparedStatement.executeUpdate();
+								output = "Updated Successfully....!";
+						}
 				}
+				
+				
 			}catch(Exception e) {
 				
-				output = "Error while updating the doctor..!";
-				System.out.println(e.getMessage());
+							output = "Error while updating the doctor..!";
+							System.out.println(e.getMessage());
 			}finally {
-				try {
-					if(preparedStatement != null) {
-						preparedStatement.close();
-					}
+				
+					try {
+							if(preparedStatement != null) {
+								preparedStatement.close();
+							}
 					
-					if(con != null) {
-						con.close();
-					}
-				}catch(Exception e) {
+							if(con != null) {
+								con.close();
+							}
+							
+					}catch(Exception e) {
+						
 					e.printStackTrace();
-				}
-			}
+					
+						}
+					}
 			return output;
 		}
 
@@ -362,12 +371,13 @@ try {
 				
 				preparedStatmnt.execute();
 				
-				output = "Deleted successfully..!";
+					output = "Deleted successfully..!";
 				
 
 			}catch(Exception e) {
 				output = "Error while deleting item..!";
 				System.out.println(e.getMessage());
+			
 			}finally {
 				
 				try {
@@ -378,53 +388,65 @@ try {
 					if(con != null) {
 						con.close();
 					}
-				}catch(Exception e) {
-					e.printStackTrace();
-				}
-			}
+					
+					}catch(Exception e) {
+						e.printStackTrace();
+						}
+					}
+			
 			return output;
 		}
 	
 
-	@Override
-	public ArrayList<String> getDoctorIDs() {
+			@Override
+			public ArrayList<String> getDoctorIDs() {
 		
-		PreparedStatement preparedStatement = null;
-		ResultSet rs = null;
-		Connection con = null;
-		
-		ArrayList<String> arrayList = new ArrayList<String>();
-		
-		try {
-			con = DBConnection.getDBConnection();
-			
-			String query = "SELECT doctor.doctorId FROM doctor";
-			
-			preparedStatement = con.prepareStatement(query);
-			rs = preparedStatement.executeQuery();
-			
-			while(rs.next()) {
 				
-				arrayList.add(rs.getString(1));
+					PreparedStatement preparedStatement = null;
+					ResultSet rs = null;
+					Connection con = null;
+		
+						ArrayList<String> arrayList = new ArrayList<String>();
+		
+						try {
+							
+							con = DBConnection.getDBConnection();
+			
+							String query = "SELECT doctor.doctorId FROM doctor";
+			
+							preparedStatement = con.prepareStatement(query);
+							rs = preparedStatement.executeQuery();
+			
+							while(rs.next()) {
 				
-			}
-		} catch (Exception e) {
-			log.log(Level.SEVERE, e.getMessage());
-		} finally {
-			try {
-				if (preparedStatement != null) {
-					preparedStatement.close();
-				}
-				if (con != null) {
-					con.close();
-				}
-			} catch (SQLException e) {
-			log.log(Level.SEVERE, e.getMessage());
-			}
+								arrayList.add(rs.getString(1));
+				
+								}
+							
+						} catch (Exception e) {
+							
+								log.log(Level.SEVERE, e.getMessage());
+			
+						} finally {
+							
+							try {
+								if (preparedStatement != null) {
+									preparedStatement.close();
+									}
+								
+								if (con != null) {
+									con.close();
+									}
+								
+							} catch (SQLException e) {
+								
+								log.log(Level.SEVERE, e.getMessage());
+								}
 
-		}
-		System.out.println(arrayList.size());
-		return arrayList;
+						}
+						
+						System.out.println(arrayList.size());
+						return arrayList;
 	}
 	
 	
