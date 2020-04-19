@@ -1,5 +1,13 @@
+
+
 package com.caremarque.hospital.model;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+import com.fasterxml.jackson.annotation.JsonRootName;
+
+
+@XmlRootElement
 public class Hospital {
 
 	private String hospitalId;
@@ -9,7 +17,6 @@ public class Hospital {
 	private String address;
 	private String Open_Hours;
 	private String Close_Hours;
-	private double channeling_fee;
 
 	public Hospital() {
 		// TODO Auto-generated constructor stub
@@ -70,15 +77,6 @@ public class Hospital {
 
 	public void setClose_Hours(String Close_Hours) {
 		this.Close_Hours = Close_Hours;
-	}
-
-	
-	public double getChanneling_fee() {
-		return channeling_fee;
-	}
-
-	public void setChanneling_fee(double channeling_fee) {
-		this.channeling_fee = channeling_fee;
 	}
 
 	public Hospital(String hospitalId, String hospitalName, String phone, String regNo, String address,
