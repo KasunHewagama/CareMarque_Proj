@@ -147,7 +147,7 @@ public class AppointmentService {
 		
 	}
 	
-	//To Connect with payment resource
+	//To Connect with payment resource....
 	@GET
 	@Path("/createPayment/{appointmentId}")
 	@Produces(MediaType.TEXT_PLAIN)
