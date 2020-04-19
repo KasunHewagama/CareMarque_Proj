@@ -23,21 +23,19 @@ public class HospitalServiceImpl implements IHospitalService {
 
 	@Override
 	public String createHospital(Hospital hospital) {
-		// TODO Auto-generated method stub
+		
 
 		String output = null;
-		// Connection con = null;
 		PreparedStatement preparedStatement = null;
 
-		// String hospitalId = CommonUtils.generateHospitalIDs(getHospitalIDs());
 		String hospitalId = CommonUtils.generateHospitalIDs(getHospitalIDs());
 		System.out.println("hospitalId " + hospitalId);
 
 		try {
 			con = DBConnection.getDBConnection();
 
-			String query = "INSERT INTO hospital(hospitalId,hospitalName,address,phone,regNo,Open_Hours,Close_Hours)"
-					+ "VALUES (?, ?, ?, ?, ?, ?, ?)";
+			String query = "INSERT INTO hospital(hospitalId,hospitalName,address,phone,regNo,Open_Hours,Close_Hours,email,channelingFee)"
+					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 			preparedStatement = con.prepareStatement(query);
 
@@ -49,6 +47,8 @@ public class HospitalServiceImpl implements IHospitalService {
 			preparedStatement.setString(5, hospital.getRegNo());
 			preparedStatement.setString(6, hospital.getOpen_Hours());
 			preparedStatement.setString(7, hospital.getClose_Hours());
+			preparedStatement.setString(8, hospital.getEmail());
+			preparedStatement.setString(9, hospital.getChannelingFee());
 
 			preparedStatement.executeUpdate();
 
@@ -94,7 +94,7 @@ public class HospitalServiceImpl implements IHospitalService {
 			ResultSet rSet=preparedStatement.executeQuery();
 			
 			output = "<table border=\"1\"> <tr>" + "<th>hospitalId</th> " + "<th>hospitalName</th> " + "<th>phone</th> "
-					+ "<th>regNo</th> " + "<th>address</th> " + "<th>Open_Hours</th> " + "<th>Close_Hours</th></tr> ";
+					+ "<th>regNo</th> " + "<th>address</th> " + "<th>Open_Hours</th> " + "<th>Close_Hours</th> "+ "<th>email</th> " + "<th>channelingFee</th></tr> ";
 
 
 			while (rSet.next()) {
@@ -108,6 +108,8 @@ public class HospitalServiceImpl implements IHospitalService {
 				hospital.setRegNo(rSet.getString(Constants.COLUMN_INDEX_FOUR));
 				hospital.setOpen_Hours(rSet.getString(Constants.COLUMN_INDEX_FIVE));
 				hospital.setClose_Hours(rSet.getString(Constants.COLUMN_INDEX_SIX));
+				hospital.setEmail(rSet.getString(Constants.COLUMN_INDEX_SEVEN));
+				hospital.setChannelingFee(rSet.getString(Constants.COLUMN_INDEX_EIGHT));
 				arrayList.add(hospital);
 
 				output += "<tr><td>" + rSet.getString(Constants.COLUMN_INDEX_ONE) + "</td>";
@@ -117,7 +119,9 @@ public class HospitalServiceImpl implements IHospitalService {
 				output += "<td>" + rSet.getString(Constants.COLUMN_INDEX_FIVE) + "</td>";
 				output += "<td>" + rSet.getString(Constants.COLUMN_INDEX_SIX) + "</td>";
 				output += "<td>" + rSet.getString(Constants.COLUMN_INDEX_SEVEN) + "</td>";
-
+				output += "<td>" + rSet.getString(Constants.COLUMN_INDEX_EIGHT) + "</td>";
+				output += "<td>" + rSet.getString(Constants.COLUMN_INDEX_NINE) + "</td>";
+				
 				System.out.println("Data Retrived");
 
 			}
@@ -162,8 +166,8 @@ public class HospitalServiceImpl implements IHospitalService {
 			st = con.createStatement();
 			rs = st.executeQuery(query);
 
-			output = "<table border=\"1\"> <tr>" + "<th>hospitalId</th> " + "<th>hospitalName</th> " + "<th>phone</th> "
-					+ "<th>regNo</th> " + "<th>address</th> " + "<th>Open_Hours</th> " + "<th>Close_Hours</th></tr> ";
+			output = "<table border=\"1\"> <tr>" + "<th>hospitalId</th> " + "<th>hospitalName</th> " + "<th>address</th> "
+					+ "<th>phone</th> " + "<th>regNo</th> " + "<th>Open_Hours</th> " + "<th>Close_Hours</th> " +  "<th>email</th> " + "<th>channelingFee</th></tr> ";
 
 			while (rs.next()) {
 
@@ -176,6 +180,8 @@ public class HospitalServiceImpl implements IHospitalService {
 				hospital.setRegNo(rs.getString(Constants.COLUMN_INDEX_FOUR));
 				hospital.setOpen_Hours(rs.getString(Constants.COLUMN_INDEX_FIVE));
 				hospital.setClose_Hours(rs.getString(Constants.COLUMN_INDEX_SIX));
+				hospital.setEmail(rs.getString(Constants.COLUMN_INDEX_SEVEN));
+				hospital.setChannelingFee(rs.getString(Constants.COLUMN_INDEX_EIGHT));
 				arrayList.add(hospital);
 
 				output += "<tr><td>" + rs.getString(Constants.COLUMN_INDEX_ONE) + "</td>";
@@ -185,6 +191,8 @@ public class HospitalServiceImpl implements IHospitalService {
 				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_FIVE) + "</td>";
 				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_SIX) + "</td>";
 				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_SEVEN) + "</td>";
+				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_EIGHT) + "</td>";
+				output += "<td>" + rs.getString(Constants.COLUMN_INDEX_NINE) + "</td>";
 
 				System.out.println("Data Retrived");
 
@@ -227,7 +235,7 @@ public class HospitalServiceImpl implements IHospitalService {
 		try {
 			con = DBConnection.getDBConnection();
 
-			String query = "UPDATE hospital SET hospitalId =?, hospitalName = ?, address = ?, phone = ?, regNo = ?, Open_Hours = ?, Close_Hours = ? WHERE hospitalId = ?";
+			String query = "UPDATE hospital SET hospitalId =?, hospitalName = ?, address = ?, phone = ?, regNo = ?, Open_Hours = ?, Close_Hours = ?, email = ?, channelingFee = ? WHERE hospitalId = ?";
 			preparedStatement = con.prepareStatement(query);
 
 			preparedStatement.setString(1, hospital.getHospitalId());
@@ -237,7 +245,9 @@ public class HospitalServiceImpl implements IHospitalService {
 			preparedStatement.setString(5, hospital.getRegNo());
 			preparedStatement.setString(6, hospital.getOpen_Hours());
 			preparedStatement.setString(7, hospital.getClose_Hours());
-			preparedStatement.setString(8, hospital.getHospitalId());
+			preparedStatement.setString(8, hospital.getEmail());
+			preparedStatement.setString(9, hospital.getChannelingFee());
+			preparedStatement.setString(10, hospital.getHospitalId());
 
 			preparedStatement.execute();
 
@@ -277,13 +287,14 @@ public class HospitalServiceImpl implements IHospitalService {
 		try {
 			con = DBConnection.getDBConnection();
 
-			String query = "DELETE FROM hospital WHERE (hospitalId = ?)";
+			String query = "DELETE FROM hospital WHERE hospitalId = ?";
 
 			pStatement = con.prepareStatement(query);
-
+			
+			pStatement.setString(1, hospitalId);
 			pStatement.execute();
 
-			output = "Deleted " + hospitalId + "Changed status to Cancel";
+			output = "Deleted " + hospitalId + " ";
 
 		} catch (Exception e) {
 
