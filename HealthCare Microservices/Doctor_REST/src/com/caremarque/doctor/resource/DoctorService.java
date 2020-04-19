@@ -1,5 +1,7 @@
 package com.caremarque.doctor.resource;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
@@ -35,16 +37,35 @@ import com.google.gson.JsonParser;
 				
 				//Creating doctor method
 				public String createDoctor(
+						
 						@FormParam("doctorId") String doctorId,
+						
+						@NotNull(message = "First Name cannot be empty..!") @Pattern(regexp = "/^[a-zA-Z]+$/", message = "First Name should have alphabets only") 
 						@FormParam("firstName") String firstName,
+						
+						@NotNull(message = "Last Name cannot be empty..!") @Pattern(regexp = "/^[a-zA-Z]+$/", message = "Last Name should have alphabets only")
 						@FormParam("lastName") String lastName,
-						@FormParam("regNo") String regNo, 
+						
+						
+						@FormParam("regNo") String regNo,
+						
+						@NotNull(message = "Gender cannot be empty..!") @Pattern(regexp = "/^[a-zA-Z]+$/", message = "Gender should have alphabets only") 
 						@FormParam("gender") String gender,
+						
 						@FormParam("specialization") String specialization,
+						
+						@NotNull(message = "phone cannot be empty..!") @Pattern(regexp = "/^\\d{10}$/", message = "Enter valid phone number") 
 						@FormParam("phone") String phone,
+						
+						@NotNull(message = "email cannot be empty..!") @Pattern(regexp = "/^[\\w\\-\\.\\+]+\\@[a-zA-Z0-9\\.\\-]+\\.[a-zA-z0-9]{2,4}$/", message = "Enter valid email")
 						@FormParam("email") String email,
+						
 						@FormParam("doctorCharges") double doctorCharges,
+						
+						@NotNull(message = "password cannot be empty..!") @Pattern(regexp = "/(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/", message = "password should consist with at least six characters containing one number, one lowercase and one uppercase letter...!")
 						@FormParam("password") String password,
+						
+						@NotNull(message = "confirm Password cannot be empty..!") 
 						@FormParam("confirmPassword") String confirmPassword)
 				
 				{
@@ -78,7 +99,7 @@ import com.google.gson.JsonParser;
 				}
 				
 				@GET
-				@Path("/{doctorId}")
+				@Path("/getdoctor/{doctorId}")
 				@Produces(MediaType.TEXT_HTML)
 				public String getDoctor(@PathParam("doctorId") String id) {
 					return ab.getDoctor(id);
