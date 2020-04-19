@@ -23,4 +23,6 @@ public interface IDoctorService {
 	
 	//to get number of appointments
 	public String getAllAppointments(String doctorId); 
+	
+	public String login(Doctor doctor);
 }
