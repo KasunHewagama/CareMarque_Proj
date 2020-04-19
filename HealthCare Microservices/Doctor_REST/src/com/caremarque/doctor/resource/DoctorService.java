@@ -152,7 +152,7 @@ import com.google.gson.JsonParser;
 				
 				
 				
-				
+				//deleteDoctor method
 				@DELETE
 				@Path("/")
 				@Consumes(MediaType.APPLICATION_XML)
