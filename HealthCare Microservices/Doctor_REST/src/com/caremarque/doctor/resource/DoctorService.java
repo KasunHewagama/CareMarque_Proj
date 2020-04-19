@@ -97,7 +97,8 @@ import com.google.gson.JsonParser;
 				public String getDoctors() {
 					return ab.getDoctors();
 				}
-				
+				 
+				//getDoctor method
 				@GET
 				@Path("/getdoctor/{doctorId}")
 				@Produces(MediaType.TEXT_HTML)
@@ -107,7 +108,7 @@ import com.google.gson.JsonParser;
 				
 				
 				
-				
+				//updateDoctor method
 				@PUT
 				@Path("/update")
 				@Consumes(MediaType.APPLICATION_JSON)
@@ -148,6 +149,8 @@ import com.google.gson.JsonParser;
 					
 					return output;
 				}
+				
+				
 				
 				
 				@DELETE
